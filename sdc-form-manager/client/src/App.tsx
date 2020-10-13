@@ -1,15 +1,24 @@
 import React from 'react';
 import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
 
 function App() {
+  const hitBackend = () => {
+    axios.get('/test')
+      .then((response) => {
+        console.log(response.data)
+      }
+    )
+  }
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
+      <button onClick={hitBackend}>Send request</button>
         <a
           className="App-link"
           href="https://reactjs.org"
