@@ -1,9 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
 import axios from 'axios';
+import {useMutation, useQuery} from 'urql'
+import {updateFormQuery} from './query'
 import './App.css';
 
 function App() {
+  let updateForm = (variables: any) : Promise<any> => new Promise(() => {});
+  [, updateForm] = useMutation(updateFormQuery)
+  updateForm({id: 'ttttttt', input: {
+    id:'ttttttt',
+    something:'test'
+  }})
   const hitBackend = () => {
     axios.get('/test')
       .then((response) => {

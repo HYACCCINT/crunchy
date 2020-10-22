@@ -1,11 +1,29 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-
+import { graphqlHTTP } from 'express-graphql';
+import { root, schema } from './graphql';
+import { router } from './rest';
 const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/graphql', graphqlHTTP({
+	schema,
+	rootValue: root,
+	graphiql: true
+}));
+app.use('/', router);
+
+app.get('/api/form', async(req: any, res: any) => {
+	try {
+		const form = await root.form({ id: req.params.id }, req);
+		res.json(form);
+	} catch (error) {
+		res.status('404').json({ error: 'form not found' });
+	}
+});
 
 app.get('/SDC_Form', async (req, res, next) => {
   const procedureID = req.query.procedureID;
