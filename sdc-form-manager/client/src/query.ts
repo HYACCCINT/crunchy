@@ -26,7 +26,7 @@ mutation($id: String, $input: FormInput) {
 
 export const urqlClient = createClient({
 	//!!!!!!!!!!!!!!!!!
-	url: `${process.env.REACT_APP_API_BASE_URL}/graphql`,
+	url: `http://localhost:8080/graphql`,
 	fetchOptions: () => ({ credentials: 'include' })
 });
 

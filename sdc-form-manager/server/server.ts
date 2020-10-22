@@ -3,18 +3,26 @@ import bodyParser from 'body-parser';
 import { graphqlHTTP } from 'express-graphql';
 import { root, schema } from './graphql';
 import { router } from './rest';
+import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 8080;
-
+// cors temp
+app.use(cors())
+// app.use(cors({
+//   credentials: true,
+//   //to be changed in production
+// 	origin: ['http://localhost:3000','http://localhost:8080', 'http://localhost:5000']
+// }))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use('/graphql', graphqlHTTP({
+//db api
+app.use('/graphql',cors(), graphqlHTTP({
 	schema,
 	rootValue: root,
 	graphiql: true
 }));
 app.use('/', router);
+
 
 app.get('/api/form', async(req: any, res: any) => {
 	try {
