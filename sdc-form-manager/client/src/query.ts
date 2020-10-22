@@ -1,13 +1,5 @@
 import { createClient, CombinedError } from 'urql';
 
-export const allFormsQuery = `
-{
-	forms {
-		id
-	}
-}
-`;
-
 export const formQuery = `
 query($id: String!) {
 	form(id: $id) {
@@ -33,6 +25,7 @@ mutation($id: String, $input: FormInput) {
 `;
 
 export const urqlClient = createClient({
+	//!!!!!!!!!!!!!!!!!
 	url: `${process.env.REACT_APP_API_BASE_URL}/graphql`,
 	fetchOptions: () => ({ credentials: 'include' })
 });

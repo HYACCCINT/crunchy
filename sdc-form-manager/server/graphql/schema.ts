@@ -7,10 +7,6 @@ export const schema = buildSchema(`
 		id: String
 	}
 
-	input ChartOptionsInput {
-		id: String
-	}
-
 	type SDCForm {
 		id: String
         lastModified: String
@@ -25,9 +21,12 @@ export const schema = buildSchema(`
         questions: [SDCQuestionInput]
 	}
 
+	input questionInput {
+		id: String
+	}
+
 	type Query {
         form(id:String): SDCForm
-		forms(limit: Int, skip: Int, id: String): [SDCForm]
 	}
 
 	type Mutation {

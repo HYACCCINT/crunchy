@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { App } from './app';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// eslint-disable-next-line
+const render = (Component: any) => ReactDOM.render(<Component/>, document.getElementById('root'));
+
+render(App);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+// Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+if (module.hot) {
+	module.hot.accept('./app', () => {
+		console.info('App updated');
+		const Next = require('./app').App;
+		render(Next);
+	});
+}

@@ -17,10 +17,11 @@ export class Database {
 	constructor(name = 'crunchy') {
 		this.name = name;
 
-		if (!process.env.CLOUDANT_USERNAME || !process.env.CLOUDANT_KEY) {
-			usage();
-		}
 // Below is for production environment
+		// if (!process.env.CLOUDANT_USERNAME || !process.env.CLOUDANT_KEY) {
+		// 	usage();
+		// }
+
 		// this.cloudant = Cloudant({
 		// 	account: process.env.CLOUDANT_USERNAME,
 		// 	plugins: {
@@ -44,9 +45,7 @@ export class Database {
 			} else {
 				this.use();
 			}
-			console.log(this.db,"test connect")
 		});
-		this.insert('ttttt',{name:'test', id:'ttttt'})
 	}
 
 	use(name: string = this.name) {
@@ -137,7 +136,7 @@ export class Database {
 	}
 
 	async updateForm<T = object>(id: string, value: any, req: any) {
-		value.lastModified = new Date().toISOString();
+		// value.lastModified = new Date().toISOString();
 		value.type = 'form';
 		return await this.upsert(id, value, req);
 	}

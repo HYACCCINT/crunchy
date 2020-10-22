@@ -1,43 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import axios from 'axios';
-import {useMutation, useQuery} from 'urql'
-import {updateFormQuery} from './query'
-import './App.css';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Provider as UrqlProvider } from 'urql';
+import { urqlClient } from './query';
+import {DBExample} from './routes';
+// import axios from 'axios';
 
-function App() {
-  let updateForm = (variables: any) : Promise<any> => new Promise(() => {});
-  [, updateForm] = useMutation(updateFormQuery)
-  updateForm({id: 'ttttttt', input: {
-    id:'ttttttt',
-    something:'test'
-  }})
-  const hitBackend = () => {
-    axios.get('/test')
-      .then((response) => {
-        console.log(response.data)
-      }
-    )
-  }
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      <button onClick={hitBackend}>Send request</button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import './app.css';
+// let updateForm = (variables: any) : Promise<any> => new Promise(() => {});
+
+export const App = () => (
+  <Router>
+    <div className='app'>
+      <UrqlProvider value={urqlClient}>
+        <Route path='/dbexample' component={DBExample} />
+      </UrqlProvider>
     </div>
-  );
-}
-
+  </Router>
+)
 export default App;
