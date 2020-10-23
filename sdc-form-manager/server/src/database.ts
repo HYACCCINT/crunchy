@@ -9,7 +9,7 @@ const usage = () => {
 
 export class Database {
 	name: string;
-	
+
 	cloudant: Cloudant.ServerScope;
 	db: Cloudant.DocumentScope<any> | any;
 	initialized = false;
@@ -17,7 +17,7 @@ export class Database {
 	constructor(name = 'crunchy') {
 		this.name = name;
 
-// Below is for production environment
+		// Below is for production environment
 		// if (!process.env.CLOUDANT_USERNAME || !process.env.CLOUDANT_KEY) {
 		// 	usage();
 		// }
@@ -32,7 +32,7 @@ export class Database {
 		// });
 
 
-// This would be http://USERNAME:PASSWORD@localhost:5984, modify as needed
+		// This would be http://USERNAME:PASSWORD@localhost:5984, modify as needed
 		this.cloudant = Cloudant('http://admin:crunchy@localhost:5984');
 
 		this.cloudant.db.list().then((body: any) => {
@@ -61,17 +61,12 @@ export class Database {
 	 * The error thrown might be surfaced in graphql.
 	 *
 	 * @param id identifier
-	 * @param canView if not supplied acts as if `canView` returns true.
 	 * @param req http request received through express, contains info on authenticated user
 	 */
-	async get<T = object>(id: string, canView?: (req: any, item: any) => boolean, req?: any) {
+	async get<T = object>(id: string, req?: any) {
 		const item = await this.db.get(id);
 
-		if (!canView || canView(req, item)) {
-			return item;
-		}
-
-		throw 'Item not found';
+		return item;
 	}
 
 
@@ -84,11 +79,10 @@ export class Database {
 	 * The error thrown might be surfaced in graphql.
 	 *
 	 * @param id identifier
-	 * @param canEdit if not supplied acts as if `canEdit` returns true.
 	 * @param req http request received through express, contains info on authenticated user
 	 */
 	// eslint-disable-next-line
-	async upsert<T = object>(id: string, value: any, canEdit?: (req: any, item: any) => boolean, req?: any) {
+	async upsert<T = object>(id: string, value: any, req?: any) {
 		let v = {};
 		try {
 			v = await this.get(id);
@@ -101,16 +95,13 @@ export class Database {
 				throw exception;
 			}
 		}
-		if (!canEdit || canEdit(req, v)) {
-			return this.insert(id, Object.assign(v, value));
-		}
+		return this.insert(id, Object.assign(v, value));
 
-		throw 'Item not found';
 	}
 
 
 
-	async delete<T = object>(id: string, canEdit?: (req: any, item: any) => boolean, req?: any) {
+	async delete<T = object>(id: string, req?: any) {
 		let docObj;
 		try {
 			docObj = await this.db.get(id);
@@ -118,10 +109,7 @@ export class Database {
 			console.error(exception);
 			throw exception;
 		}
-		if (!canEdit || canEdit(req, docObj)) {
-			return await this.db.destroy(docObj._id, docObj._rev);
-		}
-		throw 'Item not found';
+		return await this.db.destroy(docObj._id, docObj._rev);
 	}
 
 	async getForm(id: string, req: any) {

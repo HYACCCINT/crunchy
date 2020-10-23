@@ -10,8 +10,7 @@ export const DBExample = () => {
       <button onClick={() => updateForm({
         id: 'ttttttt',
         input: {
-          id: 'ttttttt',
-          something: 'test'
+          id: 'ttttttt'
         }
       })}>dsufhsaidufisduhfiusdh</button>
     </div>

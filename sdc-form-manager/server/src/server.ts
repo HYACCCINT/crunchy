@@ -5,13 +5,13 @@ import { root, schema } from './graphql';
 import { router } from './rest';
 import cors from 'cors';
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 // cors temp
 app.use(cors())
 // app.use(cors({
 //   credentials: true,
 //   //to be changed in production
-// 	origin: ['http://localhost:3000','http://localhost:8080', 'http://localhost:5000']
+// 	origin: [ 'http://localhost:5000']
 // }))
 
 //db api
@@ -21,6 +21,11 @@ app.use('/graphql',cors(), graphqlHTTP({
 	graphiql: true
 }));
 app.use('/', router);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

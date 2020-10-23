@@ -26,8 +26,7 @@ mutation($id: String, $input: FormInput) {
 
 export const urqlClient = createClient({
 	//!!!!!!!!!!!!!!!!!
-	url: `http://localhost:8080/graphql`,
-	fetchOptions: () => ({ credentials: 'include' })
+	url: `http://localhost:5000/graphql`
 });
 
 export const handleUrqlError = (error: CombinedError | undefined) => {
