@@ -1,7 +1,7 @@
 import { createClient, CombinedError } from 'urql';
 
 export const formQuery = `
-query($id: String!) {
+query($id: String) {
 	form(id: $id) {
 		id
 	}
