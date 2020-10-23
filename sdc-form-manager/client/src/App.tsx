@@ -5,7 +5,7 @@ import { urqlClient } from './query';
 import {DBExample, MainPage} from './routes';
 // import axios from 'axios';
 
-import './app.css';
+import './App.css';
 // let updateForm = (variables: any) : Promise<any> => new Promise(() => {});
 
 export const App = () => (
