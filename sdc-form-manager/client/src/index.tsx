@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { App } from './app';
+import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 
 // eslint-disable-next-line
@@ -15,9 +15,9 @@ render(App);
 serviceWorker.unregister();
 
 if (module.hot) {
-	module.hot.accept('./app', () => {
+	module.hot.accept('./App', () => {
 		console.info('App updated');
-		const Next = require('./app').App;
+		const Next = require('./App').App;
 		render(Next);
 	});
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider as UrqlProvider } from 'urql';
 import { urqlClient } from './query';
-import {DBExample} from './routes';
+import {DBExample, MainPage} from './routes';
 // import axios from 'axios';
 
 import './app.css';
@@ -12,6 +12,7 @@ export const App = () => (
   <Router>
     <div className='app'>
       <UrqlProvider value={urqlClient}>
+        <Route path='/' component={MainPage}/>
         <Route path='/dbexample' component={DBExample} />
       </UrqlProvider>
     </div>
