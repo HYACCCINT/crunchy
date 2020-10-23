@@ -2,7 +2,7 @@
   "name": "sdc-form-manager",
   "version": "1.0.0",
   "scripts": {
-    "server": "node build/server.js",
+    "server": "cd server && nodemon ./server.js localhost 8080",
     "client": "cd client && npm run start",
     "build": "npx tsc && cd client && npm run build",
     "iall": "npm i && cd client && npm i",
@@ -19,7 +19,7 @@
     "express-graphql": "^0.11.0",
     "fs": "0.0.1-security",
     "graphql": "^15.3.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",

@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlHTTP } from 'express-graphql';
-import { root, schema } from './src/graphql';
+import { root, schema } from './graphql';
 import { router } from './rest';
 import cors from 'cors';
 const app = express();

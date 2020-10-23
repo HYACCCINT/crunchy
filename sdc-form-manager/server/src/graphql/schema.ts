@@ -21,7 +21,7 @@ export const schema = buildSchema(`
         questions: [SDCQuestionInput]
 	}
 
-	input questionInput {
+	input SDCQuestionInput {
 		id: String
 	}
 
