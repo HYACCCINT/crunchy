@@ -2,7 +2,7 @@
   "name": "sdc-form-manager",
   "version": "1.0.0",
   "scripts": {
-    "server": "node build/server.js",
+    "server": "cd server && npm run start",
     "client": "cd client && npm run start",
     "build": "npx tsc && cd client && npm run build",
     "iall": "npm i && cd client && npm i",
