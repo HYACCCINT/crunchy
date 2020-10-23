@@ -25,7 +25,6 @@ mutation($id: String, $input: FormInput) {
 `;
 
 export const urqlClient = createClient({
-	//!!!!!!!!!!!!!!!!!
 	url: `http://localhost:5000/graphql`
 });
 
