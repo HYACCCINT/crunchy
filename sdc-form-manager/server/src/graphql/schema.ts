@@ -9,6 +9,8 @@ export const schema = buildSchema(`
 
 	type SDCForm {
 		id: String
+		title:String
+		name:String
         lastModified: String
         procedureID: String
         questions: [SDCQuestion]
@@ -16,6 +18,8 @@ export const schema = buildSchema(`
 
 	input FormInput {
 		id: String
+		title:String
+		name:String
         lastModified: String
         procedureID: String
         questions: [SDCQuestionInput]

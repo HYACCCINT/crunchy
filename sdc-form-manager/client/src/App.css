@@ -37,6 +37,27 @@
   }
 }
 
-.dbExampleWrap {
-  margin: auto;
+.dbExampleWrap1 {
+  margin-top: 5rem;
+  padding: 40px;
+  background-color: bisque;
+  max-width:20rem;
+  float:left;
+}
+
+.dbExampleWrap2 {
+  margin-top: 5rem;
+  padding: 40px;
+  background-color: lavender;
+  max-width:20rem;
+  float:left;
+}
+
+.dbExampleWrap3 {
+  margin-top: 5rem;
+  padding: 40px;
+  background-color: lightgreen;
+  max-width:20rem;
+  float:left;
+  min-height: 30rem;
 }
