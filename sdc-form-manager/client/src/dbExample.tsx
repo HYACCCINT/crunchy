@@ -22,6 +22,7 @@ export const DBExample = () => {
     let clone = { ...test2 };
     clone[inputID] = inputValue;
     setTest2(clone);
+    console.log(test2); //remove later
   }
   const onChange = (event: any) => {
     handleChange(event.target.id, event.target.value);

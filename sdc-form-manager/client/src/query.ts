@@ -22,7 +22,16 @@ mutation($id: String) {
 export const updateFormQuery = `
 mutation($id: String, $input: FormInput) {
 	updateForm(id: $id, input: $input) {
-		id
+		id,
+		docType,
+		procedureID,
+		patientID,
+		lineage,
+		title,
+		uri,
+		sections,
+		footer,
+        lastModified
 	}
 }
 `;

@@ -33,7 +33,7 @@ export class Database {
 
 
 		// This would be http://USERNAME:PASSWORD@localhost:5984, modify as needed
-		this.cloudant = Cloudant('http://admin:crunchy@localhost:5984');
+		this.cloudant = Cloudant('http://vidya__21:crunchy@localhost:5984');
 
 		this.cloudant.db.list().then((body: any) => {
 			// create db if it doesn't exist, otherwise just use it
@@ -125,7 +125,8 @@ export class Database {
 
 	async updateForm<T = object>(id: string, value: any, req: any) {
 		// value.lastModified = new Date().toISOString();
-		value.type = 'form';
+		console.log(value); //remove later
+		value.docType = 'SDCForm';
 		return await this.upsert(id, value, req);
 	}
 
