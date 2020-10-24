@@ -13,7 +13,7 @@ export const DBExample = () => {
     name: '',
     procedureID: ''
   };
-  const [state, setState] = useState<any>(initialState)
+  const [m, setM] = useState<any>(initialState)
   // const [, getForm] = useQuery(formQuery)
 
   // user input/form handling
@@ -21,10 +21,10 @@ export const DBExample = () => {
  
 
   const handleChange = (inputID: string, inputValue: any) => {
-    let clone = {...state};
+    let clone = {...m};
     clone[inputID] = inputValue;
-    setState(clone);
-    console.log(state, "fdff")
+    setM(clone);
+    console.log(m, "fdff")
   }
   const onChange = (event: any) => {
     handleChange(event.target.id, event.target.value);
