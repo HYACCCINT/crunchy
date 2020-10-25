@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.menu-button {
+  height: 20vh;
+  width: 85%;
+  border: 5px solid #25c9c9;
+  margin: 5px;
+  border-radius: 12px;
+  background-color: #008CBA;
+  font-size: 30px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
