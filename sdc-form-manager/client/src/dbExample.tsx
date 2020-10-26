@@ -13,7 +13,7 @@ export const DBExample = () => {
   const initialState = {
     id: 'test2',
     title: '',
-    name: '',
+    patientID: '',
     procedureID: ''
   };
   const [test2, setTest2] = useState<any>(initialState)
@@ -60,7 +60,7 @@ export const DBExample = () => {
           Test2, fill out the fields of the form, and click submit to POST
         </div>
         <TextField id="id" label="ID" required defaultValue={test2.id} onChange={(e: any) => onChange(e)} />
-        <TextField id="name" label="Name" defaultValue={test2.name} onChange={(e: any) => onChange(e)} />
+        <TextField id="patientID" label="PatientID" defaultValue={test2.patientID} onChange={(e: any) => onChange(e)} />
         <TextField id="title" label="Title" defaultValue={test2.title} onChange={(e: any) => onChange(e)} />
         <TextField id="procedureID" label="Procedure ID" defaultValue={test2.procedureID} onChange={(e: any) => onChange(e)} />
         <button onClick={() => updateForm({ id: test2.id, input: test2 })} style={{ marginTop: "3rem" }}>

@@ -4,9 +4,14 @@ export const formQuery = `
 query($id: String!) {
 	form(id: $id) {
 		id,
+		docType,
+		procedureID,
+		patientID,
+		lineage,
 		title,
-		name,
-        procedureID
+		uri,
+		footer,
+        lastModified
 	}
 }
 `;
@@ -22,7 +27,15 @@ mutation($id: String) {
 export const updateFormQuery = `
 mutation($id: String, $input: FormInput) {
 	updateForm(id: $id, input: $input) {
-		id
+		id,
+		docType,
+		procedureID,
+		patientID,
+		lineage,
+		title,
+		uri,
+		footer,
+        lastModified
 	}
 }
 `;
