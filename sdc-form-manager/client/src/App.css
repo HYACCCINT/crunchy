@@ -71,3 +71,26 @@
   float:left;
   min-height: 30rem;
 }
+
+.blue-heading {color: DarkBlue;}
+.questionp {color: DarkSlateGrey;}
+.questionp:hover {background-color: GhostWhite;}
+
+input[type=button] { 
+  background-color: DodgerBlue;
+  text-decoration: none;
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: 16px;
+  padding: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  color: MidnightBlue;
+}
+
+input[type=button]:active { 
+  background-color: DeepSkyBlue;
+}
+input[type=button]:hover { 
+  background-color: RoyalBlue;
+}

@@ -116,7 +116,7 @@ export class Database {
 		const item = await this.get(id, req)
 			.then((form: any) => { form.id = id; return form; });
 
-		if (item.type !== 'form') {
+		if (item.type !== 'form' && item.documentType !== 'SDCForm') {
 			return null;
 		}
 
