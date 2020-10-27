@@ -9,6 +9,9 @@ Apache 2.0
 
 http://www.apache.org/licenses/LICENSE-2.0.html
 
+Swagger
+https://app.swaggerhub.com/apis/crunchycoders9/SDC_Form_Manager/1.0.0
+
 Methods
 -------
 
