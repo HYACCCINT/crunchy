@@ -19,7 +19,6 @@ export const schema = buildSchema(`
 		isEnabled: Boolean
 		textAfterResponse: String
 	}
-
 	type SDCMultipleChoice implements SDCQuestion {
 		id: String
 		docType: String
@@ -36,7 +35,6 @@ export const schema = buildSchema(`
 		choices: [MultipleChoice]
 		canMultiSelect: Boolean
 	}
-
 	type SDCTextQuestion implements SDCQuestion {
 		id: String
 		docType: String
@@ -52,7 +50,6 @@ export const schema = buildSchema(`
 		textAfterResponse: String
 		defaultValue: String
 	}
-
 	type SDCIntQuestion implements SDCQuestion {
 		id: String
 		docType: String
@@ -68,7 +65,6 @@ export const schema = buildSchema(`
 		textAfterResponse: String
 		defaultValue: Int
 	}
-
 	type SDCSection {
 		id: String
 		docType: String
@@ -81,7 +77,6 @@ export const schema = buildSchema(`
 		questions: [SDCQuestion]
 		subSections: [String]
 	}
-
 	type SDCForm {
 		id: String
 		docType: String
@@ -94,7 +89,6 @@ export const schema = buildSchema(`
 		footer: String
         lastModified: String
 	}
-
 	type SDCQuestionResponse {
 		id: String
 		questionID: String
@@ -109,7 +103,6 @@ export const schema = buildSchema(`
 		patientID: String
 		responses: [SDCQuestionResponse]
 	}
-
 	input SDCQuestionInput {
 		id: String
 		docType: String
@@ -124,7 +117,6 @@ export const schema = buildSchema(`
 		isEnabled: Boolean
 		textAfterResponse: String
 	}	
-
 	input SDCSectionInput {
 		id: String
 		docType: String
@@ -137,7 +129,6 @@ export const schema = buildSchema(`
 		questions: [SDCQuestionInput]
 		subSections: [String]
 	}
-
 	input FormInput {
 		id: String
 		docType: String
@@ -150,13 +141,11 @@ export const schema = buildSchema(`
 		footer: String
         lastModified: String
 	}
-
 	input SDCQuestionResponseInput {
 		id: String
 		questionID: String
 		userInput: [String]
 	}
-
 	input SDCFormResponseInput {
 		id: String
 		docType: String
@@ -165,13 +154,15 @@ export const schema = buildSchema(`
 		patientID: String
 		responses: [SDCQuestionResponseInput]
 	}
-
 	type Query {
-        form(id:String): SDCForm
+		form(id:String): SDCForm
+		question(id:String): SDCQuestion
+		section(id:String): SDCSection
 	}
-
 	type Mutation {
 		updateForm(id: String, input: FormInput): SDCForm
+		updateQuestion(id: String, input: SDCQuestionInput): SDCQuestion
+		updateSection(id: String, input: SDCSectionInput): SDCSection
 		deleteForm(id: String): SDCForm
 	}
 `);

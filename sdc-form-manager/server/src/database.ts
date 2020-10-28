@@ -123,10 +123,43 @@ export class Database {
 		return item;
 	}
 
+	async getQuestion(id: string, req: any) {
+		const item = await this.get(id, req)
+			.then((question: any) => { question.id = id; return question; });
+
+		if (item.type !== 'question') {
+			return null;
+		}
+
+		return item;
+	}
+
+	async getSection(id: string, req: any) {
+		const item = await this.get(id, req)
+			.then((section: any) => { section.id = id; return section; });
+
+		if (item.type !== 'section') {
+			return null;
+		}
+
+		return item;
+	}
+
 	async updateForm<T = object>(id: string, value: any, req: any) {
 		// value.lastModified = new Date().toISOString();
-		console.log(value); //remove later
 		value.docType = 'SDCForm';
+		return await this.upsert(id, value, req);
+	}
+
+	async updateQuestion<T = object>(id: string, value: any, req: any) {
+		// value.lastModified = new Date().toISOString();
+		value.docType = 'SDCQuestion';
+		return await this.upsert(id, value, req);
+	}
+
+	async updateSection<T = object>(id: string, value: any, req: any) {
+		// value.lastModified = new Date().toISOString();
+		value.docType = 'SDCSection';
 		return await this.upsert(id, value, req);
 	}
 
