@@ -61,3 +61,7 @@
   float:left;
   min-height: 30rem;
 }
+#FormUpdate {
+  height: 500px;
+  width: 500px;
+}

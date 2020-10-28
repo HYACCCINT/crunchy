@@ -1,6 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import logo from './logo.svg';
+
+import FormUpdate from './components/FormUpdate';
+
+const fTitle = "test";
+
 export const MainPage = () => {
 
     const hitBackend = () => {
@@ -26,6 +31,7 @@ export const MainPage = () => {
             >
               Learn React
             </a>
+            <FormUpdate />
           </header>
         </div>
       );
