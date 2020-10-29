@@ -11,46 +11,36 @@ export const FormDisplay = () => {
     variables: formVars
   })
   const { data, fetching, error } = form;
-  console.log(data);
-  const tempData = getTempData();
+  const tempDataArr = getTempData();
+  const tempData = tempDataArr[0];
+  console.log("before function", tempData.Sections);
   return (
     <div>
-      <p>{JSON.stringify(data)}</p>
+      <h3>{tempData.ProcedureId}</h3>
       <h3>{tempData.name}</h3>
-      <h5>Type: {tempData.lineage}</h5>
-      <h6>Version: {tempData.version}</h6>
-      {tempData.patientId === "template" ? <h5>Patient: {tempData.patientId}</h5> : null}
-      {tempData.metaProperties.map((item) => { return Object.entries(item).map(([key, value]) => <p>{key}: {value}</p>) })}
+      {renderProperties(tempData)}
+      {renderContacts(tempData)}
       <br></br>
-      {tempData.sections.map(item => {
-        return (
-          <div>
-            <p>id: {item.id}</p>
-            <p> OTHER PROPERTIES HERE </p>
-            {makeQuestionList(item.questionList)}
-          </div>
-        )
-      })}
+      {renderSections(tempData.Sections)}
       <br></br>
-      <p>Footer: {JSON.stringify(tempData.footer)}</p>
+      <p>Footer: {(tempData.Footer)}</p>
     </div>
   )
 };
 
-function makeQuestionList(questions: any) {
+function renderSections(sections: any) {
+  console.log("within function", sections);
+  if (sections === undefined) return null;
   return (
     <div>
-      {questions.map((question: any) => {
+      {sections.map((section: any) => {
+        if (section === null) return null;
         return (
           <div>
-            <h4 className="blue-heading">{question.name}: {question.title}</h4>
-            {question.type === "text" ? (<input type="text"></input>) : null}
-            {question.type === "single choice text" ? (
-              question.response.answerChoices.map((choice: any) => {
-                return <p className="questionp"><input type="radio" name="q1" value="1"></input>{choice.name}: {choice.title}</p>;
-              })
-            ) : null}
-            {question.questions ? makeQuestionList(question.questions) : null}
+            <p>Section {section.Name}: {section.Title}</p>
+            {section.MustImplement ? <p>* Must Complete this section</p> : null}
+            {renderQuestions(section.Questions)}
+            {renderSections(sections.Subsections)}
           </div>
         )
       })}
@@ -58,90 +48,304 @@ function makeQuestionList(questions: any) {
   )
 }
 
+function renderQuestions(questions: any) {
+  return (
+    <div>
+      {questions.map((question: any) => {
+        if (question === null || !question.IsEnabled) return null;
+        return (
+          <div>
+            <h4 className="blue-heading">{question.Name}: {question.Title} {question.MustImplement ? "*" : ""}</h4>
+            {question.Type === "text" ? (<input type="text"></input>) : null}
+            {question.type === "single choice text" ? (
+              question.response.answerChoices.map((choice: any) => {
+                return <p className="questionp"><input type="radio" name="q1" value="1"></input>{choice.name}: {choice.title}</p>;
+              })
+            ) : null}
+            <p>{question.TextAfterResponse}</p>
+            {question.questions ? renderQuestions(question.SubQuestions) : null}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function renderContacts(data: any) {
+  return (
+    <div>
+      <h5>Organization: {data.Contact.OrganizationName}</h5>
+      <span>Emails: {data.Contact.emails.map((email: any) => <a href="javascript:void(0)">{email.Name} </a>)}</span>
+    </div>
+  )
+}
+
+function renderProperties(data: any) {
+  return (
+    <div>
+      <h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>
+      <h5>Title: {data.MetaProperties.Title}</h5>
+      <h6>Version: {data.MetaProperties.Version}</h6>
+      <h6>Order Number: {data.MetaProperties.properties.Order}</h6>
+      {data.patientId !== "template" ? <h5>Patient: {data.PatientId}</h5> : null}
+    </div>
+  )
+}
+
 function getTempData() {
-  return {
-    procedureId: "CT_Stroke_CCO.358_1.0.0.DRAFT_sdcFDF",
-    patientId: "Template",
-    name: "CCO Synoptic Template for  Stroke",
-    lineage: "CT_Stroke_CCO.358",
-    version: "1.0.0.DRAFT",
-    metaProperties: [
-      {
-        "name": "Copyright",
-        "type": "CAPeCC_static_text",
-        "styleClass": "copyright",
-        "propName": "Copyright",
-        "val": "(c) 2018 College of American Pathologists.  All rights reserved.  License required for use."
-      },
-      {
-        "name": "GenericHeaderText",
-        "type": "CAPeCC_static_text",
-        "propName": "GenericHeaderText",
-        "val": "CCO Radiology Synoptic Template"
-      }
-    ],
-    sections: [
-      {
-        "id": "76221.100004300",
-        "_rev": "1-db2ccef0d88ddd64352b66d5a5424ea4",
-        "title": "Administrative &amp; Identification Data",
-        "name": "S_76221",
-        "documentType": "SDCSection",
-        "questionList": [
-          {
-            "qid": "76219.100004300",
-            "name": "Q_76219",
-            "title": "Report Date",
-            "type": "text",
-            "response": {
-              "userInput": ""
-            }
-          },
-          {
-            "qid": "76413.100004300",
-            "name": "Q_76413",
-            "title": "Report completed by ",
-            "type": "text",
-            "response": {
-              "userInput": ""
-            }
-          },
-          {
-            "qid": "76325.100004300",
-            "name": "Q_76325",
-            "title": "Procedure ",
-            "type": "single choice text",
-            "response": {
-              "answerChoices": [
-                {
-                  "name": "LI_NS_76240",
-                  "id": "76240.100004300",
-                  "title": "LDCT"
-                },
-                {
-                  "name": "LI_Oth_76239",
-                  "id": "76239.100004300",
-                  "title": "Other (specify)",
-                  "textItem": true
-                }
-              ],
-              "userInput": []
-            }
+  return [{
+    "ProcedureId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "Sections": [{
+      "MustImplement": true,
+      "Subsections": [null, null],
+      "Title": "Title",
+      "Questions": [{
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
           }
-        ]
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }, {
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }],
+      "ID": "ID",
+      "Mincard": 5,
+      "Maxcard": 5,
+      "Name": "Name"
+    }, {
+      "MustImplement": true,
+      "Subsections": [null, null],
+      "Title": "Title",
+      "Questions": [{
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }, {
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }],
+      "ID": "ID",
+      "Mincard": 5,
+      "Maxcard": 5,
+      "Name": "Name"
+    }],
+    "releaseDate": "2016-08-29T09:12:33.001Z",
+    "MetaProperties": {
+      "Version": 0.8008281904610115,
+      "Title": "Appendix form",
+      "URI": "URI",
+      "properties": {
+        "Order": 6.027456183070403,
+        "Val": "Val",
+        "Type": "Type",
+        "PropName": "PropName",
+        "Propclass": "Propclass",
+        "Name": "Name"
       }
-    ],
-    footer: {
-      "name": "footer",
-      "ID": "Footer.CT_Stroke_CCO.358_1.0.0.DRAFT_sdcFDF",
-      "properties": [
-        {
-          "type": "meta",
-          "styleClass": "copyright",
-          "propName": "CopyrightFooter",
-          "val": "(c) 2018 College of American Pathologists.  All rights reserved.  License required for use."
-        }
-      ]
+    },
+    "PatientId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "name": "Widget Adapter",
+    "Footer": "Footer",
+    "Contact": {
+      "emails": [{
+        "Name": "Name"
+      }, {
+        "Name": "Name"
+      }],
+      "OrganizationNmae": "OrganizationNmae"
+    },
+    "BodyProperties": {
+      "Title": "Title",
+      "Id": 1.4658129805029452,
+      "Properties": [null, null]
     }
-  }
+  }, {
+    "ProcedureId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "Sections": [{
+      "MustImplement": true,
+      "Subsections": [null, null],
+      "Title": "Title",
+      "Questions": [{
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }, {
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }],
+      "ID": "ID",
+      "Mincard": 5,
+      "Maxcard": 5,
+      "Name": "Name"
+    }, {
+      "MustImplement": true,
+      "Subsections": [null, null],
+      "Title": "Title",
+      "Questions": [{
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }, {
+        "TextAfterResponse": "TextAfterResponse",
+        "IsEnabled": true,
+        "Title": "Title",
+        "Properties": [null, null],
+        "Name": "Name",
+        "MustImplement": true,
+        "Type": "Type",
+        "oneof": {
+          "Attributes": {
+            "FormResponseId": 2.027123023002322,
+            "QuestionId": 4.145608029883936
+          }
+        },
+        "MaxCard": 9,
+        "Questionid": 3.616076749251911,
+        "MinCard": 7,
+        "SectionId": 2.3021358869347655,
+        "SubQuestions": [null, null]
+      }],
+      "ID": "ID",
+      "Mincard": 5,
+      "Maxcard": 5,
+      "Name": "Name"
+    }],
+    "releaseDate": "2016-08-29T09:12:33.001Z",
+    "MetaProperties": {
+      "Version": 0.8008281904610115,
+      "Title": "Appendix form",
+      "URI": "URI",
+      "properties": {
+        "Order": 6.027456183070403,
+        "Val": "Val",
+        "Type": "Type",
+        "PropName": "PropName",
+        "Propclass": "Propclass",
+        "Name": "Name"
+      }
+    },
+    "PatientId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "name": "Widget Adapter",
+    "Footer": "Footer",
+    "Contact": {
+      "emails": [{
+        "Name": "Name"
+      }, {
+        "Name": "Name"
+      }],
+      "OrganizationNmae": "OrganizationNmae"
+    },
+    "BodyProperties": {
+      "Title": "Title",
+      "Id": 1.4658129805029452,
+      "Properties": [null, null]
+    }
+  }]
 }
