@@ -13,7 +13,6 @@ export const FormDisplay = () => {
   const { data, fetching, error } = form;
   const tempDataArr = getTempData();
   const tempData = tempDataArr[0];
-  console.log("before function", tempData.Sections);
   return (
     <div>
       <h3>{tempData.ProcedureId}</h3>
@@ -29,8 +28,6 @@ export const FormDisplay = () => {
 };
 
 function renderSections(sections: any) {
-  console.log("within function", sections);
-  if (sections === undefined) return null;
   return (
     <div>
       {sections.map((section: any) => {
@@ -40,7 +37,7 @@ function renderSections(sections: any) {
             <p>Section {section.Name}: {section.Title}</p>
             {section.MustImplement ? <p>* Must Complete this section</p> : null}
             {renderQuestions(section.Questions)}
-            {renderSections(sections.Subsections)}
+            {renderSections(section.Subsections)}
           </div>
         )
       })}
@@ -57,13 +54,14 @@ function renderQuestions(questions: any) {
           <div>
             <h4 className="blue-heading">{question.Name}: {question.Title} {question.MustImplement ? "*" : ""}</h4>
             {question.Type === "text" ? (<input type="text"></input>) : null}
-            {question.type === "single choice text" ? (
-              question.response.answerChoices.map((choice: any) => {
-                return <p className="questionp"><input type="radio" name="q1" value="1"></input>{choice.name}: {choice.title}</p>;
+            {question.Type === "number" ? (<input type="number"></input>) : null}
+            {question.Type === "single choice" ? (
+              question.Answer.Choices.map((choice: any) => {
+                return <p className="questionp"><input type="radio" name="q1" value="1"></input>{choice.Name}: {choice.Title}</p>;
               })
             ) : null}
             <p>{question.TextAfterResponse}</p>
-            {question.questions ? renderQuestions(question.SubQuestions) : null}
+            {question.SubQuestions ? renderQuestions(question.SubQuestions) : null}
           </div>
         )
       })}
@@ -106,12 +104,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "text",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -125,12 +124,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "text",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -153,12 +153,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "text",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -172,12 +173,26 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "single choice",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "Choices": [
+            {
+              "Name": "LI_NS_76240",
+              "ID": "76240.100004300",
+              "Title": "LDCT"
+            },
+            {
+              "Name": "LI_Oth_76239",
+              "ID": "76239.100004300",
+              "Title": "Other (specify)",
+              "TextItem": true
+            }
+          ],
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -233,12 +248,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "text",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -252,12 +268,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "text",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -280,12 +297,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "number",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": 0
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
@@ -299,12 +317,13 @@ function getTempData() {
         "Properties": [null, null],
         "Name": "Name",
         "MustImplement": true,
-        "Type": "Type",
-        "oneof": {
+        "Type": "text",
+        "Answer": {
           "Attributes": {
             "FormResponseId": 2.027123023002322,
             "QuestionId": 4.145608029883936
-          }
+          },
+          "UserInput": ""
         },
         "MaxCard": 9,
         "Questionid": 3.616076749251911,
