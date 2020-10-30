@@ -1,13 +1,14 @@
 import React, { BaseSyntheticEvent } from 'react';
 import { useMutation, useQuery } from 'urql';
 import { updateFormQuery, formQuery } from '../query';
+// import { useForm } from 'react-hook-form';
 
 /*export type Props = {
   name: any;
 }*/
 
 let updateForm = (variables: any) : Promise<any> => new Promise(() => {});
-State = {pid: "", file: undefined};
+//State = {pid: "", file: undefined};
 
 export const FormUpdate = () =>  {
     //const [, updateForm] = useMutation(updateFormQuery)
@@ -25,7 +26,7 @@ export const FormUpdate = () =>  {
     }
 
     changeFile = (event: BaseSyntheticEvent) => {
-      this.setState({file: event.currentTarget.files[0]})
+      this.setState({file: event.currentTarget.files[0]});
       
         // If you have any question as to why a mutation works or 
         // doesn't work, please try it out with http://localhost:5000/graphql
@@ -50,7 +51,7 @@ export const FormUpdate = () =>  {
       <form id="FormUpdate" onSubmit={this.handleSubmit}>
         <label>
           Procedure ID:
-          <input type="text" value={this.state.pid} onChange={this.changePID} />
+          <input type="text" value={this.state.pid} onChange={h} />
         </label>
         <label>
           File:
@@ -66,3 +67,37 @@ export const FormUpdate = () =>  {
 // console.log("Form update rendered");
 
 export default  FormUpdate;
+
+    /*
+
+    const Example = () => {
+      const { handleSubmit, register, errors } = useForm();
+      const onSubmit = (values: any) => console.log(values);
+    
+      return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            name="email"
+            ref={register({
+              required: "Required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "invalid email address"
+              }
+            })}
+          />
+          {errors.email && errors.email.message}
+    
+          <input
+            name="username"
+            ref={register({
+              validate: value => value !== "admin" || "Nice try!"
+            })}
+          />
+          {errors.username && errors.username.message}
+    
+          <button type="submit">Submit</button>
+        </form>
+      );
+    };
+  };*/
