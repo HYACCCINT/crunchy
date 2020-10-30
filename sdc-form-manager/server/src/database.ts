@@ -33,7 +33,7 @@ export class Database {
 
 
 		// This would be http://USERNAME:PASSWORD@localhost:5984, modify as needed
-		this.cloudant = Cloudant('http://vidya__21:crunchy@localhost:5984');
+		this.cloudant = Cloudant('http://admin:crunchy@localhost:5984');
 
 		this.cloudant.db.list().then((body: any) => {
 			// create db if it doesn't exist, otherwise just use it
