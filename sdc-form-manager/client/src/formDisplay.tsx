@@ -53,7 +53,7 @@ const renderQuestions = (questions: any) => {
         return (
           <div>
             <h4 className="blue-heading">{question.Name}: {question.Title} {question.MustImplement ? "*" : ""}</h4>
-            {question.Type === "text" ? (<input type="text"></input>) : null}
+            {question.Type === "text" ? (<input type="text"/>) : null}
             {question.Type === "number" ? (<input type="number"></input>) : null}
             {question.Type === "single choice" ? (
               question.Answer.Choices.map((choice: any) => {
