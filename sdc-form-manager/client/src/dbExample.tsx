@@ -33,6 +33,10 @@ export const DBExample = () => {
     query: formQuery,
     variables: test3
   })
+
+  // fetching is async
+  // if (fetching) data isn't updated
+  /// if (!fetching) data and error are updated...
   const { data, fetching, error } = form;
   return (
     <div >
@@ -47,7 +51,7 @@ export const DBExample = () => {
           input: {
             // it is important that we include the id again
             id: 'test1',
-            procedureID: "test2"
+            procedureID: "test2",
           }
         }
       )}>Click me to send the json file in the code to server</button>
