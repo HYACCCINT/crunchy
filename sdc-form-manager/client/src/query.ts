@@ -181,7 +181,7 @@ mutation($id: String, $input: SDCSectionInput) {
 			maxSelections,
 			questionType,
 			isEnabled,
-			textAfterResponse,
+			textAfterResponse
 		},
 		subSections
 	}
