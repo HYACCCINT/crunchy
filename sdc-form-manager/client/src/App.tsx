@@ -3,7 +3,8 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider as UrqlProvider } from 'urql';
 import { urqlClient } from './query';
 import {DBExample, MainPage} from './routes';
-import { FormUpdate } from './components/FormUpdate'
+import { FormUpdate } from './components/FormUpdate';
+import {MainPage} from './routes';
 // import axios from 'axios';
 
 import './App.css';
