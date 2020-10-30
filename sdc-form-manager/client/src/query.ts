@@ -128,7 +128,7 @@ mutation($id: String, $input: FormInput) {
 				maxSelections,
 				questionType,
 				isEnabled,
-				textAfterResponse,
+				textAfterResponse
 			},
 			subSections
 		},
