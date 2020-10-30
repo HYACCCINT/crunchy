@@ -134,7 +134,7 @@ mutation($id: String, $input: FormInput) {
 		},
 		uri,
 		footer,
-        lastModified
+            lastModified
 	}
 }
 `;
