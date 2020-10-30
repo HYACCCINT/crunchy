@@ -36,7 +36,7 @@ query($id: String!) {
 		},
 		uri,
 		footer,
-        lastModified
+            lastModified
 	}
 }
 `;
