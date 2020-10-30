@@ -78,7 +78,7 @@ function renderContacts(data: any) {
   )
 }
 
-function renderProperties(data: any) {
+const renderProperties = (data: any) => {
   return (
     <div>
       <h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>
