@@ -83,7 +83,7 @@ query($id: String!) {
 			maxSelections,
 			questionType,
 			isEnabled,
-			textAfterResponse,
+			textAfterResponse
 		},
 		subSections
 	}
