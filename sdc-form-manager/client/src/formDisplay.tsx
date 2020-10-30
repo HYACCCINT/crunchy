@@ -45,7 +45,7 @@ function renderSections(sections: any) {
   )
 }
 
-function renderQuestions(questions: any) {
+const renderQuestions = (questions: any) => {
   return (
     <div>
       {questions.map((question: any) => {
