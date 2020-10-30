@@ -36,7 +36,7 @@ query($id: String!) {
 		},
 		uri,
 		footer,
-        lastModified
+            lastModified
 	}
 }
 `;
@@ -134,7 +134,7 @@ mutation($id: String, $input: FormInput) {
 		},
 		uri,
 		footer,
-        lastModified
+            lastModified
 	}
 }
 `;
