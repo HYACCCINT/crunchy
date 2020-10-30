@@ -1,103 +1,51 @@
-import React, { BaseSyntheticEvent } from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQuery } from 'urql';
 import { updateFormQuery, formQuery } from '../query';
-// import { useForm } from 'react-hook-form';
 
-/*export type Props = {
-  name: any;
-}*/
+export const FormUpdate = () => {
+  let state = {pid: "", file: undefined, fileName: "", id:0};
+  const [,updateForm] = useMutation(updateFormQuery);
+  const initialState = {
+    id: '',
+    title: '',
+    name: '',
+    procedureID: ''
+  };
+  const [formToUpdate, setFormToUpdate] = useState<any>(initialState)
 
-let updateForm = (variables: any) : Promise<any> => new Promise(() => {});
-//State = {pid: "", file: undefined};
-
-export const FormUpdate = () =>  {
-    //const [, updateForm] = useMutation(updateFormQuery)
-
-    let state = {pid: "", file: undefined};
-    //couch db
-    const handleSubmit = (event: any) => {
-      alert('A procedure ID was submitted: ' + state.pid);
-      updateForm(event);
-      event.preventDefault();
-    }
-
-    changePID = (event: React.FormEvent<HTMLInputElement>) => {
-      this.setState({name:event.currentTarget.value});
-    }
-
-    changeFile = (event: BaseSyntheticEvent) => {
-      this.setState({file: event.currentTarget.files[0]});
-      
-        // If you have any question as to why a mutation works or 
-        // doesn't work, please try it out with http://localhost:5000/graphql
-        // note: this requires a running backend (npm run server)
-        {
-          id: 'test1',
-          input: {
-            // it is important that we include the id again
-            id: 'test1',
-            procedureID: "test2",
-            file: file
-          }
-        }
-      console.log(this.state.file);
-    }
-
-    render() {
-
-    return (
-        <div>
-    <h2>Test Form</h2>
-      <form id="FormUpdate" onSubmit={this.handleSubmit}>
+  const handleSubmit = (event: any) => {
+    let clone = { ...formToUpdate };
+    clone[state.id] = {id: state.id, title: state.fileName, procedureID: state.pid};
+    setFormToUpdate(clone);
+    alert("Form was updated with title: " + state.fileName + " and procedure ID: " + state.pid);
+    state.id++;
+  }
+  const updateFile = (event: any) => {
+    state.file = event.currentTarget.files[0];
+    state.fileName = event.currentTarget.files[0].name;
+    console.log(state.fileName);
+   
+  }
+  const updatePID = (event: any) => {
+    state.pid = event.currentTarget.value;
+    console.log(state.pid);
+  }
+  return (
+    <div>
+      <h1>Update a Form</h1>
+      <form id="FormUpdate" onSubmit={handleSubmit}>
         <label>
           Procedure ID:
-          <input type="text" value={this.state.pid} onChange={h} />
+          <input type="text" onChange={updatePID}/>
         </label>
         <label>
           File:
-          <input type="file" value={this.state.file} onChange={handleSubmit} />
+          <input type="file" onChange={updateFile}/>
         </label>
         <input type="submit" value="Submit" />
       </form>
-      </div>
-    )
-    }
-  }
+    </div>
+  )
+};
 
-// console.log("Form update rendered");
-
-export default  FormUpdate;
-
-    /*
-
-    const Example = () => {
-      const { handleSubmit, register, errors } = useForm();
-      const onSubmit = (values: any) => console.log(values);
-    
-      return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            name="email"
-            ref={register({
-              required: "Required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "invalid email address"
-              }
-            })}
-          />
-          {errors.email && errors.email.message}
-    
-          <input
-            name="username"
-            ref={register({
-              validate: value => value !== "admin" || "Nice try!"
-            })}
-          />
-          {errors.username && errors.username.message}
-    
-          <button type="submit">Submit</button>
-        </form>
-      );
-    };
-  };*/
+export default FormUpdate;
