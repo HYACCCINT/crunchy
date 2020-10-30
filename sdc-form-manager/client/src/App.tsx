@@ -15,7 +15,7 @@ export const App = () => (
       <UrqlProvider value={urqlClient}>
         <Route path='/' component={MainPage} exact/>
         <Route path='/dbexample' component={DBExample} exact/>
-        <Route path='/form-update' component={FormUpdate} exact/>
+        <Route path='/update-form' component={FormUpdate} exact/>
       </UrqlProvider>
     </div>
   </Router>

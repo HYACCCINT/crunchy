@@ -23,15 +23,15 @@ export const FormUpdate = () => {
   const updateFile = (event: any) => {
     state.file = event.currentTarget.files[0];
     state.fileName = event.currentTarget.files[0].name;
-    console.log(state.fileName);
+    // console.log(state.fileName);
    
   }
   const updatePID = (event: any) => {
     state.pid = event.currentTarget.value;
-    console.log(state.pid);
+    // console.log(state.pid);
   }
   return (
-    <div>
+    <div className="update-form-container">
       <h1>Update a Form</h1>
       <form id="FormUpdate" onSubmit={handleSubmit}>
         <label>
