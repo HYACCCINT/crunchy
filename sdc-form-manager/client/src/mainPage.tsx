@@ -8,21 +8,21 @@ export const MainPage = () => {
   const [, deleteForm] = useMutation(deleteFormQuery);
 
   const handleProcedureIdClick = async (action: any, ...params: any) => {
-    const procedureId = prompt('Please enter the Procedure ID');
-    if (!validateId(procedureId)){
+    const formId = prompt('Please enter the Form ID');
+    if (!validateId(formId)){
       return;
     }
-    await action(procedureId, ...params);
+    await action(formId, ...params);
   }
 
-  const displayFormAction = async (procedureId: string) => {
-    history.push('/formdisplay/' + procedureId);
+  const displayFormAction = async (formId: string) => {
+    history.push('/formdisplay/' + formId);
   }
 
-  const deleteFormAction = async (procedureId: string) => {
-    const result = await deleteForm({ id: procedureId });
-    if (!result.error) alert(`Form ${procedureId} deleted!`);
-    else alert(`Form deletion failed. There is no form for ID ${procedureId}`);
+  const deleteFormAction = async (formId: string) => {
+    const result = await deleteForm({ id: formId });
+    if (!result.error) alert(`Form ${formId} deleted!`);
+    else alert(`Form deletion failed. There is no form for ID ${formId}`);
   }
 
   return (
