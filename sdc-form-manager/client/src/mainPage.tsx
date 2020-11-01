@@ -17,14 +17,17 @@ export const MainPage = () => {
 
   const displayFormAction = async (formId: string) => {
     history.push('/formdisplay/' + formId);
-  }
-
+  } 
+  
   const deleteFormAction = async (formId: string) => {
     const result = await deleteForm({ id: formId });
     if (!result.error) alert(`Form ${formId} deleted!`);
     else alert(`Form deletion failed. There is no form for ID ${formId}`);
   }
 
+  const updateFormAction = async () => {
+    history.push('/update-form/');
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -32,6 +35,7 @@ export const MainPage = () => {
         <button className="menu-button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</button>
         <button className="menu-button">Replace Form</button>
         <button className="menu-button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</button>
+        <button className="menu-button" onClick={() => updateFormAction()}>Update Form</button>
       </header>
     </div>
   );

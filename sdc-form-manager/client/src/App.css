@@ -23,7 +23,7 @@
   }
 }
 
-.App-header {
+.App-header, .update-form-container {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -70,6 +70,26 @@
   max-width:20rem;
   float:left;
   min-height: 30rem;
+}
+#FormUpdate {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+#FormUpdate label {
+  margin: 5px 10px 5px;
+  padding-left: 25%;
+  padding-right: 25%;
+  width:100%;
+}
+
+#FormUpdate input[type="file"], #FormUpdate input[type="text"] {
+  margin-left: 5px;
+}
+
+#FormUpdate input[type=submit] {
+  margin: 5px auto 5px auto;
+  width: 30%;
 }
 
 .blue-heading {color: DarkBlue;}
