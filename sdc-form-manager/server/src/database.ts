@@ -116,7 +116,7 @@ export class Database {
 		const item = await this.get(id, req)
 			.then((form: any) => { form.id = id; return form; });
 
-		if (item.docType!== 'SDCForm') {
+		if (item.type !== 'form' && item.docType !== 'SDCForm') {
 			return null;
 		}
 
@@ -127,7 +127,7 @@ export class Database {
 		const item = await this.get(id, req)
 			.then((question: any) => { question.id = id; return question; });
 
-		if (item.docType!== 'SDCQuestion') {
+		if (item.docType !== 'SDCQuestion') {
 			return null;
 		}
 
@@ -138,7 +138,7 @@ export class Database {
 		const item = await this.get(id, req)
 			.then((section: any) => { section.id = id; return section; });
 
-		if (item.docType!== 'SDCSection') {
+		if (item.docType !== 'SDCSection') {
 			return null;
 		}
 
