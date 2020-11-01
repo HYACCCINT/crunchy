@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.menu-button {
+  height: 20vh;
+  width: 85%;
+  border: 5px solid #25c9c9;
+  margin: 5px;
+  border-radius: 12px;
+  background-color: #008CBA;
+  font-size: 30px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -60,4 +70,27 @@
   max-width:20rem;
   float:left;
   min-height: 30rem;
+}
+
+.blue-heading {color: DarkBlue;}
+.questionp {color: DarkSlateGrey;}
+.questionp:hover {background-color: GhostWhite;}
+
+input[type=button] { 
+  background-color: DodgerBlue;
+  text-decoration: none;
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: 16px;
+  padding: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  color: MidnightBlue;
+}
+
+input[type=button]:active { 
+  background-color: DeepSkyBlue;
+}
+input[type=button]:hover { 
+  background-color: RoyalBlue;
 }
