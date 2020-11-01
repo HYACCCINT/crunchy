@@ -113,17 +113,17 @@ Content-Type: application/json
       "ProcedureId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
       "Sections" : [ {
         "MustImplement" : true,
-        "Subsections" : [ null, null ],
+        "Subsections" : [ '', '' ],
         "Title" : "Title",
         "Questions" : [ {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -133,16 +133,16 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         }, {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -152,7 +152,7 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         } ],
         "ID" : "ID",
         "Mincard" : 5,
@@ -160,17 +160,17 @@ Content-Type: application/json
         "Name" : "Name"
       }, {
         "MustImplement" : true,
-        "Subsections" : [ null, null ],
+        "Subsections" : [ '', '' ],
         "Title" : "Title",
         "Questions" : [ {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -180,16 +180,16 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         }, {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [  ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -199,7 +199,7 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         } ],
         "ID" : "ID",
         "Mincard" : 5,
@@ -234,23 +234,23 @@ Content-Type: application/json
       "BodyProperties" : {
         "Title" : "Title",
         "Id" : 1.4658129805029452,
-        "Properties" : [ null, null ]
+        "Properties" : [ '', '' ]
       }
     }, {
       "ProcedureId" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
       "Sections" : [ {
         "MustImplement" : true,
-        "Subsections" : [ null, null ],
+        "Subsections" : [ '', '' ],
         "Title" : "Title",
         "Questions" : [ {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -260,16 +260,16 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         }, {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -279,7 +279,7 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         } ],
         "ID" : "ID",
         "Mincard" : 5,
@@ -287,17 +287,17 @@ Content-Type: application/json
         "Name" : "Name"
       }, {
         "MustImplement" : true,
-        "Subsections" : [ null, null ],
+        "Subsections" : [ '', '' ],
         "Title" : "Title",
         "Questions" : [ {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -307,16 +307,16 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         }, {
           "TextAfterResponse" : "TextAfterResponse",
           "IsEnabled" : true,
           "Title" : "Title",
-          "Properties" : [ null, null ],
+          "Properties" : [ '', '' ],
           "Name" : "Name",
           "MustImplement" : true,
           "Type" : "Type",
-          "oneof" : {
+          "Answer" : {
             "Attributes" : {
               "FormResponseId" : 2.027123023002322,
               "QuestionId" : 4.145608029883936
@@ -326,7 +326,7 @@ Content-Type: application/json
           "Questionid" : 3.616076749251911,
           "MinCard" : 7,
           "SectionId" : 2.3021358869347655,
-          "SubQuestions" : [ null, null ]
+          "SubQuestions" : [ '', '' ]
         } ],
         "ID" : "ID",
         "Mincard" : 5,
@@ -361,7 +361,7 @@ Content-Type: application/json
       "BodyProperties" : {
         "Title" : "Title",
         "Id" : 1.4658129805029452,
-        "Properties" : [ null, null ]
+        "Properties" : [ '', '' ]
       }
     } ]
 
@@ -460,6 +460,16 @@ Content-Type: application/json
 
 * `Boolean`
 * example: True
+
+##### superQuestionID
+
+* `String`
+* example: "832749.0000"
+
+##### superQuestionAnswer
+
+* `String`
+* example: "true"
 
 ##### textAfterResponse
 
@@ -579,7 +589,7 @@ Content-Type: application/json
 * example: "2020.10.29.09:44:23:23"
 
 ## `SDCQuestionResponse` 
-
+###### corresponds to SDCFormResponse in domain model
 ##### id
 
 * `String`
@@ -619,5 +629,504 @@ Content-Type: application/json
 
 ##### responses
 
+* `Object[]`
+* example: [{id:....}, {id:.....}]
+
+## `SDCFormResponse` 
+
+##### id
+
+* `String`
+* example: "732432.000001"
+
+##### formID
+
+* `String`
+* example: "732432.00000"
+
+##### formfillerID
+
+* `String`
+* example: "randomDoc738"
+
+##### patientID
+
+* `String`
+* example: "myPatient738"
+
+##### responses
+
 * `SDCQuestionResponse[]`
 * example: [{id:....}, {id:.....}]
+
+
+
+
+
+### JSON of swagger API
+``` 
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Simple Api for SDC_Form_Manager",
+    "description": "This is a simple API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/crunchycoders9/SDC_Form_Manager/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "paths": {
+    "/graphQL": {
+      "get": {
+        "summary": "queries for the SDC document based on ID",
+        "description": "By passing in the appropriate options, you can search for\navailable documents in the database\n",
+        "operationId": "queryDoc",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "description": "use the unique ID to query a document",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SDCForm"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "summary": "adds an SDC Form to the database based on the xml provided",
+        "description": "Adds an SDC Form to the system",
+        "operationId": "addInventory",
+        "requestBody": {
+          "description": "Inventory item to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDCForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "SDC Form created"
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "409": {
+            "description": "an SDC Form already exists"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete form based on ID",
+        "description": "Deletes documents with sepcified ID from database",
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the form that needs to be deleted",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "document not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SDCForm": {
+        "required": [
+          "BodyProperties",
+          "Contact",
+          "Footer",
+          "FormFillerID",
+          "MetaProperties",
+          "PatientID",
+          "Sections",
+          "procedureID"
+        ],
+        "type": "object",
+        "properties": {
+          "ProcedureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "PatientId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name": {
+            "type": "string",
+            "example": "Widget Adapter"
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "MetaProperties": {
+            "$ref": "#/components/schemas/SDCFormMeta"
+          },
+          "Contact": {
+            "$ref": "#/components/schemas/Contact"
+          },
+          "BodyProperties": {
+            "$ref": "#/components/schemas/SDCFormBody"
+          },
+          "Footer": {
+            "type": "string"
+          },
+          "Sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCSection"
+            }
+          }
+        }
+      },
+      "SDCFormMeta": {
+        "required": [
+          "Properties",
+          "Title",
+          "URI",
+          "Version"
+        ],
+        "type": "object",
+        "properties": {
+          "Title": {
+            "type": "string",
+            "example": "Appendix form"
+          },
+          "URI": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "number"
+          },
+          "properties": {
+            "$ref": "#/components/schemas/SDCProperty"
+          }
+        }
+      },
+      "Contact": {
+        "required": [
+          "OrganizationName",
+          "emails"
+        ],
+        "type": "object",
+        "properties": {
+          "OrganizationNmae": {
+            "type": "string"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/email"
+            }
+          }
+        }
+      },
+      "email": {
+        "required": [
+          "Name"
+        ],
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "SDCProperty": {
+        "required": [
+          "Name",
+          "Order",
+          "PropClass",
+          "PropName",
+          "Type",
+          "Val"
+        ],
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Order": {
+            "type": "number"
+          },
+          "PropName": {
+            "type": "string"
+          },
+          "Val": {
+            "type": "string"
+          },
+          "Propclass": {
+            "type": "string"
+          },
+          "Type": {
+            "type": "string"
+          }
+        }
+      },
+      "SDCFormBody": {
+        "required": [
+          "ID",
+          "Properties",
+          "Title"
+        ],
+        "type": "object",
+        "properties": {
+          "Title": {
+            "type": "string"
+          },
+          "Id": {
+            "type": "number"
+          },
+          "Properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCProperty"
+            }
+          }
+        }
+      },
+      "SDCSection": {
+        "required": [
+          "ID",
+          "MaxCard",
+          "MinCard",
+          "MustImplement",
+          "Name",
+          "Properties",
+          "Questions",
+          "SubSections",
+          "Title",
+          "Type"
+        ],
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "ID": {
+            "type": "string"
+          },
+          "Properties": {
+            "$ref": "#/components/schemas/SDCProperty"
+          },
+          "MustImplement": {
+            "type": "boolean"
+          },
+          "Mincard": {
+            "type": "integer"
+          },
+          "Maxcard": {
+            "type": "integer"
+          },
+          "Questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCQuestion"
+            }
+          },
+          "Subsections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCSection"
+            }
+          }
+        }
+      },
+      "SDCQuestion": {
+        "required": [
+          "Answer",
+          "MaxCard",
+          "MinCard",
+          "MustImplement",
+          "Name",
+          "Properties",
+          "QuestionID",
+          "SubQuestions",
+          "SuperAnswerID",
+          "SuperQuestionID",
+          "TextAfterResponse",
+          "Title",
+          "Type",
+          "sectionID"
+        ],
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "SectionId": {
+            "type": "number"
+          },
+          "Properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCProperty"
+            }
+          },
+          "MustImplement": {
+            "type": "boolean"
+          },
+          "MinCard": {
+            "type": "integer"
+          },
+          "MaxCard": {
+            "type": "integer"
+          },
+          "Questionid": {
+            "type": "number"
+          },
+          "Type": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "IsEnabled": {
+            "type": "boolean"
+          },
+          "TextAfterResponse": {
+            "type": "string"
+          },
+          "Answer": {
+            "$ref": "#/components/schemas/SDCFormResponse"
+          },
+          "SubQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCQuestion"
+            }
+          }
+        }
+      },
+      "SDCFormTextResponse": {
+        "required": [
+          "Attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "Attributes": {
+            "$ref": "#/components/schemas/SDCFormResponseAttributes"
+          },
+          "UserInput": {
+            "type": "string"
+          }
+        }
+      },
+      "SDCFormNumResponse": {
+        "required": [
+          "Attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "Attributes": {
+            "$ref": "#/components/schemas/SDCFormResponseAttributes"
+          },
+          "UserInput": {
+            "type": "number"
+          }
+        }
+      },
+      "SDCFormSingleChoiceResponse": {
+        "required": [
+          "Attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "Attributes": {
+            "$ref": "#/components/schemas/SDCFormResponseAttributes"
+          },
+          "Choices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "UserInput": {
+            "type": "string"
+          }
+        }
+      },
+      "SDCFormResponse": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SDCFormSingleChoiceResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SDCFormNumResponse"
+          },
+          {
+            "$ref": "#/components/schemas/SDCFormTextResponse"
+          }
+        ]
+      },
+      "SDCFormResponseAttributes": {
+        "required": [
+          "FormResponseID",
+          "QuestionID"
+        ],
+        "type": "object",
+        "properties": {
+          "FormResponseId": {
+            "type": "number"
+          },
+          "QuestionId": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
+```
