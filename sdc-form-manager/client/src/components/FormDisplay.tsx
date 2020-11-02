@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'urql'
-import { formQuery } from './query'
+import { formQuery, sectionQuery, questionQuery } from '../query'
 
 export const FormDisplay = () => {
   const { procedureId } = useParams<{ procedureId: string }>();
@@ -11,6 +11,9 @@ export const FormDisplay = () => {
     variables: formVars
   })
   const { data, fetching, error } = form;
+  console.log(fetching)
+  console.log(data);
+  if (fetching) return (<p>Loading...</p>);
   const tempDataArr = getTempData();
   const tempData = tempDataArr[0];
   return (
