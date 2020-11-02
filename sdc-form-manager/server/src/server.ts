@@ -48,40 +48,6 @@ app.post('/api/form', async(req: any, res: any) => {
 	}
 });
 
-app.get('/SDC_Form', async (req, res, next) => {
-  const procedureID = req.query.procedureID;
-  if(!procedureID){
-    next(new Error("procedureID did not show in parameters"));
-  }
-  const form = { formID: procedureID, attributes: "Blahblah" }; //do call for database function here
-  res.send(form);
-});
-
-app.post('/SDC_Form', async (req, res, next) => {
-  console.log(req.body);
-  const procedureID = req.query.procedureID;
-  if(!req.body){
-    next(new Error("No XML Form in body"));
-  }
-  if(procedureID /* is in database */){
-    //set the form version on the database and change the id possibly?
-  }
-  //const formJSON = parseXMLSomehow(req.body);
-  //put formJSON into database;
-  res.send({
-    status: "blah blah",
-    somethingsomething: "Blah",
-  });
-})
-
-app.delete('/SDC_Form', async (req, res, next) => {
-  const procedureID = req.query.procedureID;
-  if(!procedureID){
-    next(new Error("procedureID did not show in parameters"));
-  }
-  //find form with procedureID in database and delete it
-  res.send("DELETED");
-})
 
 
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
