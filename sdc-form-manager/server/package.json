@@ -17,9 +17,9 @@
     "express-session": "^1.17.1",
     "graphql": "15.3.0",
     "jasmine-node": "^3.0.0",
-    "jasmine-ts": "^0.3.0",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
+    "request": "^2.88.2",
     "ts-node": "^9.0.0",
     "typescript": "^3.7.5"
   },
@@ -27,7 +27,7 @@
     "start": "nodemon ./src/server.ts",
     "build": "tsc",
     "ts-node": "ts-node",
-    "test": "jasmine-ts --config=jasmine.json"
+    "test": "ts-node node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,7 +46,11 @@
   },
   "devDependencies": {
     "@types/node": "^12.19.1",
+    "@types/supertest": "^2.0.10",
     "@types/webpack-env": "^1.15.3",
-    "nodemon": "^2.0.6"
+    "jasmine": "^2.99.0",
+    "jasmine-ts": "^0.3.0",
+    "nodemon": "^2.0.6",
+    "supertest": "^3.4.2"
   }
 }

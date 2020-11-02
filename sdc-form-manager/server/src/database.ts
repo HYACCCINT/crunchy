@@ -7,7 +7,7 @@ const usage = () => {
 	process.exit(1);
 };
 
-export class Database {
+class Database {
 	name: string;
 
 	cloudant: Cloudant.ServerScope;
@@ -83,6 +83,7 @@ export class Database {
 	 */
 	// eslint-disable-next-line
 	async upsert<T = object>(id: string, value: any, req?: any) {
+		console.log("dsfsdhugfbsiudhfsaaaaa", id)
 		let v = {};
 		try {
 			v = await this.get(id);

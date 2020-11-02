@@ -8,11 +8,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 // cors temp
 app.use(cors())
-// app.use(cors({
-//   credentials: true,
-//   //to be changed in production
-// 	origin: [ 'http://localhost:5000']
-// }))
+app.use(cors({
+  credentials: true,
+  //to be changed in production
+	origin: [ 'http://localhost:5000']
+}))
 
 //db api
 app.use('/graphql',cors(), graphqlHTTP({
@@ -30,9 +30,18 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/form', async(req: any, res: any) => {
+app.get('/apitest/form', async(req: any, res: any) => {
 	try {
-		const form = await root.form({ id: req.params.id }, req);
+    // const form = await root.form({ id: req.params.id }, req);
+    res.status(200).json([{id:"test1", procedureID:"777.000", docType:"SDCForm"}]);
+	} catch (error) {
+		res.status('404').json({ error: 'form not found' });
+	}
+});
+
+app.post('/api/form', async(req: any, res: any) => {
+	try {
+		const form = await root.updateForm({ id: req.body.id, input:req.body.input }, req);
 		res.json(form);
 	} catch (error) {
 		res.status('404').json({ error: 'form not found' });
@@ -74,15 +83,6 @@ app.delete('/SDC_Form', async (req, res, next) => {
   res.send("DELETED");
 })
 
-//default routes to test functionality. delete when done with
-app.get('/test', (req, res) => {
-    res.send('Welcome to the backend!');
-});
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
-});
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const server = app.listen(port, () => console.log(`Listening on port ${port}`));
+export default server;

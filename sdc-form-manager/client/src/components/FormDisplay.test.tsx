@@ -25,9 +25,13 @@ it('shows notification on updated data', () => {
     pushResponse({
       data: {
         procedureID: "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        releaseDate: "2016-08-29T09:12:33.001Z",
+        name: "Widget Adapter"
       },
     });
   });
   expect(wrapper.text().includes('d290f1ee-6c54-4b01-90e6-d701748f0851'))
+  expect(wrapper.text().includes('2016-08-29T09:12:33.001Z'))
+  expect(wrapper.text().includes('Widget Adapter'))
 
 });
