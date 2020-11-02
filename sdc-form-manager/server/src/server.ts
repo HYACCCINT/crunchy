@@ -32,8 +32,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/apitest/form', async(req: any, res: any) => {
 	try {
-    // const form = await root.form({ id: req.params.id }, req);
-    res.status(200).json([{id:"test1", procedureID:"777.000", docType:"SDCForm"}]);
+    const form = await root.form({ id: req.body.id }, req);
+    res.json(form)
 	} catch (error) {
 		res.status('404').json({ error: 'form not found' });
 	}
@@ -42,7 +42,7 @@ app.get('/apitest/form', async(req: any, res: any) => {
 app.post('/api/form', async(req: any, res: any) => {
 	try {
 		const form = await root.updateForm({ id: req.body.id, input:req.body.input }, req);
-		res.json(form);
+    res.json(form);
 	} catch (error) {
 		res.status('404').json({ error: 'form not found' });
 	}

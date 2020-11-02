@@ -83,7 +83,6 @@ class Database {
 	 */
 	// eslint-disable-next-line
 	async upsert<T = object>(id: string, value: any, req?: any) {
-		console.log("dsfsdhugfbsiudhfsaaaaa", id)
 		let v = {};
 		try {
 			v = await this.get(id);
