@@ -32,10 +32,10 @@ export const MainPage = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <button className="menu-button" onClick={() => uploadFormAction('new')}>Upload Form</button>
-        <button className="menu-button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</button>
-        <button className="menu-button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</button>
-        <button className="menu-button" onClick={() => uploadFormAction('update')}>Update Form</button>
+        <button id="uploadButton" className="menu-button" onClick={() => uploadFormAction('new')}>Upload Form</button>
+        <button id="displayButton"  className="menu-button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</button>
+        <button id="deleteButton" className="menu-button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</button>
+        <button id="updateButton" className="menu-button" onClick={() => uploadFormAction('update')}>Update Form</button>
       </header>
     </div>
   );
