@@ -25,9 +25,10 @@ describe('form', async function() {
         const form = await request(server).post('/api/form').send({id:"post-form-test", input:{id:"post-form-test",procedureID:"777.000", docType:"SDCForm"}})
         expect(form.status).toEqual(200);
         expect(form.ok).toBeTruthy();
-        expect(form.text).toContain(`"_id":"post-form-test"`)
-        expect(form.text).toContain(`"procedureID":"777.000"`)
-        expect(form.text).toContain(`"docType":"SDCForm"`)
+        expect(form.body.id).toContain("post-form-test")
+        expect(form.body.procedureID).toContain("777.000")
+        expect(form.body.docType).toContain("SDCForm")
+        expect(form.text).toContain(`"_rev"`)
         done();
     });
 
