@@ -93,7 +93,7 @@ export const schema = buildSchema(`
 		lineage: String
 		title:String
 		uri: String
-		sections: [SDCSection]
+		sections: [String]
 		footer: String
         lastModified: String
 	}
@@ -147,7 +147,7 @@ export const schema = buildSchema(`
 		lineage: String
 		title: String
 		uri: String
-		sections: [SDCSectionInput]
+		sections: [String]
 		footer: String
         lastModified: String
 	}
