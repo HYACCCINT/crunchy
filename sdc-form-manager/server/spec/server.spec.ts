@@ -2,6 +2,7 @@ import server from '../src/server'
 import {} from 'jasmine'
 import request from 'supertest'
 import {database} from '../src/database'
+import { endianness } from 'os';
 
 
 
@@ -13,18 +14,21 @@ describe('form', async function() {
     beforeEach(function (done) {
         database.use();
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000000000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 500000;
+        done();
     });
     afterEach(function() {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
       });
 
     it('posting', async function(done) {
-        const form = await request(server).post('/api/form').send({id:"test1", input:{id:"test1",procedureID:"777.000", docType:"SDCForm"}})
-        expect(form.status).toEqual(200)
-        console.log(form.status,"???")
+        const form = await request(server).post('/api/form').send({id:"post-form-test", input:{id:"post-form-test",procedureID:"777.000", docType:"SDCForm"}})
+        expect(form.status).toEqual(200);
+        expect(form.ok).toBeTruthy();
+        expect(form.text).toContain(`"_id":"post-form-test"`)
+        expect(form.text).toContain(`"procedureID":"777.000"`)
+        expect(form.text).toContain(`"docType":"SDCForm"`)
         done();
-
     });
 
 });
