@@ -7,7 +7,7 @@ const usage = () => {
 	process.exit(1);
 };
 
-export class Database {
+class Database {
 	name: string;
 
 	cloudant: Cloudant.ServerScope;
