@@ -18,6 +18,8 @@ export const schema = buildSchema(`
 		questionType: String
 		isEnabled: Boolean
 		textAfterResponse: String
+		superQuestionID: String
+		subQuestions: [String]
 	}
 	type SDCMultipleChoice implements SDCQuestion {
 		id: String
@@ -32,6 +34,8 @@ export const schema = buildSchema(`
 		questionType: String
 		isEnabled: Boolean
 		textAfterResponse: String
+		superQuestionID: String
+		subQuestions: [String]
 		choices: [MultipleChoice]
 		canMultiSelect: Boolean
 	}
@@ -48,6 +52,8 @@ export const schema = buildSchema(`
 		questionType: String
 		isEnabled: Boolean
 		textAfterResponse: String
+		superQuestionID: String
+		subQuestions: [String]
 		defaultValue: String
 	}
 	type SDCIntQuestion implements SDCQuestion {
@@ -63,6 +69,8 @@ export const schema = buildSchema(`
 		questionType: String
 		isEnabled: Boolean
 		textAfterResponse: String
+		superQuestionID: String
+		subQuestions: [String]
 		defaultValue: Int
 	}
 	type SDCSection {
@@ -116,6 +124,8 @@ export const schema = buildSchema(`
 		questionType: String
 		isEnabled: Boolean
 		textAfterResponse: String
+		superQuestionID: String
+		subQuestions: [String]
 	}	
 	input SDCSectionInput {
 		id: String

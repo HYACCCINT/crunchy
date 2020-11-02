@@ -30,7 +30,9 @@ query($id: String!) {
 				maxSelections,
 				questionType,
 				isEnabled,
-				textAfterResponse
+				textAfterResponse,
+				superQuestionID,
+				subQuestions
 			},
 			subSections
 		},
@@ -55,7 +57,9 @@ query($id: String!) {
 		maxSelections,
 		questionType,
 		isEnabled,
-		textAfterResponse
+		textAfterResponse,
+		superQuestionID,
+		subQuestions
 	}
 }
 `;
@@ -83,7 +87,9 @@ query($id: String!) {
 			maxSelections,
 			questionType,
 			isEnabled,
-			textAfterResponse
+			textAfterResponse,
+			superQuestionID,
+			subQuestions
 		},
 		subSections
 	}
@@ -128,7 +134,9 @@ mutation($id: String, $input: FormInput) {
 				maxSelections,
 				questionType,
 				isEnabled,
-				textAfterResponse
+				textAfterResponse,
+				superQuestionID,
+				subQuestions
 			},
 			subSections
 		},
@@ -153,7 +161,9 @@ mutation($id: String, $input: SDCQuestionInput) {
 		maxSelections,
 		questionType,
 		isEnabled,
-		textAfterResponse
+		textAfterResponse,
+		superQuestionID,
+		subQuestions
 	}
 }
 `;
@@ -181,7 +191,9 @@ mutation($id: String, $input: SDCSectionInput) {
 			maxSelections,
 			questionType,
 			isEnabled,
-			textAfterResponse
+			textAfterResponse,
+			superQuestionID,
+			subQuestions
 		},
 		subSections
 	}
