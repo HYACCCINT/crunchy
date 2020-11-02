@@ -25,17 +25,17 @@ export const MainPage = () => {
     else alert(`Form deletion failed. There is no form for ID ${formId}`);
   }
 
-  const updateFormAction = async () => {
-    history.push('/update-form/');
+  const uploadFormAction = async (action: string) => {
+    history.push('/upload-form/' + action);
   }
+
   return (
     <div className="App">
       <header className="App-header">
-        <button className="menu-button">Upload Form</button>
+        <button className="menu-button" onClick={() => uploadFormAction('new')}>Upload Form</button>
         <button className="menu-button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</button>
-        <button className="menu-button">Replace Form</button>
         <button className="menu-button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</button>
-        <button className="menu-button" onClick={() => updateFormAction()}>Update Form</button>
+        <button className="menu-button" onClick={() => uploadFormAction('update')}>Update Form</button>
       </header>
     </div>
   );

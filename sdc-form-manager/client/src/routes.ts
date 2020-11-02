@@ -1,3 +1,3 @@
 export * from './mainPage'
-export * from './formDisplay'
-export * from './formUpdate'
+export * from './components/FormDisplay'
+export * from './components/FormUpload'
