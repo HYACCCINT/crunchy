@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cd sdc-form-manager && npm run iall && npm test"
+    "test": "bash ./test.sh"
   },
   "repository": {
     "type": "git",
