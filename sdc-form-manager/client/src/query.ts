@@ -9,31 +9,7 @@ query($id: String!) {
 		patientID,
 		lineage,
 		title,
-		sections {
-			id,
-			docType,
-			name,
-			title,
-			type,
-			mustImplement,
-			minCard,
-			maxCard,
-			questions {
-				id,
-				docType,
-				name,
-				title,
-				mustImplement,
-				readOnly,
-				minCard,
-				maxCard,
-				maxSelections,
-				questionType,
-				isEnabled,
-				textAfterResponse
-			},
-			subSections
-		},
+		sections,
 		uri,
 		footer,
             	lastModified
@@ -55,7 +31,9 @@ query($id: String!) {
 		maxSelections,
 		questionType,
 		isEnabled,
-		textAfterResponse
+		textAfterResponse,
+		superQuestionID,
+		subQuestions
 	}
 }
 `;
@@ -83,7 +61,9 @@ query($id: String!) {
 			maxSelections,
 			questionType,
 			isEnabled,
-			textAfterResponse
+			textAfterResponse,
+			superQuestionID,
+			subQuestions
 		},
 		subSections
 	}
@@ -107,31 +87,7 @@ mutation($id: String, $input: FormInput) {
 		patientID,
 		lineage,
 		title,
-		sections {
-			id,
-			docType,
-			name,
-			title,
-			type,
-			mustImplement,
-			minCard,
-			maxCard,
-			questions {
-				id,
-				docType,
-				name,
-				title,
-				mustImplement,
-				readOnly,
-				minCard,
-				maxCard,
-				maxSelections,
-				questionType,
-				isEnabled,
-				textAfterResponse
-			},
-			subSections
-		},
+		sections,
 		uri,
 		footer,
             	lastModified
@@ -153,7 +109,9 @@ mutation($id: String, $input: SDCQuestionInput) {
 		maxSelections,
 		questionType,
 		isEnabled,
-		textAfterResponse
+		textAfterResponse,
+		superQuestionID,
+		subQuestions
 	}
 }
 `;
@@ -181,7 +139,9 @@ mutation($id: String, $input: SDCSectionInput) {
 			maxSelections,
 			questionType,
 			isEnabled,
-			textAfterResponse
+			textAfterResponse,
+			superQuestionID,
+			subQuestions
 		},
 		subSections
 	}
