@@ -3,16 +3,65 @@ import { createClient, CombinedError } from 'urql';
 export const formQuery = `
 query($id: String!) {
 	form(id: $id) {
-		id,
-		docType,
-		procedureID,
-		patientID,
-		lineage,
-		title,
-		sections,
-		uri,
-		footer,
-            	lastModified
+		... on SDCForm {
+			id,
+			docType,
+			procedureID,
+			patientID,
+			lineage,
+			title,
+			sectionIDs,
+			uri,
+			footer,
+			lastModified
+		}
+		... on SDCSection {
+			id,
+			docType,
+			name,
+			title,
+			type,
+			mustImplement,
+			minCard,
+			maxCard,
+			subSectionIDs,
+			superSectionID,
+		}
+		... on SDCQuestion {
+			id,
+			docType,
+			name,
+			title,
+			mustImplement,
+			readOnly,
+			minCard,
+			maxCard,
+			maxSelections,
+			questionType,
+			isEnabled,
+			response {
+				id,
+				questionID,
+				responseType,
+				... on SDCMultipleChoiceResponse {
+					inputChoiceId: userInput,
+					choices,
+					canMultiSelect,
+				}
+				... on SDCIntResponse {
+					inputNum: userInput,
+					defaultNum: defaultValue,
+				}
+				... on SDCTextResponse {
+					inputText: userInput,
+					defaultText: defaultValue,
+				}
+			},
+			textAfterResponse,
+			superSectionID,
+			superQuestionID,
+			superAnswerID,
+		}
 	}
 }
 `;
