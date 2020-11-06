@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'urql'
-import { formQuery, sectionQuery, questionQuery } from '../query'
+import { formQuery } from '../query'
 
 export const FormDisplay = () => {
   const { procedureId } = useParams<{ procedureId: string }>();
@@ -14,18 +14,18 @@ export const FormDisplay = () => {
   console.log(fetching)
   console.log(data);
   if (fetching) return (<p>Loading...</p>);
-  const tempDataArr = getTempData();
-  const tempData = tempDataArr[0];
+  const assembledData = assemble(data.form);
+  console.log(assembledData);
   return (
     <div>
-      <h3>{tempData.ProcedureId}</h3>
-      <h3>{tempData.name}</h3>
-      {renderProperties(tempData)}
-      {renderContacts(tempData)}
+      <h3>{assembledData.procedureId}</h3>
+      <h3>{assembledData.name}</h3>
+      {renderProperties(assembledData)}
+      {/*renderContacts(assembledData)*/}
       <br></br>
-      {renderSections(tempData.Sections)}
+      {renderSections(assembledData.sections)}
       <br></br>
-      <p>Footer: {(tempData.Footer)}</p>
+      <p>Footer: {(assembledData.footer)}</p>
     </div>
   )
 };
@@ -37,10 +37,10 @@ const renderSections = (sections: any) => {
         if (section === null) return null;
         return (
           <div>
-            <p>Section {section.Name}: {section.Title}</p>
-            {section.MustImplement ? <p>* Must Complete this section</p> : null}
-            {renderQuestions(section.Questions)}
-            {renderSections(section.Subsections)}
+            <p>Section {section.name}: {section.title}</p>
+            {section.mustImplement ? <p>* Must Complete this section</p> : null}
+            {renderQuestions(section.questions)}
+            {renderSections(section.subSections)}
           </div>
         )
       })}
@@ -52,19 +52,19 @@ const renderQuestions = (questions: any) => {
   return (
     <div>
       {questions.map((question: any) => {
-        if (question === null || !question.IsEnabled) return null;
+        if (question === null || !question.isEnabled) return null;
         return (
           <div>
-            <h4 className="blue-heading">{question.Name}: {question.Title} {question.MustImplement ? "*" : ""}</h4>
-            {question.Type === "text" ? (<input type="text"/>) : null}
-            {question.Type === "number" ? (<input type="number"></input>) : null}
-            {question.Type === "single choice" ? (
-              question.Answer.Choices.map((choice: any) => {
-                return <p className="questionp"><input type="radio" name="q1" value="1"></input>{choice.Name}: {choice.Title}</p>;
+            <h4 className="blue-heading">{question.name}: {question.title} {question.mustImplement ? "*" : ""}</h4>
+            {question.questionType === "text" ? (<input type="text"/>) : null}
+            {question.questionType === "number" ? (<input type="number"></input>) : null}
+            {question.questionType === "single choice" ? (
+              question.response.choices.map((choice: any) => {
+                return <p className="questionp"><input type="radio" name="q1" value="1"></input>{choice.name}: {choice.title}</p>;
               })
             ) : null}
-            <p>{question.TextAfterResponse}</p>
-            {question.SubQuestions ? renderQuestions(question.SubQuestions) : null}
+            <p>{question.textAfterResponse}</p>
+            {question.subQuestions ? renderQuestions(question.subQuestions) : null}
           </div>
         )
       })}
@@ -84,13 +84,30 @@ function renderContacts(data: any) {
 const renderProperties = (data: any) => {
   return (
     <div>
-      <h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>
-      <h5>Title: {data.MetaProperties.Title}</h5>
-      <h6>Version: {data.MetaProperties.Version}</h6>
-      <h6>Order Number: {data.MetaProperties.properties.Order}</h6>
+      <h5>Title: {data.title}</h5>
+      <h6>Version: {data.lastModified}</h6>
+      {/*<h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>*/}
+      <h6>Lineage: {data.lineage}</h6>
       {data.patientId !== "template" ? <h5>Patient: {data.PatientId}</h5> : null}
     </div>
   )
+}
+
+const assemble = (data: any): any => {
+  if(!data) return {};
+  let { sectionIDs, ...form} = data[0];
+  form.sections = [];
+  sectionIDs.forEach((sectionId: string) => form.sections.push(assembleSection(sectionId, data)));
+  return form;
+}
+
+const assembleSection = (sectionId: string, data: any): any => {
+  const sectionObj = data.find((item: any) => item.docType === "SDCSection" && item.id === sectionId);
+  let {subSectionIDs, ...section} = sectionObj;
+  section.subSections = [];
+  subSectionIDs.forEach((id: string) => section.subSections.push(assembleSection(id, data)));
+  section.questions = [];
+  return section;
 }
 
 const getTempData = () => {

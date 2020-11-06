@@ -125,7 +125,6 @@ class Database {
 			const section = await this.getSection(sectionId, req);
 			formItems.push(...section);
 		}
-		console.log(formItems)
 
 		return formItems;
 	}

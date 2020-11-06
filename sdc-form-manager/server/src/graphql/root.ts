@@ -5,9 +5,7 @@ export const root = {
 	form: async({ id }: { id: string }, context: any) => {
 		try {
 			const form: any = await database.getForm(id, context);
-			console.log(form);
 			form[0].id = id;
-			console.log(form[0].id);
 			return form;
 		} catch (error) {
 			console.error('get form error:', error);
