@@ -48,7 +48,14 @@ app.post('/api/form', async(req: any, res: any) => {
 	}
 });
 
-
+app.post('/api/upload/form', async(req: any, res: any) => {
+	try {
+		const form = await root.uploadForm({ id: req.body.id, input:req.body.input }, req);
+    res.json(form);
+	} catch (error) {
+		res.status('404').json({ error: 'form not found' });
+	}
+});
 
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 export default server;

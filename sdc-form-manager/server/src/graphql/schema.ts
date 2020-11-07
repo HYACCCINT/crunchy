@@ -95,6 +95,7 @@ export const schema = buildSchema(`
 		uri: String
 		sections: [String]
 		footer: String
+		xml: String
         lastModified: String
 	}
 	type SDCQuestionResponse {
