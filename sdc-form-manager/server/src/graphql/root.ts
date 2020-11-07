@@ -5,7 +5,7 @@ export const root = {
 	form: async({ id }: { id: string }, context: any) => {
 		try {
 			const form: any = await database.getForm(id, context);
-			form.id = id;
+			form[0].id = id;
 			return form;
 		} catch (error) {
 			console.error('get form error:', error);
@@ -15,7 +15,7 @@ export const root = {
 	question: async({ id }: { id: string }, context: any) => {
 		try {
 			const question: any = await database.getQuestion(id, context);
-			question.id = id;
+			question[0].id = id;
 			return question;
 		} catch (error) {
 			console.error('get question error:', error);
@@ -25,7 +25,7 @@ export const root = {
 	section: async({ id }: { id: string }, context: any) => {
 		try {
 			const section: any = await database.getSection(id, context);
-			section.id = id;
+			section[0].id = id;
 			return section;
 		} catch (error) {
 			console.error('get section error:', error);

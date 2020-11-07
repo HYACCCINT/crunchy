@@ -117,10 +117,16 @@ class Database {
 			.then((form: any) => { form.id = id; return form; });
 
 		if (item.type !== 'form' && item.docType !== 'SDCForm') {
-			return null;
+			return [null];
 		}
 
-		return item;
+		let formItems = [item];
+		for(let sectionId of item.sectionIDs) {
+			const section = await this.getSection(sectionId, req);
+			formItems.push(...section);
+		}
+
+		return formItems;
 	}
 
 	async getQuestion(id: string, req: any) {
@@ -128,10 +134,10 @@ class Database {
 			.then((question: any) => { question.id = id; return question; });
 
 		if (item.docType !== 'SDCQuestion') {
-			return null;
+			return [null];
 		}
 
-		return item;
+		return [item];
 	}
 
 	async getSection(id: string, req: any) {
@@ -139,10 +145,18 @@ class Database {
 			.then((section: any) => { section.id = id; return section; });
 
 		if (item.docType !== 'SDCSection') {
-			return null;
+			return [null];
 		}
 
-		return item;
+		let sectionItems = [item];
+		for(let sectionId of item.subSectionIDs) {
+			const section = await this.getSection(sectionId, req);
+			sectionItems.push(...section);
+		}
+		const flatQuestionsList = flatQuestions(item.questions);
+		sectionItems.push(...flatQuestionsList);
+
+		return sectionItems;
 	}
 
 	async updateForm<T = object>(id: string, value: any, req: any) {
@@ -226,6 +240,16 @@ class Database {
 			});
 	}
 
+}
+
+const flatQuestions = (questions: any): any => {
+	let flatList = [];
+	for(let question of questions) {
+		const {subQuestions, ...questionWOSub} = question;
+		flatList.push(questionWOSub);
+		subQuestions ? flatList.push(...flatQuestions(subQuestions)) : null;
+	}
+	return flatList;
 }
 
 export const database = new Database();
