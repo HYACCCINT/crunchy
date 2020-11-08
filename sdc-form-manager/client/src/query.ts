@@ -90,7 +90,7 @@ mutation($id: String, $input: FormInput) {
 		sections,
 		uri,
 		footer,s
-        lastModified
+            	lastModified
 	}
 }
 `;
