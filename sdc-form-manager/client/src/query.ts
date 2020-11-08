@@ -12,7 +12,7 @@ query($id: String!) {
 		sections,
 		uri,
 		footer,
-            	lastModified
+        lastModified
 	}
 }
 `;
@@ -89,7 +89,7 @@ mutation($id: String, $input: FormInput) {
 		title,
 		sections,
 		uri,
-		footer,s
+		footer,
         lastModified
 	}
 }
