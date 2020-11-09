@@ -5,58 +5,34 @@ export const schema = buildSchema(`
 	scalar Contact
 	scalar MultipleChoice
     
-    interface SDCQuestion {
+	interface SDCQuestionResponse {
 		id: String
-		docType: String
-		name: String
-		title: String
-		mustImplement: Boolean
-		readOnly: Boolean
-		minCard: Int
-		maxCard: Int
-		maxSelections: Int
-		questionType: String
-		isEnabled: Boolean
-		textAfterResponse: String
-		superQuestionID: String
-		subQuestions: [String]
+		questionID: String
+		responseType: String
 	}
-	type SDCMultipleChoice implements SDCQuestion {
+	type SDCMultipleChoiceResponse implements SDCQuestionResponse {
 		id: String
-		docType: String
-		name: String
-		title: String
-		mustImplement: Boolean
-		readOnly: Boolean
-		minCard: Int
-		maxCard: Int
-		maxSelections: Int
-		questionType: String
-		isEnabled: Boolean
-		textAfterResponse: String
-		superQuestionID: String
-		subQuestions: [String]
+		questionID: String
+		responseType: String
+		userInput: [String]
 		choices: [MultipleChoice]
 		canMultiSelect: Boolean
 	}
-	type SDCTextQuestion implements SDCQuestion {
+	type SDCTextResponse implements SDCQuestionResponse {
 		id: String
-		docType: String
-		name: String
-		title: String
-		mustImplement: Boolean
-		readOnly: Boolean
-		minCard: Int
-		maxCard: Int
-		maxSelections: Int
-		questionType: String
-		isEnabled: Boolean
-		textAfterResponse: String
-		superQuestionID: String
-		subQuestions: [String]
+		questionID: String
+		responseType: String
+		userInput: String
 		defaultValue: String
 	}
-	type SDCIntQuestion implements SDCQuestion {
+	type SDCIntResponse implements SDCQuestionResponse {
+		id: String
+		questionID: String
+		responseType: String
+		userInput: Int
+		defaultValue: Int
+	}
+    type SDCQuestion {
 		id: String
 		docType: String
 		name: String
@@ -68,10 +44,12 @@ export const schema = buildSchema(`
 		maxSelections: Int
 		questionType: String
 		isEnabled: Boolean
+		response: SDCQuestionResponse
 		textAfterResponse: String
+		subQuestions: [SDCQuestion]
+		superSectionID: String
 		superQuestionID: String
-		subQuestions: [String]
-		defaultValue: Int
+		superAnswerID: String
 	}
 	type SDCSection {
 		id: String
@@ -83,7 +61,8 @@ export const schema = buildSchema(`
 		minCard: Int
 		maxCard: Int
 		questions: [SDCQuestion]
-		subSections: [String]
+		subSectionIDs: [String]
+		superSectionID: String
 	}
 	type SDCForm {
 		id: String
@@ -93,25 +72,12 @@ export const schema = buildSchema(`
 		lineage: String
 		title:String
 		uri: String
-		sections: [String]
+		sectionIDs: [String]
 		footer: String
 		xml: String
         lastModified: String
 	}
-	type SDCQuestionResponse {
-		id: String
-		questionID: String
-		userInput: [String]
-	}
 	
-	type SDCFormResponse {
-		id: String
-		docType: String
-		formID: String
-		formFillerID: String
-		patientID: String
-		responses: [SDCQuestionResponse]
-	}
 	input SDCQuestionInput {
 		id: String
 		docType: String
@@ -125,8 +91,10 @@ export const schema = buildSchema(`
 		questionType: String
 		isEnabled: Boolean
 		textAfterResponse: String
+		subQuestions: [SDCQuestionInput]
+		superSectionID: String
 		superQuestionID: String
-		subQuestions: [String]
+		superAnswerID: String
 	}	
 	input SDCSectionInput {
 		id: String
@@ -138,7 +106,7 @@ export const schema = buildSchema(`
 		minCard: Int
 		maxCard: Int
 		questions: [SDCQuestionInput]
-		subSections: [String]
+		superSectionID: String
 	}
 	input FormInput {
 		id: String
@@ -146,9 +114,9 @@ export const schema = buildSchema(`
 		procedureID: String
 		patientID: String
 		lineage: String
-		title: String
+		title:String
 		uri: String
-		sections: [String]
+		sectionIDs: [String]
 		footer: String
         lastModified: String
 	}
@@ -165,10 +133,14 @@ export const schema = buildSchema(`
 		patientID: String
 		responses: [SDCQuestionResponseInput]
 	}
+
+	union SDCFormObjects = SDCForm | SDCSection | SDCQuestion
+	union SDCSectionObjects = SDCSection | SDCQuestion
+
 	type Query {
-		form(id:String): SDCForm
-		question(id:String): SDCQuestion
-		section(id:String): SDCSection
+		form(id:String): [SDCFormObjects]
+		question(id:String): [SDCQuestion]
+		section(id:String): [SDCSectionObjects]
 	}
 	type Mutation {
 		updateForm(id: String, input: FormInput): SDCForm
@@ -177,3 +149,15 @@ export const schema = buildSchema(`
 		deleteForm(id: String): SDCForm
 	}
 `);
+
+export const resolveType = (obj: any, context: any, info: any): string => {
+	if(obj.docType) {
+		return obj.docType;
+	}
+	else if(obj.responseType && obj.responseType.includes("single choice")) return "SDCMultipleChoiceResponse";
+	else if(obj.responseType === "text") return "SDCTextResponse";
+	else if(obj.responseType === "num") return "SDCIntResponse";
+	else {
+		return null;
+	}
+}

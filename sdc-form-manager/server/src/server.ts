@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlHTTP } from 'express-graphql';
-import { root, schema } from './graphql';
+import { root, schema, resolveType } from './graphql';
 import { router } from './rest';
 import cors from 'cors';
 const app = express();
@@ -17,6 +17,7 @@ app.use(cors({
 //db api
 app.use('/graphql',cors(), graphqlHTTP({
 	schema,
+	typeResolver: resolveType,
 	rootValue: root,
 	graphiql: true
 }));
