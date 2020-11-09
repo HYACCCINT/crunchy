@@ -74,6 +74,7 @@ export const schema = buildSchema(`
 		uri: String
 		sectionIDs: [String]
 		footer: String
+		xml: String
         lastModified: String
 	}
 	

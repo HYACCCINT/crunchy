@@ -43,6 +43,17 @@ export const root = {
 			throw error;
 		}
 	},
+	uploadForm: async({ id, input }: { id: string, input: any }, context: any) => {
+		try {
+			await database.uploadForm(id, input, context);
+			return await root.form({ id }, context);
+			// keeping this for later
+			// input.id = id;
+		} catch (error) {
+			console.error('update form error:', error);
+			throw error;
+		}
+	},
 	updateQuestion: async({ id, input }: { id: string, input: any }, context: any) => {
 		try {
 			await database.updateQuestion(id, input, context);

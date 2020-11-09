@@ -165,6 +165,12 @@ class Database {
 		return await this.upsert(id, value, req);
 	}
 
+	async uploadForm<T = object>(id: string, value: any, req: any) {
+		// value.lastModified = new Date().toISOString();
+		value.docType = 'SDCForm';
+		return await this.upsert(id, value, req);
+	}
+
 	async updateQuestion<T = object>(id: string, value: any, req: any) {
 		// value.lastModified = new Date().toISOString();
 		value.docType = 'SDCQuestion';
