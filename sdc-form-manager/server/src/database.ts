@@ -1,6 +1,7 @@
 import Cloudant from '@cloudant/cloudant';
+import xml2js from 'xml2js';
 import { readFileSync, readdirSync } from 'fs';
-
+import { response } from 'express';
 
 const usage = () => {
 	console.log(`DB username/apikey not setup properly`);
@@ -168,7 +169,8 @@ class Database {
 	async uploadForm<T = object>(id: string, value: any, req: any) {
 		// value.lastModified = new Date().toISOString();
 		value.docType = 'SDCForm';
-		return await this.upsert(id, value, req);
+		const form = await this.parseXMLForm(value, req);
+		return await this.upsert(id, form, req);
 	}
 
 	async updateQuestion<T = object>(id: string, value: any, req: any) {
@@ -246,6 +248,116 @@ class Database {
 			});
 	}
 
+	async parseXMLForm(input: any, req: any): Promise<any> {
+		const parser = new xml2js.Parser();
+		const inputJson = await parser.parseStringPromise(input.xml);
+		const form_id = JSON.stringify(inputJson.id);
+		const formDesignObj = inputJson.SDCPackage.XMLPackage[0].FormDesign[0];
+		let form: any = {
+			_id: inputJson.id,
+			docType: inputJson.docType,
+			uri: formDesignObj.$.fullURI,
+			title: formDesignObj.$.formTitle,
+			procedureID: formDesignObj.$.ID,
+			lineage: formDesignObj.$.lineage,
+			version: formDesignObj.$.version,
+			filename: input.filename,
+			xmlns: formDesignObj.$.xmlns,
+			"xmlns:xsi": formDesignObj.$["xmlns:xsi"],
+			patientID: "template",
+		}
+	
+		form.properties = formDesignObj.Property.map((item: any) => item.$);
+		form.contact = formDesignObj.Body[0].Contact ? formDesignObj.Body[0].Contact[0].Organization.map((item: any) => ({
+			organization: item.OrgName[0].$.val,
+			email: item.Email.map((emailObj: any) => emailObj.EmailAddress[0].$.val)
+		})) : {};
+		form.sectionIDs = formDesignObj.Body[0].ChildItems[0].Section.map(
+			async (sectionObj: any) => await this.parseXMLSection(`${input.id}`, sectionObj, req)
+		);
+	
+		form.footer = `${formDesignObj.Footer[0].$.ID}${formDesignObj.Footer[0].$.title}`;
+		return form;
+	}
+
+	async parseXMLSection(superID: string, sectionObj: any, req: any): Promise<any> {
+		const sectionID = superID + '.' + sectionObj.$.ID;
+		let section: any = {
+			_id: sectionID,
+			title: sectionObj.$.title,
+			docType: "SDCSection",
+			name: sectionObj.$.type,
+			properties: sectionObj.Property ? sectionObj.Property.map((item: any) => item.$) : [],
+			superSectionID: superID,
+			subSectionIDs: [],
+			questions: [],
+		};
+
+		if(!sectionObj.ChildItems) return sectionID;
+		section.subSectionIDs = sectionObj.ChildItems[0].Section ? await Promise.all(sectionObj.ChildItems[0].Section.map(
+			async (subSectionObj: any) => (await this.parseXMLSection(sectionID, subSectionObj, req))
+		)) : [];
+		section.questions = sectionObj.ChildItems[0].Question ? sectionObj.ChildItems[0].Question.map(
+			(questionObj: any) => this.parseXMLQuestion(questionObj, sectionID, null, null)
+		) : [];
+
+		await this.upsert(sectionID, section, req);
+		return sectionID;
+	}
+
+	parseXMLQuestion(questionObj: any, superSectionID: string, superQuestionID: string, superAnswerID: string): any {
+		try {
+			const x = (questionObj.$.ID);
+		}
+		catch(e){
+			console.log(questionObj);
+		}
+		let question: any = {
+			id: questionObj.$.ID,
+			title: questionObj.$.title,
+			name: questionObj.$.name,
+			type: questionObj.$.type,
+			docType: "SDCQuestion",
+			superSectionID: superSectionID,
+			superQuestionID: superQuestionID,
+			superAnswerID: superAnswerID,
+			response: <any>{},
+			subQuestions: <any>[],
+		};
+
+		if(questionObj.ListField) {
+			question.questionType = "single choice";
+			question.response.userInput = [];
+			question.response.choices = questionObj.ListField[0].List[0].ListItem.map(
+				(item: any) => {
+					if(!item.ChildItems) return item.$;
+					item.ChildItems[0].Question.map(
+						(subQuestionObj: any) => question.subQuestions.push(this.parseXMLQuestion(subQuestionObj, null, question.id, item.$.ID))
+					)
+					return item.$;
+				}
+			);
+		}
+		else if(questionObj.ResponseField) {
+			if(questionObj.ResponseField[0].Response[0].date){
+				question.questionType = "date";
+				question.textAfterResponse = questionObj.ResponseField[0].TextAfterResponse[0].$.val;
+				question.response.userInput = "";
+			}
+			else if(questionObj.ResponseField[0].Response[0].string){
+				question.questionType = "text";
+				question.response.userInput = questionObj.ResponseField[0].Response[0].string[0].$.val;
+			}
+			else if(questionObj.ResponseField[0].Response[0].integer){
+				question.questionType = "number";
+				question.textAfterResponse = questionObj.ResponseField[0].ResponseUnits[0].$.val;
+				question.response.userInput = null;
+			}
+		}
+		question.response.responseType = question.questionType;
+
+		return question;
+	}
 }
 
 const flatQuestions = (questions: any): any => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useMutation, useQuery } from 'urql';
+import { fallbackExchangeIO, useMutation, useQuery } from 'urql';
 import { uploadFormQuery, formQuery } from '../query';
 
 export const FormUpload = () => {
@@ -19,6 +19,7 @@ export const FormUpload = () => {
   const [formToUpdate, setFormToUpdate] = useState<any>(initialFormState);
   const [fileData, setFileData] = useState<any>(initialFileData);
   const handleSubmit = (event: any) => {
+    event.preventDefault();
 
     /*
 
@@ -35,11 +36,12 @@ export const FormUpload = () => {
     }*/
   
     let clone = { ...formToUpdate };
-    clone[formToUpdate.id] = {id: formToUpdate.id, input: {id: formToUpdate.id, title: fileData.fileName, 
-      procedureID: formToUpdate.procedureID, xml: fileData.contents, docType: 'xml'}};
+    clone = {id: formToUpdate.id, input: {id: formToUpdate.id, xml: fileData.contents}};
+    console.log(clone);
     setFormToUpdate(clone);
     uploadForm(clone);
     alert(`Form was ${action === "new" ? "uploaded" : "updated"} with title: ${fileData.fileName} and procedure ID: ${formToUpdate.procedureID}`);
+    return false;
    /* 
     // reset state of FormUpload
     

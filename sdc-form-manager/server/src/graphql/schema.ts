@@ -120,6 +120,10 @@ export const schema = buildSchema(`
 		footer: String
         lastModified: String
 	}
+	input FormXMLInput {
+		id: String
+		xml: String
+	}
 	input SDCQuestionResponseInput {
 		id: String
 		questionID: String
@@ -144,6 +148,7 @@ export const schema = buildSchema(`
 	}
 	type Mutation {
 		updateForm(id: String, input: FormInput): SDCForm
+		uploadForm(id: String, input: FormXMLInput): SDCForm
 		updateQuestion(id: String, input: SDCQuestionInput): SDCQuestion
 		updateSection(id: String, input: SDCSectionInput): SDCSection
 		deleteForm(id: String): SDCForm

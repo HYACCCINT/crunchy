@@ -50,7 +50,7 @@ export const root = {
 			// keeping this for later
 			// input.id = id;
 		} catch (error) {
-			console.error('update form error:', error);
+			console.error('upload form error:', error);
 			throw error;
 		}
 	},
