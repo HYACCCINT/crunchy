@@ -347,7 +347,7 @@ class Database {
 				question.questionType = "text";
 				question.response.userInput = questionObj.ResponseField[0].Response[0].string[0].$.val;
 			}
-			else if(questionObj.ResponseField[0].Response[0].integer){
+			else if(questionObj.ResponseField[0].Response[0].integer || questionObj.ResponseField[0].Response[0].decimal){
 				question.questionType = "number";
 				question.textAfterResponse = questionObj.ResponseField[0].ResponseUnits[0].$.val;
 				question.response.userInput = null;
