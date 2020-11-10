@@ -251,11 +251,10 @@ class Database {
 	async parseXMLForm(input: any, req: any): Promise<any> {
 		const parser = new xml2js.Parser();
 		const inputJson = await parser.parseStringPromise(input.xml);
-		const form_id = JSON.stringify(inputJson.id);
 		const formDesignObj = inputJson.SDCPackage.XMLPackage[0].FormDesign[0];
 		let form: any = {
 			_id: inputJson.id,
-			docType: inputJson.docType,
+			docType: "SDCForm",
 			uri: formDesignObj.$.fullURI,
 			title: formDesignObj.$.formTitle,
 			procedureID: formDesignObj.$.ID,
@@ -272,9 +271,9 @@ class Database {
 			organization: item.OrgName[0].$.val,
 			email: item.Email.map((emailObj: any) => emailObj.EmailAddress[0].$.val)
 		})) : {};
-		form.sectionIDs = formDesignObj.Body[0].ChildItems[0].Section.map(
+		form.sectionIDs = formDesignObj.Body[0].ChildItems ? await Promise.all(formDesignObj.Body[0].ChildItems[0].Section.map(
 			async (sectionObj: any) => await this.parseXMLSection(`${input.id}`, sectionObj, req)
-		);
+		)) : [];
 	
 		form.footer = `${formDesignObj.Footer[0].$.ID}${formDesignObj.Footer[0].$.title}`;
 		return form;
