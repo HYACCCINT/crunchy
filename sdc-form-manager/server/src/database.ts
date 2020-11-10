@@ -251,7 +251,7 @@ class Database {
 	async parseXMLForm(input: any, req: any): Promise<any> {
 		const parser = new xml2js.Parser();
 		const inputJson = await parser.parseStringPromise(input.xml);
-		const formDesignObj = inputJson.SDCPackage.XMLPackage[0].FormDesign[0];
+		const formDesignObj = inputJson.SDCPackage ? inputJson.SDCPackage.XMLPackage[0].FormDesign[0] : inputJson.FormDesign;
 		let form: any = {
 			_id: inputJson.id,
 			docType: "SDCForm",
