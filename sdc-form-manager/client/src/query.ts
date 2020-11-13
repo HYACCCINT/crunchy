@@ -186,19 +186,10 @@ mutation($id: String, $input: FormInput) {
 `;
 
 export const uploadFormQuery = `
-mutation($id: String, $input: FormInput) {
-	updateForm(id: $id, input: $input) {
+mutation($id: String, $input: FormXMLInput) {
+	uploadForm(id: $id, input: $input) {
 		id,
-		docType,
-		procedureID,
-		patientID,
-		lineage,
-		title,
-		sections,
-		uri,
-		footer,
-		xml,
-        lastModified
+		xml
 	}
 }
 `;
