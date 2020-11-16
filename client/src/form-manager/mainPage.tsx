@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from 'urql';
-import { deleteFormQuery } from '../query';
+import { deleteFormQuery } from './query';
 
 export const MainPage = () => {
   const history = useHistory();

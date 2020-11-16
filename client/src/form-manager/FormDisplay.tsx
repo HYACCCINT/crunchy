@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'urql'
-import { formQuery } from '../query'
+import { formQuery } from './query'
 
 export const FormDisplay = () => {
   const { procedureId } = useParams<{ procedureId: string }>();
