@@ -11,11 +11,8 @@ export const FormDisplay = () => {
     variables: formVars
   })
   const { data, fetching, error } = form;
-  console.log(fetching)
-  console.log(data);
   if (fetching) return (<p>Loading...</p>);
   const assembledData = assemble(data.form);
-  console.log(assembledData);
   return (
     <div>
       <h3>{assembledData.procedureId}</h3>
