@@ -1,0 +1,6 @@
+// export * from './form-manager/pages/mainPage'
+// export * from './form-manager/pages/FormDisplay'
+// export * from './form-manager/pages/FormUpload'
+export * from './form-manager/pages/mainPage'
+export * from './form-manager/pages/FormDisplay'
+export * from './form-manager/pages/FormUpload'
