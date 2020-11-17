@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fallbackExchangeIO, useMutation, useQuery } from 'urql';
-import { uploadFormQuery, formQuery } from './query';
+import { uploadFormQuery, formQuery } from '../query';
 
 export const FormUpload = () => {
   const { action } = useParams<{ action: string }>();

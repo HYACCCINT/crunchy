@@ -100,8 +100,6 @@ class Database {
 
 	}
 
-
-
 	async delete<T = object>(id: string, req?: any) {
 		let docObj;
 		try {
@@ -111,6 +109,20 @@ class Database {
 			throw exception;
 		}
 		return await this.db.destroy(docObj._id, docObj._rev);
+	}
+
+	async getAllForms(
+		req: any,
+		limit: number | undefined = undefined,
+		skip = 0,
+		docId: string | undefined = undefined
+	) {
+		return (await this.db.view('forms', 'all-forms', {
+			limit,
+			skip,
+			include_docs: true, // eslint-disable-line camelcase
+			startkey_docid: docId // eslint-disable-line camelcase
+		})).rows.map((row: any) => row.value);
 	}
 
 	async getForm(id: string, req: any) {
