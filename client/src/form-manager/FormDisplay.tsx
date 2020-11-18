@@ -11,11 +11,8 @@ export const FormDisplay = () => {
     variables: formVars
   })
   const { data, fetching, error } = form;
-  console.log(fetching)
-  console.log(data);
   if (fetching) return (<p>Loading...</p>);
   const assembledData = assemble(data.form);
-  console.log(assembledData);
   return (
     <div>
       <h3>{assembledData.procedureId}</h3>
@@ -31,6 +28,9 @@ export const FormDisplay = () => {
 };
 
 const renderSections = (sections: any) => {
+  if (!sections){
+    return null;
+  }
   return (
     <div>
       {sections.map((section: any) => {

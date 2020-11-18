@@ -2,6 +2,18 @@ import { database } from '../database';
 
 // graphql root
 export const root = {
+	forms: async(
+		{ limit, skip, id }: { limit: number, skip: number | undefined, id: string | undefined },
+		context: any
+	) => {
+		try {
+			const forms: any = await database.getAllForms(context, limit, skip, id);
+			return forms;
+		} catch (error) {
+			console.error('get form error:', error);
+			throw error;
+		}
+	},
 	form: async({ id }: { id: string }, context: any) => {
 		try {
 			const form: any = await database.getForm(id, context);
