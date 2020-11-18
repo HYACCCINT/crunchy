@@ -75,7 +75,8 @@ export const schema = buildSchema(`
 		sectionIDs: [String]
 		footer: String
 		xml: String
-        lastModified: String
+		lastModified: String
+		previousVersion: String
 	}
 	
 	input SDCQuestionInput {
