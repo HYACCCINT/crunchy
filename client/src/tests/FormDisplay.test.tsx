@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'urql';
 import { makeSubject } from 'wonka';
 import { mount } from 'enzyme';
-import { FormDisplay } from './FormDisplay';
+import { FormDisplay } from '../form-manager/FormDisplay';
 import { MemoryRouter } from 'react-router-dom';
 
 const { source: stream, next: pushResponse } = makeSubject();

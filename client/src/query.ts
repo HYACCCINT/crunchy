@@ -1,5 +1,19 @@
 import { createClient, CombinedError } from 'urql';
 
+export const allFormQuery = `
+{
+	forms {
+        id,
+        docType,
+        procedureID,
+        patientID,
+        lineage,
+        title,
+        lastModified
+	}
+}
+`;
+
 export const formQuery = `
 query($id: String!) {
 	form(id: $id) {

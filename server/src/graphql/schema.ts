@@ -75,7 +75,8 @@ export const schema = buildSchema(`
 		sectionIDs: [String]
 		footer: String
 		xml: String
-        lastModified: String
+		lastModified: String
+		previousVersion: String
 	}
 	
 	input SDCQuestionInput {
@@ -142,6 +143,7 @@ export const schema = buildSchema(`
 	union SDCSectionObjects = SDCSection | SDCQuestion
 
 	type Query {
+		forms(limit: Int, skip: Int, id: String): [SDCForm]
 		form(id:String): [SDCFormObjects]
 		question(id:String): [SDCQuestion]
 		section(id:String): [SDCSectionObjects]
