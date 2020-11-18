@@ -168,6 +168,14 @@ class Database {
 
 	async uploadForm<T = object>(id: string, value: any, req: any) {
 		// value.lastModified = new Date().toISOString();
+		let previousVersion = null;
+		try {
+			previousVersion = await this.getForm(id, req);
+		}
+		catch(e){
+			console.log(e);
+		}
+		value.previousVersion = previousVersion;
 		value.docType = 'SDCForm';
 		const form = await this.parseXMLForm(value, req);
 		return await this.upsert(id, form, req);
@@ -264,6 +272,13 @@ class Database {
 			xmlns: formDesignObj.$.xmlns,
 			"xmlns:xsi": formDesignObj.$["xmlns:xsi"],
 			patientID: "template",
+			previousVersion: JSON.stringify(input.previousVersion),
+		}
+		if(input.previousVersion){
+			const previousForm = input.previousVersion.find((item: any) => item.docType === "SDCForm");
+			if(previousForm) {
+				form._rev = previousForm._rev;
+			}
 		}
 	
 		form.properties = formDesignObj.Property.map((item: any) => item.$);
@@ -272,14 +287,14 @@ class Database {
 			email: item.Email.map((emailObj: any) => emailObj.EmailAddress[0].$.val)
 		})) : {};
 		form.sectionIDs = formDesignObj.Body[0].ChildItems ? await Promise.all(formDesignObj.Body[0].ChildItems[0].Section.map(
-			async (sectionObj: any) => await this.parseXMLSection(`${input.id}`, sectionObj, req)
+			async (sectionObj: any) => await this.parseXMLSection(`${input.id}`, sectionObj, input.previousVersion, req)
 		)) : [];
 	
 		form.footer = `${formDesignObj.Footer[0].$.ID}${formDesignObj.Footer[0].$.title}`;
 		return form;
 	}
 
-	async parseXMLSection(superID: string, sectionObj: any, req: any): Promise<any> {
+	async parseXMLSection(superID: string, sectionObj: any, previousVersion: any, req: any): Promise<any> {
 		const sectionID = superID + '.' + sectionObj.$.ID;
 		let section: any = {
 			_id: sectionID,
@@ -291,10 +306,16 @@ class Database {
 			subSectionIDs: [],
 			questions: [],
 		};
+		if(previousVersion){
+			const sectionIDMap = previousVersion.filter((item: any) => item.docType === "SDCSection").map((item: any) => item._id);
+			if(sectionIDMap.includes(sectionID)){
+				section._rev = previousVersion.find((item: any) => item._id === sectionID)._rev;
+			}
+		}
 
 		if(!sectionObj.ChildItems) return sectionID;
 		section.subSectionIDs = sectionObj.ChildItems[0].Section ? await Promise.all(sectionObj.ChildItems[0].Section.map(
-			async (subSectionObj: any) => (await this.parseXMLSection(sectionID, subSectionObj, req))
+			async (subSectionObj: any) => (await this.parseXMLSection(sectionID, subSectionObj, previousVersion, req))
 		)) : [];
 		section.questions = sectionObj.ChildItems[0].Question ? sectionObj.ChildItems[0].Question.map(
 			(questionObj: any) => this.parseXMLQuestion(questionObj, sectionID, null, null)
