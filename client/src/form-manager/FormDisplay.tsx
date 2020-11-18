@@ -28,6 +28,9 @@ export const FormDisplay = () => {
 };
 
 const renderSections = (sections: any) => {
+  if (!sections){
+    return null;
+  }
   return (
     <div>
       {sections.map((section: any) => {
