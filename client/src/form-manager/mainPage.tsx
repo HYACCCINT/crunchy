@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from 'urql';
 import { deleteFormQuery } from '../query';
+import {TextInput, Button} from 'carbon-components-react'
+import './mainPage.scss'
 
 export const MainPage = () => {
   const history = useHistory();
   const [, deleteForm] = useMutation(deleteFormQuery);
-
+  const [formID, setFormID] = useState('');
   const handleProcedureIdClick = async (action: any, ...params: any) => {
     const formId = prompt('Please enter the Form ID');
     if (!validateId(formId)){
@@ -31,12 +33,13 @@ export const MainPage = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <button id="uploadButton" className="menu-button" onClick={() => uploadFormAction('new')}>Upload Form</button>
-        <button id="displayButton"  className="menu-button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</button>
-        <button id="deleteButton" className="menu-button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</button>
-        <button id="updateButton" className="menu-button" onClick={() => uploadFormAction('update')}>Update Form</button>
-      </header>
+      <div className='displayDelete'>
+        <Button id="uploadButton" kind="tertiary" className="menu-Button" onClick={() => uploadFormAction('new')}>Upload Form</Button>
+        <Button id="displayButton" kind="tertiary" className="menu-Button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</Button>
+        <Button id="updateButton" kind="tertiary" className="menu-Button" onClick={() => uploadFormAction('update')}>Update Form</Button>
+        <Button id="deleteButton" kind="danger--tertiary" className="menu-Button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</Button>
+      </div>
+        
     </div>
   );
 };
