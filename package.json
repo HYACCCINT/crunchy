@@ -7,7 +7,7 @@
     "test": "bash ./test.sh",
     "build": "npx tsc && cd client && npm run build",
     "iall": "npm i && cd client && npm i && cd .. && cd server && npm i",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"cd server && npm start\" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/csc302-fall-2020/proj-crunchycoders/issues"
   },
-  "homepage": "https://github.com/csc302-fall-2020/proj-crunchycoders#readme"
+  "homepage": "https://github.com/csc302-fall-2020/proj-crunchycoders#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
 }
