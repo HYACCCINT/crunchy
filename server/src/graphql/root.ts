@@ -7,6 +7,7 @@ export const root = {
 		context: any
 	) => {
 		try {
+			console.log("QWEQEQWEWQEWQEWQE");
 			const forms: any = await database.getAllForms(context, limit, skip, id);
 			return forms;
 		} catch (error) {

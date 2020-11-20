@@ -19,7 +19,7 @@ export const App = () => (
         <Route path='/' component={MainPage} exact/>
         <Route path='/upload-form/:action' component={FormUpload} exact/>
         <Route path='/formdisplay/:procedureId' component={FormDisplay} exact/>
-        <Route path='/fill/:formID' component={FormFill} exact/>
+        <Route path='/formfill/:formID' component={FormFill} exact/>
         <Route path='/dashboard' component={DashBoard} exact/>
       </UrqlProvider>
     </div>

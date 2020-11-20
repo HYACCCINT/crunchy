@@ -226,6 +226,7 @@ class Database {
 		//     └── view-name-2.reduce.js
 
 		// we want all the views to be initialized before we start using db so we use sync
+		console.log("object");
 		readdirSync(folderName, { withFileTypes: true })
 			.filter((entry) => entry.isDirectory())
 			.forEach((designDocument) => {
@@ -255,7 +256,7 @@ class Database {
 							}
 						}
 					});
-
+				console.log(designDocument);
 				this.db.insert({ views }, `_design/${designDocument.name}`);
 			});
 	}

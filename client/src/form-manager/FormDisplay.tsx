@@ -13,6 +13,7 @@ export const FormDisplay = () => {
   const { data, fetching, error } = form;
   if (fetching) return (<p>Loading...</p>);
   const assembledData = assemble(data.form);
+  console.log(assembledData);
   return (
     <div>
       <h3>{assembledData.procedureId}</h3>
