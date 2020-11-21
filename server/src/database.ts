@@ -185,7 +185,7 @@ class Database {
 			previousVersion = await this.getForm(id, req);
 		}
 		catch(e){
-			console.log(e);
+			console.warn("No previous versions of the form found");
 		}
 		value.previousVersion = previousVersion;
 		value.docType = 'SDCForm';
@@ -271,6 +271,7 @@ class Database {
 	async parseXMLForm(input: any, req: any): Promise<any> {
 		const parser = new xml2js.Parser();
 		const inputJson = await parser.parseStringPromise(input.xml);
+		await this.upsert("xml-testing", inputJson, req);
 		const formDesignObj = inputJson.SDCPackage ? inputJson.SDCPackage.XMLPackage[0].FormDesign[0] : inputJson.FormDesign;
 		let form: any = {
 			_id: inputJson.id,
@@ -360,7 +361,7 @@ class Database {
 		if(questionObj.ListField) {
 			question.questionType = "single choice";
 			question.response.userInput = [];
-			question.response.choices = questionObj.ListField[0].List[0].ListItem.map(
+			question.response.choices = questionObj.ListField[0].List[0].ListItem ? questionObj.ListField[0].List[0].ListItem.map(
 				(item: any) => {
 					if(!item.ChildItems) return item.$;
 					item.ChildItems[0].Question.map(
@@ -368,21 +369,21 @@ class Database {
 					)
 					return item.$;
 				}
-			);
+			) : [];
 		}
 		else if(questionObj.ResponseField) {
 			if(questionObj.ResponseField[0].Response[0].date){
 				question.questionType = "date";
-				question.textAfterResponse = questionObj.ResponseField[0].TextAfterResponse[0].$.val;
+				question.textAfterResponse = questionObj.ResponseField[0].TextAfterResponse ? questionObj.ResponseField[0].TextAfterResponse[0].$.val : "";
 				question.response.userInput = "";
 			}
 			else if(questionObj.ResponseField[0].Response[0].string){
 				question.questionType = "text";
-				question.response.userInput = questionObj.ResponseField[0].Response[0].string[0].$.val;
+				question.response.userInput = questionObj.ResponseField[0].Response[0].string[0].$.val ? questionObj.ResponseField[0].Response[0].string[0].$.val : "";
 			}
 			else if(questionObj.ResponseField[0].Response[0].integer || questionObj.ResponseField[0].Response[0].decimal){
 				question.questionType = "number";
-				question.textAfterResponse = questionObj.ResponseField[0].ResponseUnits[0].$.val;
+				question.textAfterResponse = questionObj.ResponseField[0].ResponseUnits ? questionObj.ResponseField[0].ResponseUnits[0].$.val : "";
 				question.response.userInput = null;
 			}
 		}
