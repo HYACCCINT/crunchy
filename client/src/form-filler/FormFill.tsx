@@ -2,18 +2,27 @@ import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'urql'
 import { formQuery } from '../query'
-import {TextInput, RadioButtonGroup, RadioButton} from 'carbon-components-react'
+import {SDCQuestion} from './SDCQuestion'
+import {Button, Form} from 'carbon-components-react'
+
 export const FormFill = () => {
   const { formID } = useParams<{ formID: string }>();
   const [formVars, setFormVars] = useState<any>({ id: formID })
+
   let patientID=0;
   const [input, setInput] = useState<any>({id:`${formID}.res.${patientID}`})
-  const [form,] = useQuery({
+  const [formObj,] = useQuery({
     query: formQuery,
     variables: formVars
   })
-  const { data, fetching, error } = form;
+  const [formArray, setFormArray] = useState<any>([]);
+  const { data, fetching, error } = formObj;
   if (fetching) return (<p>Loading...</p>);
+  if (formArray.length == 0) {
+    data.form.map((item:any) => {
+      formArray.push(item);
+    })
+  }
   const renderSections = (sections: any) => {
     if (!sections){
       return null;
@@ -34,30 +43,17 @@ export const FormFill = () => {
       </div>
     )
   }
+
   const text = { 
   onChange: (event:any) => setInput({ [event.target.id]:event.target.value, ...input, })
   }
+
   const renderQuestions = (questions: any) => {
     return (
       <div>
         {questions.map((question: any) => {
-          if (question === null || question.isEnabled === false) return null;
-          return (
-            <div>
-              <h4 className="blue-heading">{question.mustImplement ? "*" : ""}</h4>
-              {question.questionType === "text" ? (<TextInput id={question.name} labelText={question.title} {...text}/>) : null}
-              {question.questionType === "number" ? (<input type="number"></input>) : null}
-              {/* {question.questionType.includes("single choice") ? (
-                  <RadioButtonGroup name={question.name}>
-                      {question.response.choices.map((choice: any) => {
-                        return <RadioButton value={choice.name} labelText={choice.title}/>
-                })}
-                </RadioButtonGroup>
-              ) : null} */}
-              <p>{question.textAfterResponse}</p>
-              {question.subQuestions ? renderQuestions(question.subQuestions) : null}
-            </div>
-          )
+          return <SDCQuestion  question={question} formArray={formArray} setFormArray={setFormArray}/>
+
         })}
       </div>
     )
@@ -99,18 +95,21 @@ export const FormFill = () => {
     return question;
   }
   
-  const assembledData = assemble(data.form);
-  
+  const response = assemble(formArray);
+
+
   return (
     <div>
-      <h3>{assembledData.formID}</h3>
-      <h3>{assembledData.name}</h3>
-      {renderProperties(assembledData)}
-      {/*renderContacts(assembledData)*/}
+      <h3>{response.formID}</h3>
+      <h3>{response.name}</h3>
+      <Form>
+      {renderProperties(response)}
       <br></br>
-      {renderSections(assembledData.sections)}
+      {renderSections(response.sections)}
       <br></br>
-      <p>Footer: {(assembledData.footer)}</p>
+      <Button type="submit">Submit</Button>
+      </Form>
+      <p>Footer: {(response.footer)}</p>
     </div>
   )
 };

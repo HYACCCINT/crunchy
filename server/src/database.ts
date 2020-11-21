@@ -226,7 +226,6 @@ class Database {
 		//     └── view-name-2.reduce.js
 
 		// we want all the views to be initialized before we start using db so we use sync
-		console.log("object");
 		readdirSync(folderName, { withFileTypes: true })
 			.filter((entry) => entry.isDirectory())
 			.forEach((designDocument) => {
@@ -293,7 +292,7 @@ class Database {
 	}
 
 	async parseXMLSection(superID: string, sectionObj: any, req: any): Promise<any> {
-		const sectionID = superID + '.' + sectionObj.$.ID;
+		const sectionID = superID + '-' + sectionObj.$.ID;
 		let section: any = {
 			_id: sectionID,
 			title: sectionObj.$.title,
@@ -330,6 +329,7 @@ class Database {
 			name: questionObj.$.name,
 			type: questionObj.$.type,
 			docType: "SDCQuestion",
+			path: superSectionID.split('-'),
 			superSectionID: superSectionID,
 			superQuestionID: superQuestionID,
 			superAnswerID: superAnswerID,
