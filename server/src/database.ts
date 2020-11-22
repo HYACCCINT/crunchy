@@ -180,6 +180,14 @@ class Database {
 
 	async uploadForm<T = object>(id: string, value: any, req: any) {
 		// value.lastModified = new Date().toISOString();
+		let previousVersion = null;
+		try {
+			previousVersion = await this.getForm(id, req);
+		}
+		catch(e){
+			console.warn("No previous versions of the form found");
+		}
+		value.previousVersion = previousVersion;
 		value.docType = 'SDCForm';
 		const form = await this.parseXMLForm(value, req);
 		return await this.upsert(id, form, req);
@@ -263,6 +271,7 @@ class Database {
 	async parseXMLForm(input: any, req: any): Promise<any> {
 		const parser = new xml2js.Parser();
 		const inputJson = await parser.parseStringPromise(input.xml);
+		await this.upsert("xml-testing", inputJson, req);
 		const formDesignObj = inputJson.SDCPackage ? inputJson.SDCPackage.XMLPackage[0].FormDesign[0] : inputJson.FormDesign;
 		let form: any = {
 			_id: inputJson.id,
@@ -276,6 +285,13 @@ class Database {
 			xmlns: formDesignObj.$.xmlns,
 			"xmlns:xsi": formDesignObj.$["xmlns:xsi"],
 			patientID: "template",
+			previousVersion: JSON.stringify(input.previousVersion),
+		}
+		if(input.previousVersion){
+			const previousForm = input.previousVersion.find((item: any) => item.docType === "SDCForm");
+			if(previousForm) {
+				form._rev = previousForm._rev;
+			}
 		}
 	
 		form.properties = formDesignObj.Property.map((item: any) => item.$);
@@ -284,14 +300,14 @@ class Database {
 			email: item.Email.map((emailObj: any) => emailObj.EmailAddress[0].$.val)
 		})) : {};
 		form.sectionIDs = formDesignObj.Body[0].ChildItems ? await Promise.all(formDesignObj.Body[0].ChildItems[0].Section.map(
-			async (sectionObj: any) => await this.parseXMLSection(`${input.id}`, sectionObj, req)
+			async (sectionObj: any) => await this.parseXMLSection(`${input.id}`, sectionObj, input.previousVersion, req)
 		)) : [];
 	
 		form.footer = `${formDesignObj.Footer[0].$.ID}${formDesignObj.Footer[0].$.title}`;
 		return form;
 	}
 
-	async parseXMLSection(superID: string, sectionObj: any, req: any): Promise<any> {
+	async parseXMLSection(superID: string, sectionObj: any, previousVersion: any, req: any): Promise<any> {
 		const sectionID = superID + '.' + sectionObj.$.ID;
 		let section: any = {
 			_id: sectionID,
@@ -303,10 +319,16 @@ class Database {
 			subSectionIDs: [],
 			questions: [],
 		};
+		if(previousVersion){
+			const sectionIDMap = previousVersion.filter((item: any) => item.docType === "SDCSection").map((item: any) => item._id);
+			if(sectionIDMap.includes(sectionID)){
+				section._rev = previousVersion.find((item: any) => item._id === sectionID)._rev;
+			}
+		}
 
 		if(!sectionObj.ChildItems) return sectionID;
 		section.subSectionIDs = sectionObj.ChildItems[0].Section ? await Promise.all(sectionObj.ChildItems[0].Section.map(
-			async (subSectionObj: any) => (await this.parseXMLSection(sectionID, subSectionObj, req))
+			async (subSectionObj: any) => (await this.parseXMLSection(sectionID, subSectionObj, previousVersion, req))
 		)) : [];
 		section.questions = sectionObj.ChildItems[0].Question ? sectionObj.ChildItems[0].Question.map(
 			(questionObj: any) => this.parseXMLQuestion(questionObj, sectionID, null, null)
@@ -339,7 +361,7 @@ class Database {
 		if(questionObj.ListField) {
 			question.questionType = "single choice";
 			question.response.userInput = [];
-			question.response.choices = questionObj.ListField[0].List[0].ListItem.map(
+			question.response.choices = questionObj.ListField[0].List[0].ListItem ? questionObj.ListField[0].List[0].ListItem.map(
 				(item: any) => {
 					if(!item.ChildItems) return item.$;
 					item.ChildItems[0].Question.map(
@@ -347,21 +369,21 @@ class Database {
 					)
 					return item.$;
 				}
-			);
+			) : [];
 		}
 		else if(questionObj.ResponseField) {
 			if(questionObj.ResponseField[0].Response[0].date){
 				question.questionType = "date";
-				question.textAfterResponse = questionObj.ResponseField[0].TextAfterResponse[0].$.val;
+				question.textAfterResponse = questionObj.ResponseField[0].TextAfterResponse ? questionObj.ResponseField[0].TextAfterResponse[0].$.val : "";
 				question.response.userInput = "";
 			}
 			else if(questionObj.ResponseField[0].Response[0].string){
 				question.questionType = "text";
-				question.response.userInput = questionObj.ResponseField[0].Response[0].string[0].$.val;
+				question.response.userInput = questionObj.ResponseField[0].Response[0].string[0].$.val ? questionObj.ResponseField[0].Response[0].string[0].$.val : "";
 			}
 			else if(questionObj.ResponseField[0].Response[0].integer || questionObj.ResponseField[0].Response[0].decimal){
 				question.questionType = "number";
-				question.textAfterResponse = questionObj.ResponseField[0].ResponseUnits[0].$.val;
+				question.textAfterResponse = questionObj.ResponseField[0].ResponseUnits ? questionObj.ResponseField[0].ResponseUnits[0].$.val : "";
 				question.response.userInput = null;
 			}
 		}
