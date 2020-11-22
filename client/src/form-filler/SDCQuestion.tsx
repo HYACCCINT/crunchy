@@ -3,7 +3,7 @@ import {TextInput, NumberInput, RadioButtonGroup, RadioButton, FormGroup} from '
 
 
 export const SDCQuestion = ({question, formArray, setFormArray} : any) => {
-
+console.log(question);
 const inputArray = [...formArray]
 if (question.superQuestionID != null) {
     const superIndex = formArray.findIndex(((obj:any) => obj.id == question.superQuestionID));
