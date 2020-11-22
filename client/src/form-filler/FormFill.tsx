@@ -9,7 +9,6 @@ export const FormFill = () => {
   const { formID } = useParams<{ formID: string }>();
   const [patientID, setPatientID] = useState<any>(0)
   const [,uploadRes] = useMutation(updateResQuery);
-  const [input, setInput] = useState<any>({id:`${formID}.res.${patientID}`})
 
   const [formArray, setFormArray] = useState<any>([]);
   const [formVars] = useState<any>({ id: formID })
