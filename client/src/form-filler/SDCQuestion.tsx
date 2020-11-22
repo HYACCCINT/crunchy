@@ -24,8 +24,7 @@ const textProps = {
         inputArray[qIndex].response.userInput = event.target.value
         setFormArray(inputArray)
     },
-    mustImplement:question.mustImplement ? true : false,
-
+    // mustImplement:question.mustImplement ? true : false,
     disabled: question.isEnabled == null ? false : !question.isEnabled,
     helperText: question.name
 }
@@ -38,7 +37,7 @@ const numProps = {
         inputArray[qIndex].response.userInput = event.target.value
         setFormArray(inputArray)
     },
-    mustImplement:question.mustImplement ? true : false,
+    // mustImplement:question.mustImplement ? true : false,
     min: 0,
     max: 9999999,
     value: 0,
@@ -49,7 +48,6 @@ const numProps = {
 
 const radioProps = {
     className:"radioWrap",
-    labelText: question.title,
     onChange : (event:any)=>{
         const inputArray:any = [...formArray]
         const qIndex = inputArray.findIndex(((obj:any) => obj.id == question.id));
@@ -59,9 +57,7 @@ const radioProps = {
         else{inputArray[qIndex].response.userInput = event.target.value}
         setFormArray(inputArray)
     },
-    helperText: question.name,
     name :question.name,
-    
 }
 const radioButton ={
     className:"radioButton",
@@ -71,13 +67,13 @@ const radioButton ={
 if (question.questionType == 'text') {
     return (
         <div className="SDCQuestion">
-        <TextInput {...textProps}/>
+        {question.mustImplement ? "*" : null}<TextInput {...textProps}/>
         </div>
       )
 } else if (question.questionType == 'number') {
     return (
         <div className="SDCQuestion">
-        <NumberInput {...numProps}/>
+        {question.mustImplement ? "*" : null}<NumberInput {...numProps}/>
         </div>
       )
 } 
@@ -85,7 +81,7 @@ else if (question.questionType == 'single choice') {
     return (
         <div className="SDCQuestion">
         <FormGroup legendText={question.title? question.title : question.id}>
-        <div {...radioProps}>
+        {question.mustImplement ? "*" : null}<div {...radioProps}>
             {question.response.choices.map((choice: any) => {
                 return <RadioButton value={choice.ID} labelText={choice.title} key={choice.name} {...radioButton} defaultChecked={question.response.userInput==choice.id? true:false}/> 
         })}

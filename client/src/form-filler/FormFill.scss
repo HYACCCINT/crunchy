@@ -1,5 +1,10 @@
 .fillerWrap{
     margin-left: 10rem;
+    .bx--text-input-wrapper{
+        width: 20rem;
+        float: none;
+    }
+    
 }
 .fillerForm{
     margin: 2rem;
@@ -21,8 +26,9 @@
     left:2rem;
 }
 .radioWrap{
-    width: 5rem;
+    display: flex;
 }
 .radioButton{
+    float: left;
     align-self: initial;
 }

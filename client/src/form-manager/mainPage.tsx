@@ -37,13 +37,17 @@ export const MainPage = () => {
 }
   return (
     <div className="App">
+    <div className="mainWrap">
       <div className='displayDelete'>
         <TextInput {...txtInputProps}/>
         <Button id="displayButton" kind="tertiary" className="menu-Button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</Button>
         <Button id="deleteButton" kind="danger--tertiary" className="menu-Button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</Button>
       </div>
-      <Button id="uploadButton" kind="tertiary" className="menu-Button" onClick={() => uploadFormAction('new')}>Upload Form</Button>
+      <div className='uploadUpdate'>
+        <Button id="uploadButton" kind="tertiary" className="menu-Button" onClick={() => uploadFormAction('new')}>Upload Form</Button>
         <Button id="updateButton" kind="tertiary" className="menu-Button" onClick={() => uploadFormAction('update')}>Update Form</Button>
+      </div>
+      </div>
     </div>
   );
 };
