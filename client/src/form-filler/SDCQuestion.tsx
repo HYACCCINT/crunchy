@@ -7,7 +7,7 @@ export const SDCQuestion = ({question, formArray, setFormArray} : any) => {
 const inputArray = [...formArray]
 if (question.superQuestionID) {
     const superIndex = formArray.findIndex(((obj:any) => obj.id == question.superQuestionID));
-    if(formArray[superIndex].response.userInput == question.name) {
+    if(formArray[superIndex].response.userInput == question.superAnswerID) {
         question.isEnabled = true;
     }
 }

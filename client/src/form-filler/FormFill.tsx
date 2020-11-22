@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'urql'
-import { formQuery } from '../query'
+import { useQuery, useMutation } from 'urql'
+import { formQuery, updateResQuery } from '../query'
 import {SDCQuestion} from './SDCQuestion'
 import {Button, Form} from 'carbon-components-react'
 
 export const FormFill = () => {
   const { formID } = useParams<{ formID: string }>();
-  const [formVars, setFormVars] = useState<any>({ id: formID })
-
+  const [formVars] = useState<any>({ id: formID })
+  const [,uploadRes] = useMutation(updateResQuery);
   let patientID=0;
   const [input, setInput] = useState<any>({id:`${formID}.res.${patientID}`})
   const [formObj,] = useQuery({
@@ -20,6 +20,7 @@ export const FormFill = () => {
   if (fetching) return (<p>Loading...</p>);
   if (formArray.length == 0) {
     data.form.map((item:any) => {
+      delete item.__typename;
       formArray.push(item);
     })
   }
@@ -44,9 +45,6 @@ export const FormFill = () => {
     )
   }
 
-  const text = { 
-  onChange: (event:any) => setInput({ [event.target.id]:event.target.value, ...input, })
-  }
 
   const renderQuestions = (questions: any) => {
     return (
@@ -96,18 +94,30 @@ export const FormFill = () => {
   }
   
   const response = assemble(formArray);
+const formSubmit = () => {
+  const clone = [...formArray]
+  const time = Date.now()
+  const responseID = `${response.id}-${patientID}-${time.toString()}`
+  // clone.map((item:any) =>{
+  //   item.id = `${item.id}${addOn}`
+  //   if(item.)
+  // })
 
+  response.id = responseID;
+  uploadRes({id: responseID, input: response})
+  console.log(response,"response");
+}
 
   return (
     <div>
       <h3>{response.formID}</h3>
       <h3>{response.name}</h3>
-      <Form>
+      <Form onSubmit={formSubmit}>
       {renderProperties(response)}
       <br></br>
       {renderSections(response.sections)}
       <br></br>
-      <Button type="submit">Submit</Button>
+      <Button onClick={formSubmit}>Submit</Button>
       </Form>
       <p>Footer: {(response.footer)}</p>
     </div>

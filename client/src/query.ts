@@ -58,7 +58,6 @@ query($id: String!) {
 				questionID,
 				responseType,
 				... on SDCMultipleChoiceResponse {
-					inputChoiceId: userInput,
 					choices,
 					canMultiSelect,
 				}
@@ -99,7 +98,6 @@ query($id: String!) {
 			questionID,
 			responseType,
 			... on SDCMultipleChoiceResponse {
-				inputChoiceId: userInput,
 				choices,
 				canMultiSelect,
 			}
@@ -152,7 +150,6 @@ query($id: String!) {
 				questionID,
 				responseType,
 				... on SDCMultipleChoiceResponse {
-					inputChoiceId: userInput,
 					choices,
 					canMultiSelect,
 				}
@@ -195,6 +192,13 @@ mutation($id: String, $input: FormInput) {
 		uri,
 		footer,
         lastModified
+	}
+}
+`;
+export const updateResQuery = `
+mutation($id: String, $input: UserResponse) {
+	updateRes(id: $id, input: $input) {
+		id
 	}
 }
 `;

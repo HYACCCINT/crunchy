@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory} from 'react-router-dom';
-import { fallbackExchangeIO, useMutation, useQuery } from 'urql';
-import { uploadFormQuery, formQuery, allFormQuery} from '../query';
-import {TextInput, Button, Search,DataTable, TableContainer, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, OverflowMenu, OverflowMenuItem} from 'carbon-components-react'
+import {  useQuery } from 'urql';
+import { allFormQuery} from '../query';
+import {Search,DataTable, TableContainer, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, OverflowMenu, OverflowMenuItem} from 'carbon-components-react'
 import './DashBoard.scss'
 
 export const DashBoard = () => {

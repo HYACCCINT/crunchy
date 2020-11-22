@@ -4,7 +4,7 @@ export const schema = buildSchema(`
 	scalar DataSetValue
 	scalar Contact
 	scalar MultipleChoice
-    
+    scalar UserResponse
 	interface SDCQuestionResponse {
 		id: String
 		questionID: String
@@ -153,6 +153,7 @@ export const schema = buildSchema(`
 		updateQuestion(id: String, input: SDCQuestionInput): SDCQuestion
 		updateSection(id: String, input: SDCSectionInput): SDCSection
 		deleteForm(id: String): SDCForm
+		updateRes(id: String, input:UserResponse): SDCForm
 	}
 `);
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fallbackExchangeIO, useMutation, useQuery } from 'urql';
-import { uploadFormQuery, formQuery } from '../query';
+import { useMutation } from 'urql';
+import { uploadFormQuery } from '../query';
 import {TextInput, Button} from 'carbon-components-react'
 
 export const FormUpload = () => {
@@ -38,7 +38,6 @@ export const FormUpload = () => {
   
     let clone = { ...formToUpdate };
     clone = {id: formToUpdate.id, input: {id: formToUpdate.id, xml: fileData.contents}};
-    console.log(clone);
     setFormToUpdate(clone);
     uploadForm(clone);
     alert(`Form was ${action === "new" ? "uploaded" : "updated"} with title: ${fileData.fileName} and procedure ID: ${formToUpdate.procedureID}`);
