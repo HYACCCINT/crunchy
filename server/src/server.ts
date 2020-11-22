@@ -15,6 +15,7 @@ app.use(cors({
 }))
 
 //db api
+app.use(bodyParser.json({ limit: '1mb' }));
 app.use('/graphql',cors(), graphqlHTTP({
 	schema,
 	typeResolver: resolveType,
@@ -28,7 +29,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/apitest/form', async(req: any, res: any) => {
