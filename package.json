@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "bash ./test.sh"
+    "test": "bash ./test.sh",
+    "build": "npx tsc && cd client && npm run build",
+    "iall": "npm i && cd client && npm i && cd .. && cd server && npm i",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
