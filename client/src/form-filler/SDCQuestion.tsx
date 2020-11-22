@@ -31,7 +31,7 @@ const textProps = {
 
 const numProps = {
     id: question.id,
-    labelText: question.title,
+    //labeltext: question.title,
     onChange : (event:any)=>{
         const qIndex = formArray.findIndex(((obj:any) => obj.id == question.id));
         inputArray[qIndex].response.userInput = event.target.value

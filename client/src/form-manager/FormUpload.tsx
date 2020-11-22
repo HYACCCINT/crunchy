@@ -63,12 +63,7 @@ export const FormUpload = () => {
   }
   const updateprocedureID = (event: any) => {
     let newProcedureID = event.currentTarget.value;
-
-    // create random unique id by reversing procedure ID
-    let newID = newProcedureID.split("");
-    newID = newID.reverse();
-    newID = newID.join();
-    setFormToUpdate({id: newID, procedureID: newProcedureID});
+    setFormToUpdate({id: newProcedureID, procedureID: newProcedureID});
     // console.log(state.procedureID);
   }
   const txtInput = { // make sure all required component's inputs/Props keys&types match

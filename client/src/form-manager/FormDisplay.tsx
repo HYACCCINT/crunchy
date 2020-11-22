@@ -13,7 +13,7 @@ export const FormDisplay = () => {
     query: formQuery,
     variables: formVars
   })
-  console.log(formObj,"?");
+  
   const { data, fetching, error } = formObj;
   if (fetching) return (<p>Loading...</p>);
 
