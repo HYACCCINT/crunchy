@@ -34,7 +34,7 @@ export const MainPage = () => {
   id:"FormID",
   labelText:"Form ID",
   onChange: (event:any)=>{
-    setFormID(event.nativeEvent.data)
+    setFormID(event.target.value)
   }
 }
   return (
@@ -43,7 +43,7 @@ export const MainPage = () => {
       <div className='displayDelete'>
         <TextInput {...txtInputProps}/>
         <Button id="displayButton" kind="tertiary" className="menu-Button" onClick={() => handleProcedureIdClick(displayFormAction)}>Display Form</Button>
-        <Button id="deleteButton" kind="danger--tertiary" className="menu-Button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</Button>
+        <Button id="deleteButton" kind="danger" className="menu-Button" onClick={() => handleProcedureIdClick(deleteFormAction)}>Delete Form</Button>
       </div>
       <div className='uploadUpdate'>
         <Button id="uploadButton" kind="tertiary" className="menu-Button" onClick={() => uploadFormAction('new')}>Upload Form</Button>
