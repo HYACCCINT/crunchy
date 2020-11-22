@@ -3,13 +3,12 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from 'urql'
 import { formQuery, updateResQuery } from '../query'
 import {SDCQuestion} from './SDCQuestion'
-import {Button, Form} from 'carbon-components-react'
+import {Button, Form, TextInput} from 'carbon-components-react'
 import "./FormFill.scss"
 export const FormFill = () => {
   const { formID } = useParams<{ formID: string }>();
- 
+  const [patientID, setPatientID] = useState<any>(0)
   const [,uploadRes] = useMutation(updateResQuery);
-  let patientID=0;
   const [input, setInput] = useState<any>({id:`${formID}.res.${patientID}`})
 
   const [formArray, setFormArray] = useState<any>([]);
@@ -99,6 +98,14 @@ export const FormFill = () => {
   }
   const response = assemble(formArray);
   
+  const textProps = {
+    id: 'patientID',
+    labelText: 'Patient ID',
+    onChange : (event:any)=>{
+      setPatientID(event.target.value)
+    },
+    helperText: 'Enter Patient ID'
+}
 const formSubmit = () => {
   const time = Date.now()
   const responseID = `${response.id}-${patientID}-${time.toString()}`
@@ -111,6 +118,7 @@ const formSubmit = () => {
       <h3>{response.formID}</h3>
       <h3>{response.name}</h3>
       {renderProperties(response)}
+      <TextInput {...textProps}/>
     </div>
       <Form onSubmit={formSubmit} className="fillerForm">
       <br></br>
