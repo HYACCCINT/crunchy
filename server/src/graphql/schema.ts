@@ -4,7 +4,8 @@ export const schema = buildSchema(`
 	scalar DataSetValue
 	scalar Contact
 	scalar MultipleChoice
-    
+	scalar UserResponse
+	scalar InputType
 	interface SDCQuestionResponse {
 		id: String
 		questionID: String
@@ -14,7 +15,7 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
-		userInput: [String]
+		userInput: InputType
 		choices: [MultipleChoice]
 		canMultiSelect: Boolean
 	}
@@ -22,14 +23,14 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
-		userInput: String
+		userInput: InputType
 		defaultValue: String
 	}
 	type SDCIntResponse implements SDCQuestionResponse {
 		id: String
 		questionID: String
 		responseType: String
-		userInput: Int
+		userInput: InputType
 		defaultValue: Int
 	}
     type SDCQuestion {
@@ -128,7 +129,7 @@ export const schema = buildSchema(`
 	input SDCQuestionResponseInput {
 		id: String
 		questionID: String
-		userInput: [String]
+		userInput: InputType
 	}
 	input SDCFormResponseInput {
 		id: String
@@ -154,6 +155,7 @@ export const schema = buildSchema(`
 		updateQuestion(id: String, input: SDCQuestionInput): SDCQuestion
 		updateSection(id: String, input: SDCSectionInput): SDCSection
 		deleteForm(id: String): SDCForm
+		updateRes(id: String, input:UserResponse): SDCForm
 	}
 `);
 

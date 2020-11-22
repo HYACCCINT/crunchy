@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fallbackExchangeIO, useMutation, useQuery } from 'urql';
-import { uploadFormQuery, formQuery } from '../query';
+import { useMutation } from 'urql';
+import { uploadFormQuery } from '../query';
+import {TextInput, Button} from 'carbon-components-react'
 
 export const FormUpload = () => {
   const { action } = useParams<{ action: string }>();
@@ -37,7 +38,6 @@ export const FormUpload = () => {
   
     let clone = { ...formToUpdate };
     clone = {id: formToUpdate.id, input: {id: formToUpdate.id, xml: fileData.contents}};
-    console.log(clone);
     setFormToUpdate(clone);
     uploadForm(clone);
     alert(`Form was ${action === "new" ? "uploaded" : "updated"} with title: ${fileData.fileName} and procedure ID: ${formToUpdate.procedureID}`);
@@ -71,19 +71,21 @@ export const FormUpload = () => {
     setFormToUpdate({id: newID, procedureID: newProcedureID});
     // console.log(state.procedureID);
   }
+  const txtInput = { // make sure all required component's inputs/Props keys&types match
+  id:"FormID",
+  labelText:"Form ID",
+  onChange: updateprocedureID
+}
   return (
     <div className="update-form-container">
       <h1>{action === "new" ? "Upload" : "Update"} a Form</h1>
       <form id="FormUpdate" onSubmit={handleSubmit}>
-        <label>
-          Procedure ID:
-          <input type="text" onChange={updateprocedureID}/>
-        </label>
+          <TextInput {...txtInput}/>
         <label>
           File:
           <input type="file" onChange={updateFile}/>
         </label>
-        <input type="submit" value="Submit" />
+        <Button type="submit" kind="tertiary">Submit</Button>
       </form>
     </div>
   )

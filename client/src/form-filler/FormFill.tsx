@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'urql'
-import { formQuery } from '../query'
-import {SDCQuestion} from '../form-filler/SDCQuestion'
-import {Button, Form} from 'carbon-components-react'
-import "../form-filler/FormFill.scss"
-export const FormDisplay = () => {
-  const { procedureId } = useParams<{ procedureId: string }>();
+import { useQuery, useMutation } from 'urql'
+import { formQuery, updateResQuery } from '../query'
+import {SDCQuestion} from './SDCQuestion'
+import {Button, Form, TextInput} from 'carbon-components-react'
+import "./FormFill.scss"
+export const FormFill = () => {
+  const { formID } = useParams<{ formID: string }>();
+  const [patientID, setPatientID] = useState<any>(0)
+  const [,uploadRes] = useMutation(updateResQuery);
+
   const [formArray, setFormArray] = useState<any>([]);
-  const [formVars] = useState<any>({ id: procedureId })
+  const [formVars] = useState<any>({ id: formID })
   const [formObj,] = useQuery({
     query: formQuery,
     variables: formVars
   })
-  console.log(formObj,"?");
   const { data, fetching, error } = formObj;
   if (fetching) return (<p>Loading...</p>);
 
@@ -94,17 +96,34 @@ export const FormDisplay = () => {
     return question;
   }
   const response = assemble(formArray);
+  
+  const textProps = {
+    id: 'patientID',
+    labelText: 'Patient ID',
+    onChange : (event:any)=>{
+      setPatientID(event.target.value)
+    },
+    helperText: 'Enter Patient ID'
+}
+const formSubmit = () => {
+  const time = Date.now()
+  const responseID = `${response.id}-${patientID}-${time.toString()}`
+  response.id = responseID;
+  uploadRes({id: responseID, input: response})
+}
   return (
     <div className="fillerWrap">
     <div className="fillerHead">
       <h3>{response.formID}</h3>
       <h3>{response.name}</h3>
       {renderProperties(response)}
+      <TextInput {...textProps}/>
     </div>
-      <Form  className="fillerForm">
+      <Form onSubmit={formSubmit} className="fillerForm">
       <br></br>
       {renderSections(response.sections)}
       <br></br>
+      <Button onClick={formSubmit}>Submit</Button>
       </Form>
       <p className="footer">Footer: {(response.footer)}</p>
     </div>

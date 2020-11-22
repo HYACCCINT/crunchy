@@ -58,16 +58,16 @@ query($id: String!) {
 				questionID,
 				responseType,
 				... on SDCMultipleChoiceResponse {
-					inputChoiceId: userInput,
 					choices,
 					canMultiSelect,
+					userInput: userInput,
 				}
 				... on SDCIntResponse {
-					inputNum: userInput,
+					userInput: userInput,
 					defaultNum: defaultValue,
 				}
 				... on SDCTextResponse {
-					inputText: userInput,
+					userInput: userInput,
 					defaultText: defaultValue,
 				}
 			},
@@ -99,17 +99,19 @@ query($id: String!) {
 			questionID,
 			responseType,
 			... on SDCMultipleChoiceResponse {
-				inputChoiceId: userInput,
 				choices,
 				canMultiSelect,
+				userInput: userInput,
 			}
 			... on SDCIntResponse {
 				inputNum: userInput,
 				defaultNum: defaultValue,
+				userInput: userInput,
 			}
 			... on SDCTextResponse {
 				inputText: userInput,
 				defaultText: defaultValue,
+				userInput: userInput,
 			}
 		},
 		textAfterResponse,
@@ -152,16 +154,16 @@ query($id: String!) {
 				questionID,
 				responseType,
 				... on SDCMultipleChoiceResponse {
-					inputChoiceId: userInput,
 					choices,
 					canMultiSelect,
+					userInput: userInput,
 				}
 				... on SDCIntResponse {
-					inputNum: userInput,
+					userInput: userInput,
 					defaultNum: defaultValue,
 				}
 				... on SDCTextResponse {
-					inputText: userInput,
+					userInput: userInput,
 					defaultText: defaultValue,
 				}
 			},
@@ -195,6 +197,13 @@ mutation($id: String, $input: FormInput) {
 		uri,
 		footer,
         lastModified
+	}
+}
+`;
+export const updateResQuery = `
+mutation($id: String, $input: UserResponse) {
+	updateRes(id: $id, input: $input) {
+		id
 	}
 }
 `;

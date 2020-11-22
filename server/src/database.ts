@@ -213,10 +213,10 @@ class Database {
 			console.error(exception);
 			throw exception;
 		}
-		if (!formObj || formObj.type !== 'form') {
+		if (!formObj || formObj.docType !== 'SDCForm') {
 			throw 'Item not found';
 		}
-		return this.delete(formObj.id, req);
+		return await this.delete(id, req);
 	}
 
 	initializeViews(folderName = 'db-views') {
@@ -263,7 +263,7 @@ class Database {
 							}
 						}
 					});
-
+				console.log(designDocument);
 				this.db.insert({ views }, `_design/${designDocument.name}`);
 			});
 	}
@@ -308,7 +308,7 @@ class Database {
 	}
 
 	async parseXMLSection(superID: string, sectionObj: any, previousVersion: any, req: any): Promise<any> {
-		const sectionID = superID + '.' + sectionObj.$.ID;
+		const sectionID = superID + '-' + sectionObj.$.ID;
 		let section: any = {
 			_id: sectionID,
 			title: sectionObj.$.title,
@@ -351,6 +351,7 @@ class Database {
 			name: questionObj.$.name,
 			type: questionObj.$.type,
 			docType: "SDCQuestion",
+			path: superSectionID? superSectionID.split('-'): [],
 			superSectionID: superSectionID,
 			superQuestionID: superQuestionID,
 			superAnswerID: superAnswerID,
