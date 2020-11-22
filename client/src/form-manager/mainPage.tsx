@@ -33,7 +33,9 @@ export const MainPage = () => {
   const txtInputProps = { // make sure all required component's inputs/Props keys&types match
   id:"FormID",
   labelText:"Form ID",
-  onChange: (event:any)=>setFormID(event)
+  onChange: (event:any)=>{
+    setFormID(event.nativeEvent.data)
+  }
 }
   return (
     <div className="App">

@@ -213,10 +213,10 @@ class Database {
 			console.error(exception);
 			throw exception;
 		}
-		if (!formObj || formObj.type !== 'form') {
+		if (!formObj || formObj.docType !== 'SDCForm') {
 			throw 'Item not found';
 		}
-		return this.delete(formObj.id, req);
+		return await this.delete(id, req);
 	}
 
 	initializeViews(folderName = 'db-views') {
