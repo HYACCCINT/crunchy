@@ -4,7 +4,7 @@ import { useQuery, useMutation } from 'urql'
 import { formQuery, updateResQuery } from '../query'
 import {SDCQuestion} from './SDCQuestion'
 import {Button, Form} from 'carbon-components-react'
-
+import "./FormFill.scss"
 export const FormFill = () => {
   const { formID } = useParams<{ formID: string }>();
   const [formVars] = useState<any>({ id: formID })
@@ -29,12 +29,12 @@ export const FormFill = () => {
       return null;
     }
     return (
-      <div>
+      <div className='sectionWrap'>
         {sections.map((section: any) => {
           if (section === null) return null;
           return (
             <div>
-              <p>Section {section.name}: {section.title}</p>
+              <p className="sectionTitle">Section {section.name}: {section.title}</p>
               {section.mustImplement ? <p>* Must Complete this section</p> : null}
               {renderQuestions(section.questions)}
               {renderSections(section.subSections)}
@@ -58,7 +58,7 @@ export const FormFill = () => {
   }
   const renderProperties = (data: any) => {
     return (
-      <div>
+      <div className="fillerProperties">
         <h5>Title: {data.title}</h5>
         <h6>Version: {data.lastModified}</h6>
         {/*<h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>*/}
@@ -95,31 +95,27 @@ export const FormFill = () => {
   
   const response = assemble(formArray);
 const formSubmit = () => {
-  const clone = [...formArray]
   const time = Date.now()
   const responseID = `${response.id}-${patientID}-${time.toString()}`
-  // clone.map((item:any) =>{
-  //   item.id = `${item.id}${addOn}`
-  //   if(item.)
-  // })
-
   response.id = responseID;
   uploadRes({id: responseID, input: response})
   console.log(response,"response");
 }
 
   return (
-    <div>
+    <div className="fillerWrap">
+    <div className="fillerHead">
       <h3>{response.formID}</h3>
       <h3>{response.name}</h3>
-      <Form onSubmit={formSubmit}>
       {renderProperties(response)}
+    </div>
+      <Form onSubmit={formSubmit} className="fillerForm">
       <br></br>
       {renderSections(response.sections)}
       <br></br>
       <Button onClick={formSubmit}>Submit</Button>
       </Form>
-      <p>Footer: {(response.footer)}</p>
+      <p className="footer">Footer: {(response.footer)}</p>
     </div>
   )
 };
