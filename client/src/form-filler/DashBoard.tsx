@@ -44,7 +44,7 @@ export const DashBoard = () => {
             {rows.map((row:any) => (
               <TableRow key={row.id}>
                 {row.cells.map((cell:any) => (
-                  <TableCell key={cell.id} onClick={()=>history.push('/fill/' + row.id)}>{cell.value}</TableCell>
+                  <TableCell key={cell.id} onClick={()=>history.push('/formfill/' + row.id)}>{cell.value}</TableCell>
 ))}
                 {/* <TableCell className="bx--table-column-menu">
                   <OverflowMenu light flipped>

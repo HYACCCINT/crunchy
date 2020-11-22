@@ -5,10 +5,12 @@ import {TextInput, NumberInput, RadioButtonGroup, RadioButton, FormGroup} from '
 export const SDCQuestion = ({question, formArray, setFormArray} : any) => {
 
 const inputArray = [...formArray]
-if (question.superQuestionID) {
+if (question.superQuestionID != null) {
     const superIndex = formArray.findIndex(((obj:any) => obj.id == question.superQuestionID));
     if(formArray[superIndex].response.userInput == question.superAnswerID) {
         question.isEnabled = true;
+    }else {
+        question.isEnabled = false;
     }
 }
 
@@ -21,8 +23,8 @@ const textProps = {
         setFormArray(inputArray)
     },
     mustImplement:question.mustImplement ? true : false,
-    defaultValue: question.response.userInput,
-    disabled: question.isEnabled == null ? false : question.isEnabled,
+    // defaultValue: question.response.userInput,
+    disabled: question.isEnabled == null ? false : !question.isEnabled,
     helperText: question.name
 }
 
@@ -35,12 +37,12 @@ const numProps = {
         setFormArray(inputArray)
     },
     mustImplement:question.mustImplement ? true : false,
-    defaultValue: question.response.userInput,
+    // defaultValue: question.response.userInput,
     min: 0,
     max: 9999999,
     value: 0,
     step: 1,
-    disabled:question.isEnabled == null ? false : question.isEnabled,
+    disabled:question.isEnabled == null ? false : !question.isEnabled,
     helperText: question.name
 }
 const radioProps = {
@@ -51,13 +53,13 @@ const radioProps = {
         inputArray[qIndex].response.userInput = event
         setFormArray(inputArray)
     },
-    disabled:question.isEnabled == null ? false : question.isEnabled,
+    disabled:question.isEnabled == null ? false : !question.isEnabled,
     helperText: question.name,
     name :question.name,
-    defaultSelected:question.response.userInput
+    // defaultSelected:question.response.userInput
 }
 const radioButton ={
-    disabled:question.isEnabled == null ? false : question.isEnabled,
+    disabled:question.isEnabled == null ? false : !question.isEnabled,
 }
 if (question.questionType == 'text') {
     return (
@@ -78,7 +80,7 @@ else if (question.questionType == 'single choice') {
         <FormGroup legendText={question.title? question.title : question.id}>
         <RadioButtonGroup {...radioProps}>
             {question.response.choices.map((choice: any) => {
-                return <RadioButton value={choice.name} labelText={choice.title} key={choice.name} {...radioButton}/>
+                return <RadioButton value={choice.id} labelText={choice.title} key={choice.name} {...radioButton}/>
         })}
         </RadioButtonGroup>
         </FormGroup>

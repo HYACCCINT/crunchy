@@ -50,8 +50,11 @@ export const FormFill = () => {
     return (
       <div>
         {questions.map((question: any) => {
-          return <SDCQuestion  question={question} formArray={formArray} setFormArray={setFormArray}/>
-
+          const qIndex = formArray.findIndex(((obj:any) => obj.id == question.id));
+          return <div> 
+            <SDCQuestion  question={formArray[qIndex]} formArray={formArray} setFormArray={setFormArray}/>
+            {question.subQuestions? renderQuestions(question.subQuestions):null}
+          </div>
         })}
       </div>
     )
@@ -94,6 +97,7 @@ export const FormFill = () => {
   }
   
   const response = assemble(formArray);
+  
 const formSubmit = () => {
   const time = Date.now()
   const responseID = `${response.id}-${patientID}-${time.toString()}`
@@ -101,7 +105,9 @@ const formSubmit = () => {
   uploadRes({id: responseID, input: response})
   console.log(response,"response");
 }
-
+// console.log(formArray.filter((item:any) => {
+//   return item.docType=='SDCQuestion' && item.superQuestionID !== null
+// }),"form");
   return (
     <div className="fillerWrap">
     <div className="fillerHead">

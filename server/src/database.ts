@@ -351,7 +351,7 @@ class Database {
 			name: questionObj.$.name,
 			type: questionObj.$.type,
 			docType: "SDCQuestion",
-			path: superSectionID.split('-'),
+			path: superSectionID? superSectionID.split('-'): [],
 			superSectionID: superSectionID,
 			superQuestionID: superQuestionID,
 			superAnswerID: superAnswerID,
