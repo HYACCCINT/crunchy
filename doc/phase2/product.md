@@ -12,7 +12,7 @@ The biggest challenge we faced was Graphql’s insistence that we not put arbitr
 ## Teamwork and Process
 Our progress was smoother in P2 compared to P1 due to teammates already being familiar with the workflow and having some idea of what to get done. We set up and used the [Zenhub board](https://github.com/csc302-fall-2020/proj-crunchycoders#zenhub) for our tasks better after some guidance, and we made the task more granular into things that could be done in a single “after dinner work session”. This was helpful in defining exactly what people were doing and keeping track of the progress better. The snags included a few teammates leaving the project mid-way and the lack of time compared to the amount of work that was needed. First our teammate Muskan simply stopped communicating at all, and we have not heard from her for weeks now. Then two weeks into P2, Cherise left the course, leaving us with just 3 people total. After that, we had to triage and focus on the big stuff like form filling and dependent questions, and each one of us were working on a big chunk of the application generally on our own.
 This is a screenshot of the Zenhub board showing various Epic issues and their granular tasks: 
-![Image](https://imgur.com/a/J5XCxip)
+![Image](https://i.imgur.com/v12xZep.png)
 
 We also held a weekly meeting and had tasks defined for us individually each meeting in order to ensure everyone stayed on-track. This is an example of our weekly meeting notes:
 ```
