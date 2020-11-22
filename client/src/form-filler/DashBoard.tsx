@@ -18,8 +18,11 @@ export const DashBoard = () => {
   }
   const overflow = { 
   itemText:"Fill",
-  onClick: (row:any) => history.push('/fill/' + row.id)
+  onClick: (row:any) => history.push('/fillform/' + row.id)
 }
+
+
+
   let rows = resultAll.data? resultAll.data.forms.map((item:any)=>  ({id: item.id, procedureID:item.procedureID, lastm: item.lastModified})): [];
   const headers = [{key:"id", header:"ID"}, {key:"procedureID", header:"Procedure ID"}, {key:"lastm", header:"Last Modifed"}]
   return (

@@ -7,17 +7,20 @@ import {Button, Form} from 'carbon-components-react'
 import "./FormFill.scss"
 export const FormFill = () => {
   const { formID } = useParams<{ formID: string }>();
-  const [formVars] = useState<any>({ id: formID })
+ 
   const [,uploadRes] = useMutation(updateResQuery);
   let patientID=0;
   const [input, setInput] = useState<any>({id:`${formID}.res.${patientID}`})
+
+  const [formArray, setFormArray] = useState<any>([]);
+  const [formVars] = useState<any>({ id: formID })
   const [formObj,] = useQuery({
     query: formQuery,
     variables: formVars
   })
-  const [formArray, setFormArray] = useState<any>([]);
   const { data, fetching, error } = formObj;
   if (fetching) return (<p>Loading...</p>);
+
   if (formArray.length == 0) {
     data.form.map((item:any) => {
       delete item.__typename;
@@ -50,9 +53,8 @@ export const FormFill = () => {
     return (
       <div>
         {questions.map((question: any) => {
-          const qIndex = formArray.findIndex(((obj:any) => obj.id == question.id));
           return <div> 
-            <SDCQuestion  question={formArray[qIndex]} formArray={formArray} setFormArray={setFormArray}/>
+            <SDCQuestion  questionID={question.id} formArray={formArray} setFormArray={setFormArray}/>
             {question.subQuestions? renderQuestions(question.subQuestions):null}
           </div>
         })}
@@ -95,7 +97,6 @@ export const FormFill = () => {
     question.subQuestions = subQuestions;
     return question;
   }
-  
   const response = assemble(formArray);
   
 const formSubmit = () => {
@@ -103,11 +104,7 @@ const formSubmit = () => {
   const responseID = `${response.id}-${patientID}-${time.toString()}`
   response.id = responseID;
   uploadRes({id: responseID, input: response})
-  console.log(response,"response");
 }
-// console.log(formArray.filter((item:any) => {
-//   return item.docType=='SDCQuestion' && item.superQuestionID !== null
-// }),"form");
   return (
     <div className="fillerWrap">
     <div className="fillerHead">
