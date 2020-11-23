@@ -96,7 +96,6 @@ export const FormFill = () => {
     return question;
   }
   const response = assemble(formArray);
-  
   const textProps = {
     id: 'patientID',
     labelText: 'Patient ID',
@@ -109,7 +108,8 @@ const formSubmit = () => {
   const time = Date.now()
   const responseID = `${response.id}-${patientID}-${time.toString()}`
   response.id = responseID;
-  uploadRes({id: responseID, input: response})
+  uploadRes({id: responseID, input: response});
+  console.log(response);
 }
   return (
     <div className="fillerWrap">
