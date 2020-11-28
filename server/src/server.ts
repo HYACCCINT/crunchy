@@ -4,6 +4,13 @@ import { graphqlHTTP } from 'express-graphql';
 import { root, schema, resolveType } from './graphql';
 import { router } from './rest';
 import cors from 'cors';
+
+const guestUser = {
+	id: 'guest',
+	docType: 'user',
+	permissions:['read']
+};
+
 const app = express();
 const port = process.env.PORT || 5000;
 // cors temp
@@ -11,8 +18,19 @@ app.use(cors())
 app.use(cors({
   credentials: true,
   //to be changed in production
-	origin: [ 'http://localhost:5000']
+	origin: [ 'http://localhost:5000', 'http://localhost:3000']
 }))
+
+/**
+ * If guest user is logged in, here is where it becomes an object on req.
+ */
+app.use('*', (req: any, res: any, next: any) => {
+	if (req.session && req.session.user && !req.user) {
+		// We're a guest user now!
+		req.user = guestUser;
+	}
+	next();
+});
 
 //db api
 app.use(bodyParser.json({ limit: '1mb' }));
@@ -30,7 +48,26 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+function checkAuthentication(req: any, res: any, next: any) {
+try {
+		next();
+	} catch (error){
+		res.status('401').json({ error: 'unauthorized' });
+	}
+}
+app.get('/api/guest-login', async(req: any, res: any) => {
+	req.session.user = guestUser;
+	res.redirect("localhost:3000/dashboard");
+});
 
+app.get('/api/user', checkAuthentication, async(req: any, res: any) => {
+	try {
+		const user = guestUser;
+		res.json(user);
+	} catch (error) {
+		res.status('404').json({ error: 'User not found' });
+	}
+});
 app.get('/apitest/form', async(req: any, res: any) => {
 	try {
     const form = await root.form({ id: req.body.id }, req);
