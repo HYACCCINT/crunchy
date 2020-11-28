@@ -67,6 +67,11 @@ export const FormFill = () => {
         {/*<h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>*/}
         <h6>Lineage: {data.lineage}</h6>
         {data.patientID !== "template" ? <h5>Patient: {data.patientID}</h5> : null}
+        {data.arbitraryProperties ? data.arbitraryProperties.map((item: any) => {
+          item ? <div className="arbitraryProperties">{
+            Object.entries(item).map((entry: any) => <h6 className="arbitraryProperty">{JSON.stringify(entry[0])}: {JSON.stringify(entry[1])}</h6>)
+          }</div>
+        }) : ""}
       </div>
     )
   }
