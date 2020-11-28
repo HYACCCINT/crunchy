@@ -315,6 +315,7 @@ class Database {
 			docType: "SDCSection",
 			name: sectionObj.$.type,
 			properties: sectionObj.Property ? sectionObj.Property.map((item: any) => item.$) : [],
+			mustImplement: sectionObj.$.mustImplement && sectionObj.$.mustImplement === "false" ? false : true,
 			superSectionID: superID,
 			subSectionIDs: [],
 			questions: [],
