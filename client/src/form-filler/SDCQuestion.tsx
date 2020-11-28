@@ -90,10 +90,10 @@ else if (question.questionType == 'single choice') {
         <div {...radioProps}>
             {question.response.choices.map((choice: any) => {
                 let text = choice.title;
-                if(question.arbitraryProperties) {
-                    for(let [key, value] of question.arbitraryProperties.map((item: any) => Object.entries(item))){
+                if(question.response.arbitraryProperties && question.response.arbitraryProperties.length !== 0) {
+                    for(let [[key, value]] of question.response.arbitraryProperties.map((item: any) => Object.entries(item))){
                         if(Array.isArray(value) && value.length === question.response.choices.length) {
-                            text = `${text}, ${JSON.stringify(key)}: ${JSON.stringify(value[question.response.choices.indexOf(choice)])}`;
+                            text = text + ", " + JSON.stringify(key) + ": " + JSON.stringify(value[question.response.choices.indexOf(choice)]);
                         }
                     }
                 }
