@@ -348,6 +348,7 @@ class Database {
 		let question: any = {
 			id: questionObj.$.ID,
 			title: questionObj.$.title,
+			mustImplement: questionObj.$.mustImplement && questionObj.$.mustImplement === "false" ? false : true,
 			name: questionObj.$.name,
 			type: questionObj.$.type,
 			docType: "SDCQuestion",
