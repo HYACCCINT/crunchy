@@ -6,7 +6,7 @@ export const SDCQuestion = ({questionID, formArray, setFormArray} : any) => {
 const questionIndex=formArray.findIndex(((obj:any) => obj.id == questionID));
 const question:any= formArray[questionIndex];
 const inputArray = [...formArray]
-
+console.log(inputArray.filter((obj)=>obj.questionType =='number'));
 if (question.superQuestionID != null) {
     const superIndex = formArray.findIndex(((obj:any) => obj.id == question.superQuestionID));
     if(formArray[superIndex].response.userInput == question.superAnswerID) {
@@ -34,7 +34,10 @@ const numProps = {
     //labeltext: question.title,
     onChange : (event:any)=>{
         const qIndex = formArray.findIndex(((obj:any) => obj.id == question.id));
-        inputArray[qIndex].response.userInput = event.target.value
+        inputArray[qIndex]['response']={
+            userInput : event.imaginaryTarget.value
+        }
+        // inputArray[qIndex].response.userInput = event.imaginaryTarget.value;
         setFormArray(inputArray)
     },
     // mustImplement:question.mustImplement ? true : false,
