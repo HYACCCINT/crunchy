@@ -34,7 +34,17 @@ const numProps = {
     //labeltext: question.title,
     onChange : (event:any)=>{
         const qIndex = formArray.findIndex(((obj:any) => obj.id == question.id));
-        inputArray[qIndex].response.userInput = event.target.value
+        if(inputArray[qIndex].response.userInput === null){
+            inputArray[qIndex].response.userInput = 0;
+        }
+        if(event.target.value)
+            inputArray[qIndex].response.userInput = isNaN(parseInt(event.target.value)) ? inputArray[qIndex].response.userInput : parseInt(event.target.value);
+        else if (event.target.title === "Increment number"){
+            inputArray[qIndex].response.userInput = parseInt(inputArray[qIndex].response.userInput) + 1;
+        }
+        else if (event.target.title === "Decrement number"){
+            inputArray[qIndex].response.userInput = parseInt(inputArray[qIndex].response.userInput) - 1;
+        }
         setFormArray(inputArray)
     },
     // mustImplement:question.mustImplement ? true : false,

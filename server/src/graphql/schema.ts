@@ -165,7 +165,7 @@ export const resolveType = (obj: any, context: any, info: any): string => {
 	}
 	else if(obj.responseType && obj.responseType.includes("single choice")) return "SDCMultipleChoiceResponse";
 	else if(obj.responseType === "text") return "SDCTextResponse";
-	else if(obj.responseType === "num") return "SDCIntResponse";
+	else if(obj.responseType === "number") return "SDCIntResponse";
 	else {
 		return null;
 	}
