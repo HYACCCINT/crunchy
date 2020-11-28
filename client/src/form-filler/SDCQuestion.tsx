@@ -112,7 +112,7 @@ else {
 const renderArbitraryQuestionProperties = (question: any) => {
     return (<div>
         {question.arbitraryProperties ? question.arbitraryProperties.map((item: any) => {
-          item ? <div className="arbitraryQuestionProperties">{
+          return item ? <div className="arbitraryQuestionProperties">{
             Object.entries(item).map((entry: any) => <h6 className="arbitraryQuestionProperty">{JSON.stringify(entry[0])}: {JSON.stringify(entry[1])}</h6>)
           }</div> : ""
         }) : ""}

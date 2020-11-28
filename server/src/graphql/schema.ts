@@ -18,6 +18,7 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 		userInput: InputType
 		choices: [MultipleChoice]
 		canMultiSelect: Boolean
@@ -26,6 +27,7 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 		userInput: InputType
 		defaultValue: String
 	}
@@ -33,6 +35,7 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 		userInput: InputType
 		defaultValue: Int
 	}
