@@ -4,6 +4,8 @@ import { graphqlHTTP } from 'express-graphql';
 import { root, schema, resolveType } from './graphql';
 import { router } from './rest';
 import cors from 'cors';
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const guestUser = {
 	id: 'guest',
@@ -21,13 +23,25 @@ app.use(cors({
 	origin: [ 'http://localhost:5000', 'http://localhost:3000']
 }))
 
+app.use(cookieParser());
+
+// Setup express application to use express-session middleware
+// Must be configured with proper session storage for production
+// environments. See https://github.com/expressjs/session for
+// additional documentation
+app.use(session({
+	secret: '123456',
+	resave: true,
+	saveUninitialized: true
+}));
+
 /**
  * If guest user is logged in, here is where it becomes an object on req.
  */
 app.use('*', (req: any, res: any, next: any) => {
 	if (req.session && req.session.user && !req.user) {
 		// We're a guest user now!
-		req.user = guestUser;
+		req.user = res.user;
 	}
 	next();
 });
@@ -55,6 +69,7 @@ try {
 		res.status('401').json({ error: 'unauthorized' });
 	}
 }
+
 app.get('/api/guest-login', async(req: any, res: any) => {
 	req.session.user = guestUser;
 	res.redirect("localhost:3000/dashboard");
@@ -68,6 +83,7 @@ app.get('/api/user', checkAuthentication, async(req: any, res: any) => {
 		res.status('404').json({ error: 'User not found' });
 	}
 });
+
 app.get('/apitest/form', async(req: any, res: any) => {
 	try {
     const form = await root.form({ id: req.body.id }, req);

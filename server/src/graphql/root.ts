@@ -44,6 +44,15 @@ export const root = {
 			throw error;
 		}
 	},
+	user: async({ id }: { id: string }, context: any) => {
+		try {
+			const user = await database.getUser(id, context);
+			return user;
+		} catch (error) {
+			console.error('get user error:', error);
+			throw error;
+		}
+	},
 	updateForm: async({ id, input }: { id: string, input: any }, context: any) => {
 		try {
 			await database.updateForm(id, input, context);
@@ -104,6 +113,23 @@ export const root = {
 			return await database.deleteForm(id, context);
 		} catch (error) {
 			console.error('delete form error:', error);
+			throw error;
+		}
+	},
+	updateUser: async({ id, user }: { id: string, user: any }, context: any) => {
+		try {
+			return await database.updateUser(id, user, context);
+		} catch (error) {
+			console.error('update user error:', error);
+			throw error;
+		}
+	},
+	registerUser: async(user: any) => {
+		try {
+			await database.registerUser(user);
+			return user;
+		} catch (error) {
+			console.error('register user error:', error);
 			throw error;
 		}
 	}
