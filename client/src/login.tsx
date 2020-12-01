@@ -31,11 +31,13 @@ const guestLogin = (type: string) => fetch(`http://localhost:5000/api/${type}-gu
         }
         response.json().then((res:any)=>{ userState.setState({status: 'success',
 		error: null,user:res.user}); history.push(res.url);return res;})
-	});
+    });
+    console.log("user", userState.state);
   return (
     <div className="App">
     <div className="mainWrap">
       <div className='loginreg'>
+      Login
         <TextInput {...userNameProps}/>
         <TextInput {...pwdProps}/>
         <Button id="loginbtn" kind="primary" className="menu-Button" >Login</Button>

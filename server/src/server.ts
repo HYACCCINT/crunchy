@@ -76,12 +76,12 @@ try {
 }
 app.get('/api/filler-guest-login', async(req: any, res: any) => {
 	req.session.user = fillerUser;
-	req.user =fillerUser;
+	req.user = fillerUser;
 	res.json({user: fillerUser, url:'/fill'})
 });
 app.get('/api/manager-guest-login', async(req: any, res: any) => {
 	req.session.user = managerUser;
-	req.user =managerUser;
+	req.user = managerUser;
 	res.json({user: managerUser, url:'/manage'})
 });
 

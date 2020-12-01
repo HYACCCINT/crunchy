@@ -87,7 +87,6 @@ export const ProtectedRoute = ({
 			return false;
 		}
 	}
-console.log(rest, "Dfdsfsdfsdf");
 	return <Route {...rest} render={(props) => (
 		isAuthenticated
 			? isAuthenticated({ auth })
