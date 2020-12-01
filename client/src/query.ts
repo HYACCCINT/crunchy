@@ -27,7 +27,8 @@ query($id: String!) {
 			sectionIDs,
 			uri,
 			footer,
-			lastModified
+			lastModified,
+			arbitraryProperties,
 		}
 		... on SDCSection {
 			id,
@@ -40,6 +41,7 @@ query($id: String!) {
 			maxCard,
 			subSectionIDs,
 			superSectionID,
+			arbitraryProperties,
 		}
 		... on SDCQuestion {
 			id,
@@ -57,6 +59,7 @@ query($id: String!) {
 				id,
 				questionID,
 				responseType,
+				arbitraryProperties,
 				... on SDCMultipleChoiceResponse {
 					choices,
 					canMultiSelect,
@@ -75,6 +78,7 @@ query($id: String!) {
 			superSectionID,
 			superQuestionID,
 			superAnswerID,
+			arbitraryProperties,
 		}
 	}
 }
@@ -98,6 +102,7 @@ query($id: String!) {
 			id,
 			questionID,
 			responseType,
+			arbitraryProperties,
 			... on SDCMultipleChoiceResponse {
 				choices,
 				canMultiSelect,
@@ -118,6 +123,7 @@ query($id: String!) {
 		superSectionID,
 		superQuestionID,
 		superAnswerID,
+		arbitraryProperties,
 	}
 }
 `;
@@ -136,6 +142,7 @@ query($id: String!) {
 			maxCard,
 			subSectionIDs,
 			superSectionID,
+			arbitraryProperties,
 		}
 		... on SDCQuestion {
 			id,
@@ -153,6 +160,7 @@ query($id: String!) {
 				id,
 				questionID,
 				responseType,
+				arbitraryProperties,
 				... on SDCMultipleChoiceResponse {
 					choices,
 					canMultiSelect,
@@ -171,6 +179,7 @@ query($id: String!) {
 			superSectionID,
 			superQuestionID,
 			superAnswerID,
+			arbitraryProperties,
 		}
 	}
 }
@@ -196,7 +205,8 @@ mutation($id: String, $input: FormInput) {
 		sections,
 		uri,
 		footer,
-        lastModified
+		lastModified,
+		arbitraryProperties,
 	}
 }
 `;
@@ -233,7 +243,8 @@ mutation($id: String, $input: SDCQuestionInput) {
 		isEnabled,
 		textAfterResponse,
 		superQuestionID,
-		subQuestions
+		subQuestions,
+		arbitraryProperties,
 	}
 }
 `;
@@ -265,7 +276,8 @@ mutation($id: String, $input: SDCSectionInput) {
 			superQuestionID,
 			subQuestions
 		},
-		subSections
+		subSections,
+		arbitraryProperties,
 	}
 }
 `;

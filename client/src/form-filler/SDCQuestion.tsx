@@ -1,5 +1,6 @@
 import React from 'react';
 import {TextInput, NumberInput, RadioButtonGroup, RadioButton, FormGroup} from 'carbon-components-react'
+import { responsePathAsArray } from 'graphql';
 
 
 export const SDCQuestion = ({questionID, formArray, setFormArray} : any) => {
@@ -67,23 +68,36 @@ const radioButton ={
 if (question.questionType == 'text') {
     return (
         <div className="SDCQuestion">
-        {question.mustImplement ? "*" : null}<TextInput {...textProps}/>
+        {question.mustImplement ? "*" : null}
+        {renderArbitraryQuestionProperties(question)}
+        <TextInput {...textProps}/>
         </div>
       )
 } else if (question.questionType == 'number') {
     return (
         <div className="SDCQuestion">
-        {question.mustImplement ? "*" : null}<NumberInput {...numProps}/>
+        {question.mustImplement ? "*" : null}
+        {renderArbitraryQuestionProperties(question)}
+        <NumberInput {...numProps}/>
         </div>
       )
 } 
 else if (question.questionType == 'single choice') {
     return (
         <div className="SDCQuestion">
-        <FormGroup legendText={question.title? question.title : question.id}>
-        {question.mustImplement ? "*" : null}<div {...radioProps}>
+        <FormGroup legendText={question.title? question.title : question.id}> {question.mustImplement ? "*" : null}
+        {renderArbitraryQuestionProperties(question)}
+        <div {...radioProps}>
             {question.response.choices.map((choice: any) => {
-                return <RadioButton value={choice.ID} labelText={choice.title} key={choice.name} {...radioButton} defaultChecked={question.response.userInput==choice.id? true:false}/> 
+                let text = choice.title;
+                if(question.response.arbitraryProperties && question.response.arbitraryProperties.length !== 0) {
+                    for(let [[key, value]] of question.response.arbitraryProperties.map((item: any) => Object.entries(item))){
+                        if(Array.isArray(value) && value.length === question.response.choices.length) {
+                            text = text + ", " + JSON.stringify(key) + ": " + JSON.stringify(value[question.response.choices.indexOf(choice)]);
+                        }
+                    }
+                }
+                return <RadioButton value={choice.ID} labelText={text} key={choice.name} {...radioButton} defaultChecked={question.response.userInput==choice.id? true:false}/> 
         })}
         </div>
         </FormGroup>
@@ -94,3 +108,13 @@ else {
     return null;
 }
 };
+
+const renderArbitraryQuestionProperties = (question: any) => {
+    return (<div>
+        {question.arbitraryProperties ? question.arbitraryProperties.map((item: any) => {
+          return item ? <div className="arbitraryQuestionProperties">{
+            Object.entries(item).map((entry: any) => <h6 className="arbitraryQuestionProperty">{JSON.stringify(entry[0])}: {JSON.stringify(entry[1])}</h6>)
+          }</div> : ""
+        }) : ""}
+    </div>);
+}

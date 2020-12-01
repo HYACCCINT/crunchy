@@ -59,7 +59,7 @@ export const FormFill = () => {
       </div>
     )
   }
-  const renderProperties = (data: any) => {
+  const renderProperties = (data: any, arbitraryProperties: any) => {
     return (
       <div className="fillerProperties">
         <h5>Title: {data.title}</h5>
@@ -67,6 +67,11 @@ export const FormFill = () => {
         {/*<h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>*/}
         <h6>Lineage: {data.lineage}</h6>
         {data.patientID !== "template" ? <h5>Patient: {data.patientID}</h5> : null}
+        {arbitraryProperties ? arbitraryProperties.map((item: any) => {
+          return item ? <div className="arbitraryFormProperties">{
+            Object.entries(item).map((entry: any) => <h6 className="arbitraryFormProperty">{JSON.stringify(entry[0])}: {JSON.stringify(entry[1])}</h6>)
+          }</div> : ""
+        }) : ""}
       </div>
     )
   }
@@ -116,7 +121,7 @@ const formSubmit = () => {
     <div className="fillerHead">
       <h3>{response.formID}</h3>
       <h3>{response.name}</h3>
-      {renderProperties(response)}
+      {renderProperties(response, response.arbitraryProperties)}
       <TextInput {...textProps}/>
     </div>
       <Form onSubmit={formSubmit} className="fillerForm">

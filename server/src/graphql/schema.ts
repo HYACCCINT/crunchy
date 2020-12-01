@@ -6,15 +6,19 @@ export const schema = buildSchema(`
 	scalar MultipleChoice
 	scalar UserResponse
 	scalar InputType
+	scalar ArbitraryProperty
+
 	interface SDCQuestionResponse {
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 	}
 	type SDCMultipleChoiceResponse implements SDCQuestionResponse {
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 		userInput: InputType
 		choices: [MultipleChoice]
 		canMultiSelect: Boolean
@@ -23,6 +27,7 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 		userInput: InputType
 		defaultValue: String
 	}
@@ -30,6 +35,7 @@ export const schema = buildSchema(`
 		id: String
 		questionID: String
 		responseType: String
+		arbitraryProperties: [ArbitraryProperty]
 		userInput: InputType
 		defaultValue: Int
 	}
@@ -51,6 +57,7 @@ export const schema = buildSchema(`
 		superSectionID: String
 		superQuestionID: String
 		superAnswerID: String
+		arbitraryProperties: [ArbitraryProperty]
 	}
 	type SDCSection {
 		id: String
@@ -64,6 +71,7 @@ export const schema = buildSchema(`
 		questions: [SDCQuestion]
 		subSectionIDs: [String]
 		superSectionID: String
+		arbitraryProperties: [ArbitraryProperty]
 	}
 	type SDCForm {
 		id: String
@@ -78,6 +86,7 @@ export const schema = buildSchema(`
 		xml: String
 		lastModified: String
 		previousVersion: String
+		arbitraryProperties: [ArbitraryProperty]
 	}
 	
 	input SDCQuestionInput {

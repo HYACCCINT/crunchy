@@ -268,6 +268,7 @@ class Database {
 			});
 	}
 
+	/** Add objects to arbitraryProperties for new XML changes */
 	async parseXMLForm(input: any, req: any): Promise<any> {
 		const parser = new xml2js.Parser();
 		const inputJson = await parser.parseStringPromise(input.xml);
@@ -286,6 +287,7 @@ class Database {
 			"xmlns:xsi": formDesignObj.$["xmlns:xsi"],
 			patientID: "template",
 			previousVersion: JSON.stringify(input.previousVersion),
+			arbitraryProperties: [],
 		}
 		if(input.previousVersion){
 			const previousForm = input.previousVersion.find((item: any) => item.docType === "SDCForm");
@@ -318,6 +320,7 @@ class Database {
 			superSectionID: superID,
 			subSectionIDs: [],
 			questions: [],
+			arbitraryProperties: [],
 		};
 		if(previousVersion){
 			const sectionIDMap = previousVersion.filter((item: any) => item.docType === "SDCSection").map((item: any) => item._id);
@@ -355,8 +358,9 @@ class Database {
 			superSectionID: superSectionID,
 			superQuestionID: superQuestionID,
 			superAnswerID: superAnswerID,
-			response: <any>{},
+			response: <any>{ arbitraryProperties: [] },
 			subQuestions: <any>[],
+			arbitraryProperties: [],
 		};
 
 		if(questionObj.ListField) {
