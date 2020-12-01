@@ -4,11 +4,10 @@ import { useMutation } from 'urql';
 import { deleteFormQuery } from '../query';
 import {TextInput, Button} from 'carbon-components-react';
 import {UserContext} from '../common/user-context';
-import './mainPage.scss'
+import './FormManage.scss'
 
-export const MainPage = () => {
+export const FormManage = () => {
   const history = useHistory();
-  const userState = useContext(UserContext);
   const [, deleteForm] = useMutation(deleteFormQuery);
   const [formID, setFormID] = useState('');
   const handleProcedureIdClick = async (action: any, ...params: any) => {

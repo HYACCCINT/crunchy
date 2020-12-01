@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, fireEvent } from '@testing-library/react';
-import { MainPage } from './mainPage';
+import { FormManage } from './FormManage';
 
 const mockHistoryPush = jest.fn();
 
@@ -14,11 +14,11 @@ jest.mock('react-router-dom', () => ({
     }),
   }));
   
-    describe('MainPage', () => {
+    describe('FormManage', () => {
     it('Upload form redirects to correct URL on click', () => {
       const { getByText } = render(
         <MemoryRouter>
-          <MainPage />
+          <FormManage />
         </MemoryRouter>,
       );
   
@@ -30,7 +30,7 @@ jest.mock('react-router-dom', () => ({
       window.prompt.mockClear();
       const { getByText } = render(
         <MemoryRouter>
-          <MainPage />
+          <FormManage />
         </MemoryRouter>,
       );
   
@@ -41,7 +41,7 @@ jest.mock('react-router-dom', () => ({
     it('Delete form is called', () => {
       const { getByText } = render(
         <MemoryRouter>
-          <MainPage />
+          <FormManage />
         </MemoryRouter>,
       );
   
@@ -52,7 +52,7 @@ jest.mock('react-router-dom', () => ({
     it('Update form redirects to correct URL on click', () => {
       const { getByText } = render(
         <MemoryRouter>
-          <MainPage />
+          <FormManage />
         </MemoryRouter>,
       );
 

@@ -13,7 +13,6 @@ const getUser = () => fetch(`http://localhost:5000/api/cur-user`, { credentials 
 		if (!response.ok) {
 			throw new Error(response.statusText);
 		}
-		console.log("!!!!!!!");
 		return response.json();
 	});
 
@@ -39,7 +38,7 @@ const UserContextProvider = ({ children }: any) => {
 			} as any)
 		);
 	}, []);
-
+console.log("user", state);
 	return (
 		<UserContext.Provider value={{state:state, setState:setState}}>
 			{ children }

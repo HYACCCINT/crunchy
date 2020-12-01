@@ -7,10 +7,15 @@ import cors from 'cors';
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-const guestUser = {
+const fillerUser = {
 	id: 'guest',
 	docType: 'user',
-	permissions:['fill', 'manage']
+	permissions:['fill']
+};
+const managerUser = {
+	id: 'guest',
+	docType: 'user',
+	permissions:['manage']
 };
 
 const app = express();
@@ -69,11 +74,15 @@ try {
 		res.status('401').json({ error: 'unauthorized' });
 	}
 }
-app.get('/api/guest-login', async(req: any, res: any) => {
-	req.session.user = guestUser;
-	req.user =guestUser;
-	res.json({user:guestUser, url:'/after-login'})
-	// res.redirect("http://localhost:3000/after-login");
+app.get('/api/filler-guest-login', async(req: any, res: any) => {
+	req.session.user = fillerUser;
+	req.user =fillerUser;
+	res.json({user: fillerUser, url:'/fill'})
+});
+app.get('/api/manager-guest-login', async(req: any, res: any) => {
+	req.session.user = managerUser;
+	req.user =managerUser;
+	res.json({user: managerUser, url:'/manage'})
 });
 
 app.get('/api/user', async(req: any, res: any) => {

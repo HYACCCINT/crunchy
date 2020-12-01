@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider as UrqlProvider } from 'urql';
 import { urqlClient } from './query';
 import { UserContextProvider } from './common/user-context';
-import {MainPage, FormDisplay, FormUpload, FormFill, DashBoard, ErrorBoundary} from './routes';
+import {FormManage, FormDisplay, FormUpload, FormFill, DashBoard, ErrorBoundary, Login} from './routes';
 import {Header, HeaderName} from 'carbon-components-react'
 import { ProtectedRoute } from './common/protected-route';
 
@@ -26,10 +26,11 @@ export const App = () => (
                 [Forms]
               </HeaderName>
             </Header>
-            <ProtectedRoute path={['/', '/manage']} component={MainPage} exact/>
+            <Route path={'/'} component={Login} exact/>
+            <ProtectedRoute path={'/manage'} component={FormManage} exact/>
             <ProtectedRoute path='/upload-form/:action' component={FormUpload} exact/>
             <ProtectedRoute path='/formdisplay/:procedureId' component={FormDisplay} exact/>
-            <ProtectedRoute path='/formfill/:formID' component={FormFill} exact/>
+            <ProtectedRoute path='/formfill/:formID' component={FormFill}/>
             <ProtectedRoute path='/fill' component={DashBoard} exact/>
           </UrqlProvider>
         </div>

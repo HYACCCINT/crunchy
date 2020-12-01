@@ -30,22 +30,21 @@ export const ProtectedRoute = ({
 	const value = useContext(UserContext);
 	const history = useHistory();
 	let auth = useAuth();
-    const getUser = () => fetch(`http://localhost:5000/api/guest-login`)
+    const guestLogin = (type: string) => fetch(`http://localhost:5000/api/${type}-guest-login`)
 	.then((response) => {
 		if (!response.ok) {
 			throw new Error(response.statusText);
         }
         response.json().then((res:any)=>{ value.setState({status: 'success',
-		error: null,user:res.user}); return res;})
+		error: null,user:res.user}); history.push(res.url); return res;})
 	});
-console.log(value,"????");
 	let NoAuthComponent = () => {
 		window.localStorage.setItem('redirectUrl', window.location.href);
 		return (
 			<div >
 				<div >
 					<h1>SDC Forms</h1>
-					<p style={{ marginTop: '0.5em' }}>Crunchy coders</p>
+					<p style={{ marginTop: '0.5em' }}>You don't have access to this page, try...</p>
 					<Button
 						// disabled
 						style={{
@@ -56,8 +55,12 @@ console.log(value,"????");
 						Log in to get started
 					</Button>
 					<Button
-						onClick={() => { getUser() }}>
-						Log in as guest
+						onClick={() => { guestLogin('filler') }}>
+						Log in as Filler guest
+					</Button>
+					<Button
+						onClick={() => { guestLogin('manager') }}>
+						Log in as Manager guest
 					</Button>
 				</div>
 			</div>
@@ -67,13 +70,30 @@ console.log(value,"????");
 	if (noAuthComponent) {
 		NoAuthComponent = noAuthComponent;
 	}
+	const tryAuth = (user: any) =>{
+		if(! user) {
+			return false;
+		}
+		if (rest.path.includes('manage') || rest.path.includes('upload-form') || rest.path.includes('formdisplay')){
+			if(user.permissions.includes('manage')){
+				return true;
+			}
+			return false;
+		}
+		if (rest.path.includes('formfill') || rest.path.includes('fill') ){
+			if(user.permissions.includes('fill')){
+				return true;
+			}
+			return false;
+		}
+	}
 console.log(rest, "Dfdsfsdfsdf");
 	return <Route {...rest} render={(props) => (
 		isAuthenticated
 			? isAuthenticated({ auth })
 				? <Component {...props} {...rest} />
 				: <NoAuthComponent />
-			: auth.user
+			: tryAuth(auth.user)
 				? <Component {...props} {...rest} />
 				: <NoAuthComponent />
 	)} />;
