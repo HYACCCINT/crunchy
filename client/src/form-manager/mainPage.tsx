@@ -9,7 +9,6 @@ import './mainPage.scss'
 export const MainPage = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
-  console.log(userState);
   const [, deleteForm] = useMutation(deleteFormQuery);
   const [formID, setFormID] = useState('');
   const handleProcedureIdClick = async (action: any, ...params: any) => {

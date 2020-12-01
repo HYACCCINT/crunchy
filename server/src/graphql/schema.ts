@@ -79,6 +79,11 @@ export const schema = buildSchema(`
 		lastModified: String
 		previousVersion: String
 	}
+	type User {
+		id: String
+		password: String
+		permissions: [String]
+	}
 	
 	input SDCQuestionInput {
 		id: String
@@ -148,6 +153,7 @@ export const schema = buildSchema(`
 		form(id:String): [SDCFormObjects]
 		question(id:String): [SDCQuestion]
 		section(id:String): [SDCSectionObjects]
+		user(id: String, password: String): User
 	}
 	type Mutation {
 		updateForm(id: String, input: FormInput): SDCForm
@@ -156,6 +162,7 @@ export const schema = buildSchema(`
 		updateSection(id: String, input: SDCSectionInput): SDCSection
 		deleteForm(id: String): SDCForm
 		updateRes(id: String, input:UserResponse): SDCForm
+		registerUser(id: String, password: String, permissions: [String]): User
 	}
 `);
 

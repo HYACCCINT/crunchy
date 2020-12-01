@@ -218,9 +218,9 @@ class Database {
 		}
 		return await this.delete(id, req);
 	}
-	async getUser(id: string, req: any) {
-		const item = await this.get(id,  req);
-		if (item.docType !== 'user') {
+	async getUser(id: string, password: string, req: any) {
+		const item = await this.get(id, req);
+		if (item.docType !== 'user' || item.password !== password) {
 			return null;
 		}
 		return item;

@@ -8,11 +8,12 @@ const UserContext: React.Context<any> = createContext({});
 
 UserContext.displayName = 'UserContext';
 
-const getUser = () => fetch(`http://localhost:5000/api/user`)
+const getUser = () => fetch(`http://localhost:5000/api/cur-user`, { credentials : 'same-origin' })
 	.then((response) => {
 		if (!response.ok) {
 			throw new Error(response.statusText);
 		}
+		console.log("!!!!!!!");
 		return response.json();
 	});
 
@@ -40,7 +41,7 @@ const UserContextProvider = ({ children }: any) => {
 	}, []);
 
 	return (
-		<UserContext.Provider value={state}>
+		<UserContext.Provider value={{state:state, setState:setState}}>
 			{ children }
 		</UserContext.Provider>
 	);

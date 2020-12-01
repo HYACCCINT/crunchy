@@ -44,9 +44,9 @@ export const root = {
 			throw error;
 		}
 	},
-	user: async({ id }: { id: string }, context: any) => {
+	user: async({ id, password }: { id: string, password:string }, context: any) => {
 		try {
-			const user = await database.getUser(id, context);
+			const user = await database.getUser(id, password, context);
 			return user;
 		} catch (error) {
 			console.error('get user error:', error);

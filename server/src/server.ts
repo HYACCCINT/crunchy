@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const guestUser = {
 	id: 'guest',
 	docType: 'user',
-	permissions:['read']
+	permissions:['fill', 'manage']
 };
 
 const app = express();
@@ -20,7 +20,7 @@ app.use(cors())
 app.use(cors({
   credentials: true,
   //to be changed in production
-	origin: [ 'http://localhost:5000', 'http://localhost:3000']
+	origin: ['http://localhost:3000']
 }))
 
 app.use(cookieParser());
@@ -69,16 +69,26 @@ try {
 		res.status('401').json({ error: 'unauthorized' });
 	}
 }
-
 app.get('/api/guest-login', async(req: any, res: any) => {
 	req.session.user = guestUser;
-	res.redirect("localhost:3000/dashboard");
+	req.user =guestUser;
+	res.json({user:guestUser, url:'/after-login'})
+	// res.redirect("http://localhost:3000/after-login");
 });
 
-app.get('/api/user', checkAuthentication, async(req: any, res: any) => {
+app.get('/api/user', async(req: any, res: any) => {
 	try {
-		const user = guestUser;
+		const user = await root.user({ id: req.user.id, password: req.user.password}, req);
 		res.json(user);
+	} catch (error) {
+		res.status('404').json({ error: 'User not found' });
+	}
+});
+
+app.get('/api/cur-user', checkAuthentication, async(req: any, res: any) => {
+	try {
+		console.log(req.session,"dsfdsfsdfsdff");
+		res.json(req.user);
 	} catch (error) {
 		res.status('404').json({ error: 'User not found' });
 	}

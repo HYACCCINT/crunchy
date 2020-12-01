@@ -2,16 +2,26 @@ import { useContext } from 'react';
 import { UserContext } from './user-context';
 
 export const useAuth = () => {
-	const state = useContext(UserContext);
-	const isPending = state.status === 'pending';
-	const isError = state.status === 'error';
-	const isSuccess = state.status === 'success';
-	const isAuthenticated = state.user && isSuccess;
+	const value = useContext(UserContext);
+	const isPending = value.state.status === 'pending';
+	const isError = value.state.status === 'error';
+	const isSuccess = value.state.status === 'success';
+	const isAuthenticated = value.state.user && isSuccess;
 	return {
-		...state,
+		...value.state,
 		isPending,
 		isError,
 		isSuccess,
 		isAuthenticated
 	};
 };
+
+// export const UpdateAuth = (user:any) => {
+// 	const state = useContext(UserContext);
+// 	state.status='success', 
+// 	state.user=user;
+// 	console.log(state);
+// 	return {
+// 		...state
+// 	};
+// };
