@@ -57,7 +57,7 @@ export const FormDisplay = () => {
       </div>
     )
   }
-  const renderProperties = (data: any) => {
+  const renderProperties = (data: any, arbitraryProperties: any) => {
     return (
       <div className="fillerProperties">
         <h5>Title: {data.title}</h5>
@@ -65,10 +65,14 @@ export const FormDisplay = () => {
         {/*<h5>Release Date: {(new Date(data.releaseDate)).toLocaleString()}</h5>*/}
         <h6>Lineage: {data.lineage}</h6>
         {data.patientID !== "template" ? <h5>Patient: {data.patientID}</h5> : null}
+        {arbitraryProperties ? arbitraryProperties.map((item: any) => {
+          return item ? <div className="arbitraryFormProperties">{
+            Object.entries(item).map((entry: any) => <h6 className="arbitraryFormProperty">{JSON.stringify(entry[0])}: {JSON.stringify(entry[1])}</h6>)
+          }</div> : ""
+        }) : ""}
       </div>
     )
   }
-  
   const assemble = (data: any): any => {
     if(!data) return {};
     let { sectionIDs, ...form} = data[0];
@@ -99,7 +103,7 @@ export const FormDisplay = () => {
     <div className="fillerHead">
       <h3>{response.formID}</h3>
       <h3>{response.name}</h3>
-      {renderProperties(response)}
+      {renderProperties(response, response.arbitraryProperties)}
     </div>
       <Form  className="fillerForm">
       <br></br>
