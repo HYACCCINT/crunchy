@@ -173,9 +173,58 @@ class Database {
 	}
 
 	async updateForm<T = object>(id: string, value: any, req: any) {
-		// value.lastModified = new Date().toISOString();
-		value.docType = 'SDCForm';
-		return await this.upsert(id, value, req);
+		//functions for assembling section objects
+		const updateIDs = (formObj: any, prefix: string) => {
+			if (formObj.docType === "SDCForm"){
+				formObj.sectionIDs = formObj.sectionIDs.map((item: any) => item = `${prefix}-${item}`);
+			}
+			else if(formObj.docType === "SDCSection") {
+				formObj.subSectionIDs = formObj.subSectionIDs.map((item: any) => item = `${prefix}-${item}`)
+				formObj.superSectionID = formObj.superSectionID ? `${prefix}-${formObj.superSectionID}`: formObj.superSectionID;
+			}
+			else if(formObj.docType === "SDCQuestion") {
+				formObj.superSectionID = formObj.superSectionID ? `${prefix}-${formObj.superSectionID}`: formObj.superSectionID;
+			}
+		}
+		const upsertAssembledSection = async (sectionId: string, data: any): Promise<any> => {
+			const sectionObj = data.find((item: any) => item.docType === "SDCSection" && item.id === sectionId);
+			const { ...section } = sectionObj;
+			for(let subSectionID of section.subSectionIDs){
+				await upsertAssembledSection(subSectionID, data);
+			}
+			let questions = data.filter((item: any) => item.docType === "SDCQuestion" && item.superSectionID === sectionId);
+			section.questions = [];
+			questions.forEach((question: any) => section.questions.push(assembleQuestions(question, data)));
+			try {
+				return await this.upsert(sectionId, section, req);
+			}
+			catch(e){
+				console.log("Could not upsert form response for section", sectionId, e);
+			}
+		}
+
+		const assembleQuestions = (question: any, data: any): any => {
+			const subQuestions = data.filter((item: any) => item.docType === "SDCQuestion" && item.superQuestionID === question.id);
+			question.subQuestions = subQuestions;
+			return question;
+		}
+
+		if (!value) return {};
+		value.forEach((element: any) => {
+			if(element.docType === "SDCSection") element.id = id + '-' + element.id;
+			updateIDs(element, id);
+		});
+		const form = value[0];
+		form.id = id;
+		for(let sectionID of form.sectionIDs){
+			await upsertAssembledSection(sectionID, value);
+		}
+		try{
+			return await this.upsert(id, form, req);
+		}
+		catch(e){
+			console.log("Could not upsert form response for form", id, e);
+		}
 	}
 
 	async uploadForm<T = object>(id: string, value: any, req: any) {
