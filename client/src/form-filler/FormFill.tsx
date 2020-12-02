@@ -105,11 +105,64 @@ export const FormFill = () => {
     helperText: 'Enter Patient ID'
 }
 const formSubmit = () => {
-  const time = Date.now()
-  const responseID = `${response.id}-${patientID}-${time.toString()}`
-  response.id = responseID;
-  uploadRes({id: responseID, input: response});
-  console.log(response);
+  let submitFlag = 0;
+
+  if(patientID == '')
+  {
+    alert(`Please enter the Patient ID`);
+    submitFlag = 1;
+  }
+  else submitFlag = 0;
+
+  outer_loop:
+  for(let item of formArray)
+  {
+    if(item.docType === "SDCQuestion")
+    {
+      if(item.mustImplement !== false && item.isEnabled !== false)
+      {
+        if(item.questionType === "text")
+        {
+          if(item.response.userInput === "")
+          {
+            alert(`Please fill in the answer for Question: ${(item.title).slice(0, -1)}`);
+            submitFlag = 1;
+            break outer_loop;
+          }
+          else submitFlag = 0;
+        }
+        else if(item.questionType === "single choice")
+        {
+          if(item.response.userInput.length == 0)
+          {
+            alert(`Please fill in the answer for Question: ${(item.title).slice(0, -1)}`);
+            submitFlag = 1;
+            break outer_loop;
+          }
+          else submitFlag = 0;
+        }
+        else
+        {
+          if(item.response === null) //item.response.userInput === null after bug input fix
+          {
+            alert(`Please fill in the answer for Question: ${(item.title).slice(0, -1)}`);
+            submitFlag = 1;
+            break outer_loop;
+          }
+          else submitFlag = 0;
+        }
+      }
+    }
+  }
+  
+  if(submitFlag === 0)
+  {
+    const time = Date.now()
+    const responseID = `${response.id}-${patientID}-${time.toString()}`
+    response.id = responseID;
+    uploadRes({id: responseID, input: response});
+    console.log("This is the response: ", response);
+  }
 }
   return (
     <div className="fillerWrap">
