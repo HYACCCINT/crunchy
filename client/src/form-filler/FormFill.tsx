@@ -106,14 +106,16 @@ export const FormFill = () => {
     labelText: 'Patient ID',
     onChange : (event:any)=>{
       setPatientID(event.target.value)
+      formArray.find((item: any) => item.docType === "SDCForm").patientID = event.target.value;
     },
-    helperText: 'Enter Patient ID'
+    helperText: 'Enter Patient ID',
+    value: formArray.find((item: any) => item.docType === "SDCForm").patientID === "template" ? "" : formArray.find((item: any) => item.docType === "SDCForm").patientID,
 }
 const formSubmit = () => {
   const time = Date.now()
   const responseID = `${response.id}-${patientID}-${time.toString()}`
   response.id = responseID;
-  uploadRes({id: responseID, input: response});
+  uploadRes({id: responseID, input: formArray});
   console.log(response);
 }
   return (

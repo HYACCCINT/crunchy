@@ -27,6 +27,7 @@ const textProps = {
     },
     // mustImplement:question.mustImplement ? true : false,
     disabled: question.isEnabled == null ? false : !question.isEnabled,
+    value: question.response.userInput !== null ? question.response.userInput : "",
     helperText: question.name
 }
 
@@ -51,7 +52,7 @@ const numProps = {
     // mustImplement:question.mustImplement ? true : false,
     min: 0,
     max: 9999999,
-    value: 0,
+    value: question.response.userInput !== null ? question.response.userInput : 0,
     step: 1,
     disabled:question.isEnabled == null ? false : !question.isEnabled,
     helperText: question.name
@@ -107,7 +108,7 @@ else if (question.questionType == 'single choice') {
                         }
                     }
                 }
-                return <RadioButton value={choice.ID} labelText={text} key={choice.name} {...radioButton} defaultChecked={question.response.userInput==choice.id? true:false}/> 
+                return <RadioButton value={choice.ID} labelText={text} key={choice.name} {...radioButton} defaultChecked={question.response.userInput==choice.ID? true:false}/> 
         })}
         </div>
         </FormGroup>
