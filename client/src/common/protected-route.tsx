@@ -3,7 +3,7 @@ import { Route, useHistory} from 'react-router-dom';
 import { Button, Modal } from 'carbon-components-react';
 import { useAuth } from './hooks';
 import { UserContext } from './user-context';
-
+import './not-found.scss'
 
 export const validUrl = (url: string | null) => {
 	const pattern = new RegExp('^(https?:\\/\\/)?' // protocol
@@ -42,7 +42,7 @@ export const ProtectedRoute = ({
 		window.localStorage.setItem('redirectUrl', window.location.href);
 		return (
 			<div >
-				<div >
+				<div className='noAuth'>
 					<h1>SDC Forms</h1>
 					<p style={{ marginTop: '0.5em' }}>You don't have access to this page, try...</p>
 					<Button

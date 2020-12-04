@@ -20,15 +20,6 @@ const managerUser = {
 
 const app = express();
 const port = process.env.PORT || 5000;
-// cors temp
-app.use(cors())
-app.use(cors({
-  credentials: true,
-  //to be changed in production
-	origin: ['http://localhost:3000']
-}))
-
-app.use(cookieParser());
 
 // Setup express application to use express-session middleware
 // Must be configured with proper session storage for production
@@ -37,17 +28,29 @@ app.use(cookieParser());
 app.use(session({
 	secret: '123456',
 	resave: true,
-	saveUninitialized: true
+	saveUninitialized: false,
+	cookie: { secure: false , maxAge: 86400000}
 }));
+
+// cors temp
+app.use(cors())
+app.use(cors({
+  credentials: true,
+  //to be changed in production
+	origin: 'http://localhost:3000'
+}))
+
+app.use(cookieParser());
+
+
 
 /**
  * If guest user is logged in, here is where it becomes an object on req.
  */
 app.use('*', (req: any, res: any, next: any) => {
-	if (req.session && req.session.user && !req.user) {
-		// We're a guest user now!
-		req.user = res.user;
-	}
+	req.session.reload(function(err:any) {
+		console.log(err);
+	})
 	next();
 });
 
@@ -76,19 +79,20 @@ try {
 }
 app.get('/api/filler-guest-login', async(req: any, res: any) => {
 	req.session.user = fillerUser;
-	req.user = fillerUser;
 	res.json({user: fillerUser, url:'/fill'})
+	req.session.save();
 });
 app.get('/api/manager-guest-login', async(req: any, res: any) => {
 	req.session.user = managerUser;
-	req.user = managerUser;
 	res.json({user: managerUser, url:'/manage'})
+	req.session.save();
 });
 
 app.get('/api/user', async(req: any, res: any) => {
 	try {
-		const user = await root.user({ id: req.user.id, password: req.user.password}, req);
+		const user = await root.user({ id: req.id, password: req.password}, req);
 		res.json(user);
+		req.session.save();
 	} catch (error) {
 		res.status('404').json({ error: 'User not found' });
 	}
@@ -96,7 +100,8 @@ app.get('/api/user', async(req: any, res: any) => {
 
 app.get('/api/cur-user', checkAuthentication, async(req: any, res: any) => {
 	try {
-		res.json(req.user);
+		res.json(req.session.user);
+		req.session.save();
 	} catch (error) {
 		res.status('404').json({ error: 'User not found' });
 	}

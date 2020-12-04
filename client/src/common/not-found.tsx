@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'carbon-components-react';
 import { useHistory } from 'react-router-dom';
-
+import './not-found.scss'
 export const NotFound = () => {
 	const history = useHistory();
 	return (

@@ -7,6 +7,7 @@ export const useAuth = () => {
 	const isError = value.state.status === 'error';
 	const isSuccess = value.state.status === 'success';
 	const isAuthenticated = value.state.user && isSuccess;
+	console.log(value,"dsfsdfsdf");
 	return {
 		...value.state,
 		isPending,
@@ -14,6 +15,7 @@ export const useAuth = () => {
 		isSuccess,
 		isAuthenticated
 	};
+
 };
 
 // export const UpdateAuth = (user:any) => {

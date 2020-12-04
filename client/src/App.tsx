@@ -1,15 +1,18 @@
 import React from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router, useHistory } from 'react-router-dom';
 import { Provider as UrqlProvider } from 'urql';
 import { urqlClient } from './query';
 import { UserContextProvider } from './common/user-context';
 import {FormManage, FormDisplay, FormUpload, FormFill, DashBoard, ErrorBoundary, Login} from './routes';
-import {Header, HeaderName} from 'carbon-components-react'
+import {Header, HeaderName, HeaderMenuItem, HeaderNavigation} from 'carbon-components-react'
 import { ProtectedRoute } from './common/protected-route';
+import {HeaderMenuItemLink} from './common/header-menu-item-link'
 
 import './App.css';
 
-export const App = () => (
+export const App = () => {
+  const history = useHistory();
+  return (
   <Router>
     <ErrorBoundary>
       <UserContextProvider>
@@ -25,6 +28,10 @@ export const App = () => (
               <HeaderName href="#" prefix="SDC">
                 [Forms]
               </HeaderName>
+              <HeaderNavigation aria-label="Crunchy">
+              <HeaderMenuItemLink history={history} to='/manage'>Manage</HeaderMenuItemLink>
+              <HeaderMenuItemLink history={history} to='/fill'>Fill</HeaderMenuItemLink>
+              </HeaderNavigation>
             </Header>
             <Route path={'/'} component={Login} exact/>
             <ProtectedRoute path={'/manage'} component={FormManage} exact/>
@@ -36,6 +43,6 @@ export const App = () => (
         </div>
       </UserContextProvider>
     </ErrorBoundary>
-  </Router>
-)
+  </Router>);
+}
 export default App;

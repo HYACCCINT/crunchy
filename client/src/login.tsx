@@ -18,8 +18,8 @@ export const Login = () => {
     }
 }
 const pwdProps = { // make sure all required component's inputs/Props keys&types match
-    id:"username",
-    labelText:"User Name",
+    id:"password",
+    labelText:"Password",
     onChange: (event:any)=>{
         setPassword(event.target.value)
     }
@@ -32,6 +32,14 @@ const guestLogin = (type: string) => fetch(`http://localhost:5000/api/${type}-gu
         response.json().then((res:any)=>{ userState.setState({status: 'success',
 		error: null,user:res.user}); history.push(res.url);return res;})
     });
+const userLogin = () => fetch(`http://localhost:5000/api/user`)
+.then((response) => {
+  if (!response.ok) {
+    throw new Error(response.statusText);
+      }
+      response.json().then((res:any)=>{ userState.setState({status: 'success',
+  error: null,user:res.user}); history.push(res.url);return res;})
+  });
     console.log("user", userState.state);
   return (
     <div className="App">
@@ -40,8 +48,7 @@ const guestLogin = (type: string) => fetch(`http://localhost:5000/api/${type}-gu
       Login
         <TextInput {...userNameProps}/>
         <TextInput {...pwdProps}/>
-        <Button id="loginbtn" kind="primary" className="menu-Button" >Login</Button>
-        <Button id="regbtn" kind="secondary" className="menu-Button">Sign Up</Button>
+        <Button id="loginbtn" kind="primary" className="menu-Button"onClick={() => { userLogin() }} >Login</Button>
       </div>
       <div className="guest">
       Or...
