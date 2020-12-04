@@ -45,23 +45,32 @@ export const ProtectedRoute = ({
 				<div className='noAuth'>
 					<h1>SDC Forms</h1>
 					<p style={{ marginTop: '0.5em' }}>You don't have access to this page, try...</p>
-					<Button
+					<div>					
+						<Button
 						// disabled
 						style={{
 							marginTop: '2em',
 							marginBottom: '1em'
 						}}
-						href={`localhost:3000/login`}>
+						onClick={()=>history.push('/')}
+						>
 						Log in to get started
-					</Button>
+					</Button></div>
+					<div className="guest">
+      				<p>Or...</p>
 					<Button
+					      id="fillbtn"
+						  kind="secondary"
 						onClick={() => { guestLogin('filler') }}>
 						Log in as Filler guest
 					</Button>
 					<Button
+						id="mngbtn"
+						kind="secondary"
 						onClick={() => { guestLogin('manager') }}>
 						Log in as Manager guest
 					</Button>
+					</div>
 				</div>
 			</div>
 		);

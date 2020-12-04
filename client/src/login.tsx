@@ -4,7 +4,7 @@ import {TextInput, Button} from 'carbon-components-react';
 import {UserContext} from './common/user-context';
 import {  useQuery } from 'urql';
 import { userQuery} from './query';
-
+import './login.scss'
 export const Login = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
@@ -48,21 +48,26 @@ const userLogin = () => {
   };
     console.log("user", userState.state);
   return (
-    <div className="App">
+    <div>
     <div className="mainWrap">
+    <h1>Login</h1>
       <div className='loginreg'>
-      Login
+
         <TextInput {...userNameProps}/>
         <TextInput {...pwdProps}/>
         <Button id="loginbtn" kind="primary" className="menu-Button"onClick={() => { userLogin(); console.log('click');}} >Login</Button>
       </div>
       <div className="guest">
-      Or...
+      <p>Or...</p>
       <Button
+      id="fillerbtn"
+      kind="secondary"
             onClick={() => { guestLogin('filler') }}>
             Log in as Filler guest
     </Button>
     <Button
+    id="managebtn"
+    kind="secondary"
         onClick={() => { guestLogin('manager') }}>
         Log in as Manager guest
     </Button>    
