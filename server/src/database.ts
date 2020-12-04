@@ -218,6 +218,30 @@ class Database {
 		}
 		return await this.delete(id, req);
 	}
+	async getUser(id: string, password: string, req: any) {
+		const item = await this.get(id, req);
+		if (item.docType !== 'user' || item.password !== password) {
+			return null;
+		}
+		return item;
+	}
+	async updateUser(id: string, value: any, req: any) {
+		value.docType = 'user';
+		return this.upsert(id, value, req);
+	}
+
+	async registerUser(user: any) {
+		try {
+			user.docType = 'user';
+			await this.insert(user).then(
+				(response: any) => user.processAPIResponse(response)
+			);
+			return user;
+		} catch (error) {
+			console.error('database register user error:', error);
+			throw error;
+		}
+	}
 
 	initializeViews(folderName = 'db-views') {
 		// `db-views` folder structure

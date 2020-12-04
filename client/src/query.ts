@@ -83,7 +83,14 @@ query($id: String!) {
 	}
 }
 `;
-
+export const userQuery = `
+query($id: String, $password: String) {
+	user(id: $id, password: $password) {
+		id,
+		password,
+		permissions
+	}
+}`
 export const questionQuery = `
 query($id: String!) {
 	question(id: $id) {

@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from 'urql';
 import { deleteFormQuery } from '../query';
-import {TextInput, Button} from 'carbon-components-react'
-import './mainPage.scss'
+import {TextInput, Button} from 'carbon-components-react';
+import {UserContext} from '../common/user-context';
+import './FormManage.scss'
 
-export const MainPage = () => {
+export const FormManage = () => {
   const history = useHistory();
   const [, deleteForm] = useMutation(deleteFormQuery);
   const [formID, setFormID] = useState('');
