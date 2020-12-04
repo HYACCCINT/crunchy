@@ -96,7 +96,6 @@ app.get('/api/user', async(req: any, res: any) => {
 
 app.get('/api/cur-user', checkAuthentication, async(req: any, res: any) => {
 	try {
-		console.log(req.session,"dsfdsfsdfsdff");
 		res.json(req.user);
 	} catch (error) {
 		res.status('404').json({ error: 'User not found' });

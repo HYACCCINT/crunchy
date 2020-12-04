@@ -57,14 +57,11 @@ export const FormUpload = () => {
      textPromise.then((text: any) => text);
 
      let content = await fileIn.text();
-    // console.log(content);
     setFileData({fileName: fileIn.name, contents:  content});
-    // console.log(state.fileName);
   }
   const updateprocedureID = (event: any) => {
     let newProcedureID = event.currentTarget.value;
     setFormToUpdate({id: newProcedureID, procedureID: newProcedureID});
-    // console.log(state.procedureID);
   }
   const txtInput = { // make sure all required component's inputs/Props keys&types match
   id:"FormID",
