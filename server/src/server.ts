@@ -49,7 +49,6 @@ app.use(cookieParser());
  */
 app.use('*', (req: any, res: any, next: any) => {
 	req.session.reload(function(err:any) {
-		console.log(err);
 	})
 	next();
 });

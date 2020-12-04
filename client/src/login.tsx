@@ -2,13 +2,24 @@ import React, {useState, useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import {TextInput, Button} from 'carbon-components-react';
 import {UserContext} from './common/user-context';
+import {  useQuery } from 'urql';
+import { userQuery} from './query';
 
 export const Login = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [permissions, setPermissions] = useState({manage:false, fill:false});
+  const [userObj,executeQuery] = useQuery({
+    query: userQuery,
+    pause:true,
+    variables: {id: username, password: password}
+  })
+  const { data, fetching, error } = userObj;
+  if (!fetching && data && data.user){
+    userState.setState({status: 'success',
+    error: null,user:data.user}); history.push('/manage')
+  }
 
   const userNameProps = { // make sure all required component's inputs/Props keys&types match
     id:"username",
@@ -32,14 +43,9 @@ const guestLogin = (type: string) => fetch(`http://localhost:5000/api/${type}-gu
         response.json().then((res:any)=>{ userState.setState({status: 'success',
 		error: null,user:res.user}); history.push(res.url);return res;})
     });
-const userLogin = () => fetch(`http://localhost:5000/api/user`)
-.then((response) => {
-  if (!response.ok) {
-    throw new Error(response.statusText);
-      }
-      response.json().then((res:any)=>{ userState.setState({status: 'success',
-  error: null,user:res.user}); history.push(res.url);return res;})
-  });
+const userLogin = () => {
+  executeQuery()
+  };
     console.log("user", userState.state);
   return (
     <div className="App">
@@ -48,7 +54,7 @@ const userLogin = () => fetch(`http://localhost:5000/api/user`)
       Login
         <TextInput {...userNameProps}/>
         <TextInput {...pwdProps}/>
-        <Button id="loginbtn" kind="primary" className="menu-Button"onClick={() => { userLogin() }} >Login</Button>
+        <Button id="loginbtn" kind="primary" className="menu-Button"onClick={() => { userLogin(); console.log('click');}} >Login</Button>
       </div>
       <div className="guest">
       Or...
